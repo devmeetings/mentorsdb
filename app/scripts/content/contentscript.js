@@ -71,7 +71,7 @@
         }
     };
     var init = function() {
-        var profileId = window.location.search.match(/id=(\d+)/)[1];
+        var profileId = window.location.pathname.substr(4);
         Profile.id = profileId;
         Storage.getProfile(profileId, function(res) {
             console.log(res);
