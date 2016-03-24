@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -20,7 +20,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.linkedin.com/profile/*"
+        "https://www.linkedin.com/in/*"
       ],
       "css": [
         "scripts/libs/taggle.js/assets/css/taggle.min.css",
