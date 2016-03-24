@@ -31,6 +31,8 @@
         "scripts/libs/taggle.js/src/taggle.js",
         "scripts/libs/transparency/dist/transparency.min.js",
         "scripts/content/constants.js",
+        "scripts/content/services/linkedin-data.service.js",
+        "scripts/content/models/profile.model.js",
         "scripts/content/contentscript.js"
       ],
       "run_at": "document_idle",

@@ -1,7 +1,32 @@
 'use strict';
 (function() {
-    var name = document.querySelector('.full-name');
-    var plusModal = false;
+
+    function MainController() {
+        this.existing = null;
+        this.current = new Profile({
+            id: window.location.pathname.substr(4),
+            name: LinkedinDataService.getName()
+        });
+        this.getProfile(this.current.id);
+    }
+
+    MainController.prototype.getProfile = function(id) {
+        var me = this;
+        Storage.getProfile(id, function(profile) {
+            me.existing = profile || null;
+        });
+    };
+
+    MainController.prototype.saveProfile = function() {
+        var me = this;
+        Storage.setProfile(this.current, function() {
+            // close popup
+        });
+    };
+
+    return new MainController;
+
+    /*var plusModal = false;
     var previewModal = false;
     var taggle = null;
     var showPlusModal = function() {
@@ -50,17 +75,6 @@
             plusModal.classList.remove('show');
         });
     };
-    var Profile = {
-        id: null,
-        img:null,
-        name: null,
-        email: null,
-        city: null,
-        status: null,
-        comment: null,
-        tags: [],
-        added: false
-    };
     var setProfile = function(data) {
         if (!data) {
             Profile.name = document.querySelector(NAME_EL).textContent;
@@ -71,10 +85,7 @@
         }
     };
     var init = function() {
-        var profileId = window.location.pathname.substr(4);
-        Profile.id = profileId;
         Storage.getProfile(profileId, function(res) {
-            console.log(res);
             setProfile(res);
             getTemplates().then(propagateTemplates).then(attachTemplateEvents);
             addPlusButton();
@@ -96,6 +107,6 @@
                 reject(error);
             }
         });
-    };
-    init();
+    };*/
+
 })();
