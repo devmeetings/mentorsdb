@@ -28,7 +28,7 @@
             try {
                 Storage.getProfile(id, function(profile) {
                     me.existing = profile || null;
-                    if(me.existing === null) {
+                    if(me.existing !== null) {
                         resolve(me.existing);
                     } else {
                         reject();
