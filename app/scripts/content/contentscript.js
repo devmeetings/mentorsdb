@@ -3,6 +3,10 @@
 
     function MainController() {
         var me = this;
+        chrome.extension.sendRequest({
+            method: 'setStatus',
+            status: 'processing'
+        });
         this.existing = null;
         this.current = new Profile({
             id: window.location.pathname.substr(4),
@@ -16,10 +20,18 @@
             languages: LinkedinDataService.getLanguages(),
             education: LinkedinDataService.getEducation()
         });
-        this.getProfile(this.current.id).then(function() {
-            me.current.status = me.existing.status;
+        chrome.extension.sendRequest({
+            method: 'setStatus',
+            status: 'new',
+            scoring: 0
         });
-        console.log(this.current);
+        this.getProfile(this.current.id).then(function(existing) {
+            chrome.extension.sendRequest({
+                method: 'setStatus',
+                status: 'existing',
+                scoring: 0
+            });
+        });
     }
 
     MainController.prototype.getProfile = function(id) {
