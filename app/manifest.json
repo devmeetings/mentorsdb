@@ -30,9 +30,12 @@
         "scripts/content/storage.js",
         "scripts/libs/taggle.js/src/taggle.js",
         "scripts/libs/transparency/dist/transparency.min.js",
-        "scripts/content/constants.js",
         "scripts/content/services/linkedin-data.service.js",
         "scripts/content/models/profile.model.js",
+        "scripts/content/models/skill.model.js",
+        "scripts/content/models/job.model.js",
+        "scripts/content/models/language.model.js",
+        "scripts/content/models/education.model.js",
         "scripts/content/contentscript.js"
       ],
       "run_at": "document_idle",

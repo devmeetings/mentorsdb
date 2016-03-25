@@ -2,18 +2,41 @@
 (function() {
 
     function MainController() {
+        var me = this;
         this.existing = null;
         this.current = new Profile({
             id: window.location.pathname.substr(4),
-            name: LinkedinDataService.getName()
+            name: LinkedinDataService.getName(),
+            img: LinkedinDataService.getPhoto(),
+            description: LinkedinDataService.getDescription(),
+            email: '',
+            city: LinkedinDataService.getCity(),
+            skills: LinkedinDataService.getSkills(),
+            jobs: LinkedinDataService.getJobs(),
+            languages: LinkedinDataService.getLanguages(),
+            education: LinkedinDataService.getEducation()
         });
-        this.getProfile(this.current.id);
+        this.getProfile(this.current.id).then(function() {
+            me.current.status = me.existing.status;
+        });
+        console.log(this.current);
     }
 
     MainController.prototype.getProfile = function(id) {
         var me = this;
-        Storage.getProfile(id, function(profile) {
-            me.existing = profile || null;
+        return new Promise(function(resolve, reject) {
+            try {
+                Storage.getProfile(id, function(profile) {
+                    me.existing = profile || null;
+                    if(me.existing === null) {
+                        resolve(me.existing);
+                    } else {
+                        reject();
+                    }
+                });
+            } catch(error) {
+                reject(error);
+            }
         });
     };
 

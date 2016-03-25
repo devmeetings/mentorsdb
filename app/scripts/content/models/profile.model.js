@@ -6,11 +6,27 @@ var Profile = (function() {
         this.img = data.img || null;
         this.email = data.email || null;
         this.city = data.city || null;
+        this.description = data.description || null;
+        this.skills = this.makeModels(Skill, data.skills);
+        this.jobs = this.makeModels(Job, data.jobs);
+        this.languages = this.makeModels(Language, data.languages);
+        this.education = this.makeModels(Education, data.education);
         this.status = data.status || null;
         this.comment = data.comment || null;
         this.tags = data.tags || [];
         this.added = data.added || false;
     }
+
+    ProfileModel.prototype.makeModels = function(model, data) {
+        var me = this;
+        var result = [];
+        if(data) {
+            data.forEach(function(item) {
+                result.push(new model(item));
+            });
+        }
+        return result;
+    };
 
     return ProfileModel;
 
