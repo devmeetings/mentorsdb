@@ -46,6 +46,14 @@
       "run_at": "document_idle",
       "all_frames": false
     },
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "scripts/content/services/github-data.service.js",
+        "scripts/content/models/github.model.js",
+        "scripts/content/github.controller.js"
       ],
       "run_at": "document_idle",
       "all_frames": false
