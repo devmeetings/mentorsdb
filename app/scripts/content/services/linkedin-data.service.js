@@ -5,15 +5,20 @@ var LinkedinDataService = (function() {
     }
 
     function getName() {
-        return document.querySelector('.full-name').textContent;
+        return textContent(document.querySelector('.full-name'));
     }
 
     function getCity() {
-        return document.querySelector('.locality a').textContent;
+        return textContent(document.querySelector('.locality a'));
     }
 
     function getPhoto() {
-        return document.querySelector('.profile-picture img').src;
+        var img = document.querySelector('.profile-picture img');
+        var src;
+        if(img) {
+            src = img.src;
+        }
+        return src;
     }
 
     function getDescription() {
