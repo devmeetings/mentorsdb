@@ -26,6 +26,12 @@ angular.module('App')
         });
     };
 
+    $scope.save = function() {
+        Storage.setProfile($scope.profile.current, function(res) {
+            $scope.close();
+        });
+    };
+
     $scope.showAll = function() {
         chrome.tabs.create({
             url: chrome.runtime.getURL('scripts/profiles/index.html'),
