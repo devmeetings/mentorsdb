@@ -32,6 +32,16 @@
                 scoring: 0
             });
         });
+        chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+            switch(request.method) {
+                case 'getProfileFromContent':
+                    sendResponse(JSON.stringify({
+                        current: me.current,
+                        existing: me.existing
+                    }));
+                    break;
+            }
+        });
     }
 
     MainController.prototype.getProfile = function(id) {

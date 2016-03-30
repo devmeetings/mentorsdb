@@ -1,23 +1,30 @@
 'use strict';
-chrome.extension.onConnect.addListener(function(port) {
 
-chrome.browserAction.onClicked.addListener(function(tab) { //Fired when User Clicks ICON
-    /*var url = chrome.runtime.getURL('scripts/profiles/index.html');
-    if (tab.url != url) { // Inspect whether the place where user clicked matches with our list of URL
-        chrome.tabs.create({
-            url: url,
-            active: true
-        });
-    }*/
-    chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-        //if(request.method === '')
+/* bridge between popup and content script */
+chrome.runtime.onConnect.addListener(function(port) {
+    port.onMessage.addListener(function(request) {
+        switch(request.method) {
+            case 'getProfile':
+                chrome.tabs.query({
+                    active: true,
+                    currentWindow: true
+                }, function(tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        method: 'getProfileFromContent'
+                    }, function(response) {
+                        port.postMessage(response);
+                    });
+                });
+                break;
+        }
     });
 });
-//port.onMessage.addListener(function(msg) {});
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if(request.method === 'setStatus') {
-        setStatus(request, sender);
+    switch(request.method) {
+        case 'setStatus':
+            setStatus(request, sender);
+            break;
     }
 });
 
@@ -45,5 +52,3 @@ function setStatus(request, sender) {
         tabId: sender.tab.id
     });
 }
-
-});
