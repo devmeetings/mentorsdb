@@ -15,7 +15,8 @@
     ]
   },
   "browser_action": {
-    "name": "LinkedInExt"
+    "name": "LinkedInExt",
+    "default_popup": "popup/popup.html"
   },
   "content_scripts": [
     {

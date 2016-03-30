@@ -1,0 +1,117 @@
+<!doctype html>
+<html ng-app="App" ng-csp="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../scripts/libs/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../scripts/libs/bootstrap/dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div ng-controller="ProfileCtrl">
+            <form ng-if="profile.current" ng-submit="save()">
+                <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label">Imię i nazwisko</label>
+                    <div class="col-sm-9">
+                        <s ng-if="profile.current.name !== profile.existing.name">{{profile.existing.name}}</s>
+                        <input type="text" name="name" class="form-control" ng-model="profile.current.name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-sm-3 control-label">Podsumowanie</label>
+                    <div class="col-sm-9">
+                        <s ng-if="profile.current.description !== profile.existing.description">{{profile.existing.description}}</s>
+                        <textarea name="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">Adres e-mail</label>
+                    <div class="col-sm-9">
+                        <s ng-if="profile.current.email !== profile.existing.email">{{profile.existing.email}}</s>
+                        <input type="text" name="email" class="form-control" ng-model="profile.current.email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="city" class="col-sm-3 control-label">Miasto</label>
+                    <div class="col-sm-9">
+                        <s ng-if="profile.current.city !== profile.existing.city">{{profile.existing.city}}</s>
+                        <input type="text" name="city" class="form-control" ng-model="profile.current.city">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Umiejętności</label>
+                    <div class="col-sm-9">
+                        <div class="bullets">
+                            <div class="bullet" ng-repeat="skill in profile.current.skills">
+                                <span class="label label-default">
+                                    {{skill.name}}
+                                    <span class="badge">{{skill.count}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Doświadczenie zawodowe</label>
+                    <div class="col-sm-9">
+                        <div class="jobs">
+                            <div class="job" ng-repeat="job in profile.current.jobs">
+                                <div><strong>{{job.position}}</strong></div>
+                                <div>Firma: <i>{{job.company}}</i></div>
+                                <div>Miasto: {{job.locality}}</div>
+                                <div>Okres zatrudnienia: {{job.period}} miesięcy</div>
+                                <div ng-if="job.current">Obecnie zatrudniony</div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Języki</label>
+                    <div class="col-sm-9">
+                        <div class="strips">
+                            <div ng-repeat="language in profile.current.languages">
+                                <span class="label label-default">
+                                    {{language.name}}
+                                    <div class="badge">{{language.proficiency}}</div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Wykształcenie</label>
+                    <div class="col-sm-9">
+                        <div class="educationlist">
+                            <div class="education" ng-repeat="education in profile.current.education">
+                                <div><strong>{{education.school}}</strong></div>
+                                <div>Stopień: <i>{{education.degree}}</i></div>
+                                <div>Specjalność: {{education.major}}</div>
+                                <div>Okres: {{education.date}} miesięcy</div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="submit" class="btn btn-primary">
+                            <span ng-if="!profile.existing">Dodaj</span>
+                            <span ng-if="profile.existing">Aktualizuj</span>
+                        </button>
+                        <button class="btn btn-default" ng-click="close()">Anuluj</button>
+                    </div>
+                </div>
+            </form>
+            <nav class="navbar navbar-default text-center">
+                <button class="btn btn-default" ng-click="refresh()">Odśwież</button>
+                <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
+            </nav>
+        </div>
+        <script src="../scripts/libs/jquery/dist/jquery.min.js"></script>
+        <script src="../scripts/libs/angular/angular.min.js"></script>
+        <script src="../scripts/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../scripts/content/storage.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
