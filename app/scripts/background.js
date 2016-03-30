@@ -25,6 +25,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
         case 'setStatus':
             setStatus(request, sender);
             break;
+        case 'openGithub':
+            chrome.tabs.create({
+                url: 'https://github.com/search?q=' + request.name + '&type=Users',
+                active: false
+            });
+            break;
     }
 });
 

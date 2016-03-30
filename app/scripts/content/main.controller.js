@@ -21,6 +21,10 @@
             education: LinkedinDataService.getEducation()
         });
         chrome.extension.sendRequest({
+            method: 'openGithub',
+            name: this.current.name.replace(/ /g, '+')
+        });
+        chrome.extension.sendRequest({
             method: 'setStatus',
             status: 'new',
             scoring: 0
