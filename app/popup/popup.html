@@ -60,7 +60,7 @@
                                 <div>Firma: <i>{{job.company}}</i></div>
                                 <div>Miasto: {{job.locality}}</div>
                                 <div>Okres zatrudnienia: {{job.period}} miesięcy</div>
-                                <div ng-show="job.current">Obecnie zatrudniony</div>
+                                <div ng-if="job.current">Obecnie zatrudniony</div>
                                 <hr>
                             </div>
                         </div>
