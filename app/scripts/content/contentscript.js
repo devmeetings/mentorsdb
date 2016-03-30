@@ -62,13 +62,6 @@
         });
     };
 
-    MainController.prototype.saveProfile = function() {
-        var me = this;
-        Storage.setProfile(this.current, function() {
-            // close popup
-        });
-    };
-
     return new MainController;
 
 })();
