@@ -1,4 +1,31 @@
 html {
+    position: relative;
     width: 800px;
     height: 600px;
+    overflow: auto;
 }
+
+body {
+    height: 100%;
+    margin: 10px;
+}
+
+.form-group:after {
+    content: '';
+    clear: both;
+    display:block;
+    width:100%;
+}
+
+.bullets .bullet {
+    display: inline-block;
+}
+
+.bullets .bullet .badge,
+.strips .badge {
+    background-color: black;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); }
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:window-inactive  { background: black; }

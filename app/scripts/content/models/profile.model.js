@@ -14,7 +14,6 @@ var Profile = (function() {
         this.status = data.status || null;
         this.comment = data.comment || null;
         this.tags = data.tags || [];
-        this.added = data.added || false;
     }
 
     ProfileModel.prototype.makeModels = function(model, data) {

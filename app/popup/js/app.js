@@ -3,15 +3,13 @@ angular.module('App', []);
 angular.module('App')
 .controller('ProfileCtrl', ['$scope', function($scope) {
 
+    var port = chrome.runtime.connect({name: "bridge"});
+
     $scope.profile = {
         current: null,
         existing: {}
     };
 
-    var port = chrome.runtime.connect({name: "bridge"});
-    port.postMessage({
-        method: 'getProfile'
-    });
     port.onMessage.addListener(function(response) {
         var json;
         if(typeof response === 'string' && response !== 'undefined' && response !== 'null') {
@@ -22,11 +20,23 @@ angular.module('App')
         }
     });
 
+    $scope.refresh = function() {
+        port.postMessage({
+            method: 'getProfile'
+        });
+    };
+
     $scope.showAll = function() {
         chrome.tabs.create({
             url: chrome.runtime.getURL('scripts/profiles/index.html'),
             active: true
         });
     };
+
+    $scope.close = function() {
+        window.close();
+    };
+
+    $scope.refresh();
 
 }]);
