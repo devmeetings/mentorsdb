@@ -23,21 +23,29 @@
       "matches": [
         "https://www.linkedin.com/in/*"
       ],
-      "css": [
-        "scripts/libs/taggle.js/assets/css/taggle.min.css",
-        "scripts/content/templates.css"
-      ],
       "js": [
         "scripts/content/storage.js",
-        "scripts/libs/taggle.js/src/taggle.js",
-        "scripts/libs/transparency/dist/transparency.min.js",
         "scripts/content/services/linkedin-data.service.js",
         "scripts/content/models/profile.model.js",
         "scripts/content/models/skill.model.js",
         "scripts/content/models/job.model.js",
         "scripts/content/models/language.model.js",
         "scripts/content/models/education.model.js",
-        "scripts/content/contentscript.js"
+        "scripts/content/main.controller.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://github.com/search?q=*"
+      ],
+      "js": [
+        "scripts/content/github-search.controller.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
       ],
       "run_at": "document_idle",
       "all_frames": false
