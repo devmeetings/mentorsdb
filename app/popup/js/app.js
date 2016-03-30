@@ -4,7 +4,7 @@ angular.module('App')
 .controller('ProfileCtrl', ['$scope', function($scope) {
 
     $scope.profile = {
-        current: {},
+        current: null,
         existing: {}
     };
 
