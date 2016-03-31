@@ -31,6 +31,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 active: false
             });
             break;
+        case 'openGithubProfile':
+            chrome.tabs.create({
+                url: request.url,
+                active: false
+            });
+            break;
     }
 });
 
