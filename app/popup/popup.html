@@ -14,32 +14,44 @@
                     <label for="name" class="col-sm-3 control-label">Imię i nazwisko</label>
                     <div class="col-sm-9">
                         <s ng-if="profile.current.name !== profile.existing.name">{{profile.existing.name}}</s>
-                        <input type="text" name="name" class="form-control" ng-model="profile.current.name">
+                        <input type="text" id="name" class="form-control" ng-model="profile.current.name">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description" class="col-sm-3 control-label">Podsumowanie</label>
+                    <label for="extra" class="col-sm-3 control-label">Dodatkowe punkty</label>
+                    <div class="col-sm-9">
+                        <input type="number" id="extra" class="form-control" ng-model="profile.current.scoring.extra">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for="description" class="control-label">Podsumowanie</label>
+                        <scoring score="profile.current.scoring.description"></scoring>
+                    </div>
                     <div class="col-sm-9">
                         <s ng-if="profile.current.description !== profile.existing.description">{{profile.existing.description}}</s>
-                        <textarea name="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
+                        <textarea id="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">Adres e-mail</label>
                     <div class="col-sm-9">
                         <s ng-if="profile.current.email !== profile.existing.email">{{profile.existing.email}}</s>
-                        <input type="text" name="email" class="form-control" ng-model="profile.current.email">
+                        <input type="text" id="email" class="form-control" ng-model="profile.current.email">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="city" class="col-sm-3 control-label">Miasto</label>
                     <div class="col-sm-9">
                         <s ng-if="profile.current.city !== profile.existing.city">{{profile.existing.city}}</s>
-                        <input type="text" name="city" class="form-control" ng-model="profile.current.city">
+                        <input type="text" id="city" class="form-control" ng-model="profile.current.city">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Umiejętności</label>
+                    <div class="col-sm-3">
+                        <label class="control-label">Umiejętności</label>
+                        <scoring score="profile.current.scoring.skills"></scoring>
+                    </div>
                     <div class="col-sm-9">
                         <div class="bullets">
                             <div class="bullet" ng-repeat="skill in profile.current.skills">
@@ -52,7 +64,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Doświadczenie zawodowe</label>
+                    <div class="col-sm-3">
+                        <label class="control-label">Doświadczenie zawodowe</label>
+                        <scoring score="profile.current.scoring.experience"></scoring>
+                    </div>
                     <div class="col-sm-9">
                         <div class="jobs">
                             <div class="job" ng-repeat="job in profile.current.jobs">
@@ -67,7 +82,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Języki</label>
+                    <div class="col-sm-3">
+                        <label class="control-label">Języki</label>
+                        <scoring score="profile.current.scoring.languages"></scoring>
+                    </div>
                     <div class="col-sm-9">
                         <div class="strips">
                             <div ng-repeat="language in profile.current.languages">
@@ -80,7 +98,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Wykształcenie</label>
+                    <div class="col-sm-3">
+                        <label class="control-label">Wykształcenie</label>
+                        <scoring score="profile.current.scoring.education"></scoring>
+                    </div>
                     <div class="col-sm-9">
                         <div class="educationlist">
                             <div class="education" ng-repeat="education in profile.current.education">
@@ -94,6 +115,31 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-3">
+                        <label class="control-label">GitHub</label>
+                        <scoring score="profile.current.scoring.github"></scoring>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="githubs">
+                            <div class="github" ng-repeat="github in profile.current.github | filter:{removed:false}">
+                                <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;">
+                                <button class="btn btn-danger" ng-click="github.removed = true" style="float:right;">X</button>
+                                <div><strong>{{github.city}}</strong></div>
+                                <div><a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span></div>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <input type="text" class="form-control" ng-model="githubSearch" placeholder="Wpisz nazwę użytkownika">
+                            <button class="btn btn-default" ng-click="addGithubProfile(githubSearch)">Dodaj</button>
+                        </div>
+                    </div>
+                </div>
+                <nav class="navbar navbar-default text-center">
+                    <button class="btn btn-default" ng-click="refresh()">Odśwież</button>
+                    <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
+                </nav>
+                <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                         <button type="submit" class="btn btn-primary">
                             <span ng-if="!profile.existing">Dodaj</span>
@@ -104,28 +150,6 @@
                     </div>
                 </div>
             </form>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">GitHub</label>
-                <div class="col-sm-9">
-                    <div class="githubs">
-                        <div class="github" ng-repeat="github in profile.current.github | filter:{removed:false}">
-                            <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;">
-                            <button class="btn btn-danger" ng-click="github.removed = true" style="float:right;">X</button>
-                            <div><strong>{{github.city}}</strong></div>
-                            <div><a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span></div>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="form-inline">
-                        <input type="text" class="form-control" ng-model="githubSearch" placeholder="Wpisz nazwę użytkownika">
-                        <button class="btn btn-default" ng-click="addGithubProfile(githubSearch)">Dodaj</button>
-                    </div>
-                </div>
-            </div>
-            <nav class="navbar navbar-default text-center">
-                <button class="btn btn-default" ng-click="refresh()">Odśwież</button>
-                <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
-            </nav>
         </div>
         <script src="../scripts/libs/jquery/dist/jquery.min.js"></script>
         <script src="../scripts/libs/angular/angular.min.js"></script>
