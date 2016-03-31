@@ -21,7 +21,7 @@
             education: LinkedinDataService.getEducation()
         });
         me.getProfile(me.current.id).then(function(existing) {
-            me.existing = existing;
+            me.existing = new Profile(existing);
             chrome.runtime.sendMessage({
                 method: 'setStatus',
                 status: 'existing',

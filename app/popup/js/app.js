@@ -60,7 +60,8 @@ angular.module('App')
     };
 
     $scope.save = function() {
-        Storage.setProfile($scope.profile.current, function(res) {
+        var profile = new Profile($scope.profile.current);
+        Storage.setProfile(profile, function(res) {
             $scope.close();
         });
     };
