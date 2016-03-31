@@ -12,6 +12,7 @@ var Profile = (function() {
         this.languages = this.makeModels(Language, data.languages);
         this.education = this.makeModels(Education, data.education);
         this.github = this.makeModels(Github, data.github);
+        this.scoring = data.scoring? new Scoring(data.scoring): new Scoring();
         this.status = data.status || null;
         this.comment = data.comment || null;
         this.tags = data.tags || [];

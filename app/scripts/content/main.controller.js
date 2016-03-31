@@ -33,6 +33,9 @@
                     me.current.push(github);
                 }
             });
+            if(me.existing.scoring) {
+                me.current.scoring = me.existing.scoring;
+            }
         }, function() {
             chrome.runtime.sendMessage({
                 method: 'setStatus',
