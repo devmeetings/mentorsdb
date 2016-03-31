@@ -27,7 +27,12 @@
                 status: 'existing',
                 scoring: 0
             });
-
+            me.existing.github.forEach(function(data) {
+                var github = new Github(data);
+                if(github.removed === true) {
+                    me.current.push(github);
+                }
+            });
         }, function() {
             chrome.runtime.sendMessage({
                 method: 'setStatus',
