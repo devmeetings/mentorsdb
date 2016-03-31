@@ -1,4 +1,4 @@
-angular.module('App', []);
+angular.module('App', ['directives']);
 
 angular.module('App')
 .controller('ProfileCtrl', ['$scope', function($scope) {
