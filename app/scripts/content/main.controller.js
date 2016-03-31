@@ -61,6 +61,9 @@
                     if(!removed) {
                         me.current.github.push(github);
                     }
+                    chrome.runtime.sendMessage({
+                        method: 'refreshPopup'
+                    });
                     break;
             }
         });

@@ -17,7 +17,7 @@ var GithubDataService = (function() {
     }
 
     function getAvatar() {
-        var img = document.querySelector('.avatar');
+        var img = document.querySelector('.vcard .avatar');
         var src;
         if(img) {
             src = img.src;

@@ -4,11 +4,14 @@ angular.module('App')
 .controller('ProfileCtrl', ['$scope', function($scope) {
 
     var port = chrome.runtime.connect({name: "bridge"});
+    var popupPush = chrome.runtime.connect({name: "popupPush"});
 
     $scope.profile = {
         current: null,
         existing: {}
     };
+
+    $scope.githubSearch = '';
 
     port.onMessage.addListener(function(response) {
         var json;
@@ -20,11 +23,34 @@ angular.module('App')
         }
     });
 
+    popupPush.onMessage.addListener(function(response) {
+        if(response === 'refresh') {
+            $scope.refresh();
+        }
+    });
+
     $scope.openGithub = function(username) {
         chrome.tabs.create({
             url: 'https://github.com/' + username,
             active: true
         });
+    };
+
+    $scope.addGithubProfile = function(username) {
+        if(username) {
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function(tabs) {
+                chrome.tabs.create({
+                    url: 'https://github.com/' + username,
+                    active: false,
+                    openerTabId: tabs[0].id
+                }, function(tab) {
+                    $scope.refresh();
+                });
+            });
+        }
     };
 
     $scope.refresh = function() {
