@@ -11,6 +11,16 @@ var Scoring = (function() {
         this.github = data.github || 0;
     }
 
+    ScoringModel.prototype.sum = function() {
+        return this.extra
+            + this.description
+            + this.skills
+            + this.experience
+            + this.languages
+            + this.education
+            + this.github;
+    };
+
     return ScoringModel;
 
 })();

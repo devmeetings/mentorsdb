@@ -25,7 +25,7 @@
             chrome.runtime.sendMessage({
                 method: 'setStatus',
                 status: 'existing',
-                scoring: 0
+                scoring: me.existing.scoring.sum()
             });
             me.existing.github.forEach(function(data) {
                 var github = new Github(data);
