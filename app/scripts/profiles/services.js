@@ -2,7 +2,7 @@ angular.module('App').factory('Profiles', function($q) {
     return {
         getAll: function() {
             var deferred = $q.defer();
-            chrome.storage.sync.get('profiles', function(res) {
+            chrome.storage.local.get('profiles', function(res) {
                 if (res.profiles) { 
                     var resArr = []
                     for(var i in res.profiles) {

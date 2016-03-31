@@ -1,4 +1,4 @@
-angular.module('App', []);
+angular.module('App', ['directives']);
 
 angular.module('App')
 .controller('ProfileCtrl', ['$scope', function($scope) {
@@ -60,7 +60,8 @@ angular.module('App')
     };
 
     $scope.save = function() {
-        Storage.setProfile($scope.profile.current, function(res) {
+        var profile = new Profile($scope.profile.current);
+        Storage.setProfile(profile, function(res) {
             $scope.close();
         });
     };

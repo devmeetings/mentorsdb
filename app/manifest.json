@@ -32,6 +32,7 @@
         "scripts/content/models/language.model.js",
         "scripts/content/models/education.model.js",
         "scripts/content/models/github.model.js",
+        "scripts/content/models/scoring.model.js",
         "scripts/content/main.controller.js"
       ],
       "run_at": "document_idle",
