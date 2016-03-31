@@ -5,7 +5,7 @@
         var me = this;
         var users = document.querySelectorAll('.user-list-item');
         Array.prototype.forEach.call(users, function(user) {
-            chrome.extension.sendRequest({
+            chrome.runtime.sendMessage({
                 method: 'openGithubProfile',
                 url: user.querySelector('a').href
             });
