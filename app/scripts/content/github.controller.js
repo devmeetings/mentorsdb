@@ -19,12 +19,14 @@
             chrome.runtime.sendMessage({
                 method: 'getOpenerTabId'
             }, function(openerTabId) {
-                chrome.runtime.sendMessage({
-                    method: 'setGithubProfile',
-                    openerTabId: openerTabId,
-                    github: me.github
-                });
-                window.close();
+                if(openerTabId !== null) {
+                    chrome.runtime.sendMessage({
+                        method: 'setGithubProfile',
+                        openerTabId: openerTabId,
+                        github: me.github
+                    });
+                    window.close();
+                }
             });
         }
     }

@@ -7,14 +7,16 @@
         chrome.runtime.sendMessage({
             method: 'getOpenerTabId'
         }, function(openerTabId) {
-            Array.prototype.forEach.call(users, function(user) {
-                chrome.runtime.sendMessage({
-                    method: 'openGithubProfile',
-                    url: user.querySelector('a').href,
-                    openerTabId: openerTabId
+            if(openerTabId !== null) {
+                Array.prototype.forEach.call(users, function(user) {
+                    chrome.runtime.sendMessage({
+                        method: 'openGithubProfile',
+                        url: user.querySelector('a').href,
+                        openerTabId: openerTabId
+                    });
                 });
-            });
-            window.close();
+                window.close();
+            }
         });
     }
 
