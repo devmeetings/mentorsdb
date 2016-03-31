@@ -20,12 +20,12 @@ chrome.runtime.onConnect.addListener(function(port) {
     });
 });
 
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.method) {
         case 'setStatus':
             setStatus(request, sender);
             break;
-        case 'openGithub':
+        case 'openGithubSearch':
             chrome.tabs.create({
                 url: 'https://github.com/search?q=' + request.name + '&type=Users',
                 active: false

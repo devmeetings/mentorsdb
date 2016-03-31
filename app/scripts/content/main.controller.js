@@ -3,7 +3,7 @@
 
     function MainController() {
         var me = this;
-        chrome.extension.sendRequest({
+        chrome.runtime.sendMessage({
             method: 'setStatus',
             status: 'processing'
         });
@@ -20,19 +20,20 @@
             languages: LinkedinDataService.getLanguages(),
             education: LinkedinDataService.getEducation()
         });
-        chrome.extension.sendRequest({
-            method: 'openGithub',
+        chrome.runtime.sendMessage({
+            method: 'openGithubSearch',
             name: this.current.name.replace(/ /g, '+')
         });
-        chrome.extension.sendRequest({
-            method: 'setStatus',
-            status: 'new',
-            scoring: 0
-        });
         this.getProfile(this.current.id).then(function(existing) {
-            chrome.extension.sendRequest({
+            chrome.runtime.sendMessage({
                 method: 'setStatus',
                 status: 'existing',
+                scoring: 0
+            });
+        }, function() {
+            chrome.runtime.sendMessage({
+                method: 'setStatus',
+                status: 'new',
                 scoring: 0
             });
         });
