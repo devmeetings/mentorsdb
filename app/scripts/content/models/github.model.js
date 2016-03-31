@@ -10,6 +10,7 @@ var Github = (function() {
         this.starred = data.starred || 0;
         this.following = data.following || 0;
         this.contributions = data.contributions || 0;
+        this.removed = false;
     }
 
     return GithubModel;

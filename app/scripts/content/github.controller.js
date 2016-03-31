@@ -16,7 +16,16 @@
                 following: GithubDataService.getFollowing(),
                 contributions: GithubDataService.getContributions()
             });
-            console.log(this.github);
+            chrome.runtime.sendMessage({
+                method: 'getOpenerTabId'
+            }, function(openerTabId) {
+                chrome.runtime.sendMessage({
+                    method: 'setGithubProfile',
+                    openerTabId: openerTabId,
+                    github: me.github
+                });
+                window.close();
+            });
         }
     }
 

@@ -11,6 +11,7 @@ var Profile = (function() {
         this.jobs = this.makeModels(Job, data.jobs);
         this.languages = this.makeModels(Language, data.languages);
         this.education = this.makeModels(Education, data.education);
+        this.github = this.makeModels(Github, data.github);
         this.status = data.status || null;
         this.comment = data.comment || null;
         this.tags = data.tags || [];

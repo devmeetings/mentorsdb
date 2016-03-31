@@ -45,6 +45,20 @@
                         existing: me.existing
                     }));
                     break;
+                case 'setGithubProfileContent':
+                    var github = new Github(request.github);
+                    var removed = false;
+                    if(me.existing !== null) {
+                        me.existing.github.forEach(function(existing) {
+                            if(existing.username === github.username && existing.removed) {
+                                removed = true;
+                            }
+                        });
+                    }
+                    if(!removed) {
+                        me.current.github.push(github);
+                    }
+                    break;
             }
         });
     }

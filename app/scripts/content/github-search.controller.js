@@ -4,13 +4,18 @@
     function GithubSearchController() {
         var me = this;
         var users = document.querySelectorAll('.user-list-item');
-        Array.prototype.forEach.call(users, function(user) {
-            chrome.runtime.sendMessage({
-                method: 'openGithubProfile',
-                url: user.querySelector('a').href
+        chrome.runtime.sendMessage({
+            method: 'getOpenerTabId'
+        }, function(openerTabId) {
+            Array.prototype.forEach.call(users, function(user) {
+                chrome.runtime.sendMessage({
+                    method: 'openGithubProfile',
+                    url: user.querySelector('a').href,
+                    openerTabId: openerTabId
+                });
             });
+            window.close();
         });
-        window.close();
     }
 
     return new GithubSearchController;
