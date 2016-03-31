@@ -4,6 +4,7 @@ angular.module('App')
 .controller('ProfileCtrl', ['$scope', function($scope) {
 
     var port = chrome.runtime.connect({name: "bridge"});
+    var popupPush = chrome.runtime.connect({name: "popupPush"});
 
     $scope.profile = {
         current: null,
@@ -19,6 +20,12 @@ angular.module('App')
             $scope.profile.current = json.current;
             $scope.profile.existing = json.existing;
             $scope.$apply();
+        }
+    });
+
+    popupPush.onMessage.addListener(function(response) {
+        if(response === 'refresh') {
+            $scope.refresh();
         }
     });
 
