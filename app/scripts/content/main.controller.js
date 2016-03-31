@@ -21,11 +21,13 @@
             education: LinkedinDataService.getEducation()
         });
         me.getProfile(me.current.id).then(function(existing) {
+            me.existing = existing;
             chrome.runtime.sendMessage({
                 method: 'setStatus',
                 status: 'existing',
                 scoring: 0
             });
+
         }, function() {
             chrome.runtime.sendMessage({
                 method: 'setStatus',
@@ -69,9 +71,8 @@
         return new Promise(function(resolve, reject) {
             try {
                 Storage.getProfile(id, function(profile) {
-                    me.existing = profile || null;
-                    if(me.existing !== null) {
-                        resolve(me.existing);
+                    if(profile) {
+                        resolve(profile);
                     } else {
                         reject();
                     }
