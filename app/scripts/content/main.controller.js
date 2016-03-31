@@ -7,8 +7,8 @@
             method: 'setStatus',
             status: 'processing'
         });
-        this.existing = null;
-        this.current = new Profile({
+        me.existing = null;
+        me.current = new Profile({
             id: window.location.pathname.substr(4),
             name: LinkedinDataService.getName(),
             img: LinkedinDataService.getPhoto(),
@@ -20,11 +20,7 @@
             languages: LinkedinDataService.getLanguages(),
             education: LinkedinDataService.getEducation()
         });
-        chrome.runtime.sendMessage({
-            method: 'openGithubSearch',
-            name: this.current.name.replace(/ /g, '+')
-        });
-        this.getProfile(this.current.id).then(function(existing) {
+        me.getProfile(me.current.id).then(function(existing) {
             chrome.runtime.sendMessage({
                 method: 'setStatus',
                 status: 'existing',
@@ -35,6 +31,11 @@
                 method: 'setStatus',
                 status: 'new',
                 scoring: 0
+            });
+        }).then(function() {
+            chrome.runtime.sendMessage({
+                method: 'openGithubSearch',
+                name: me.current.name.replace(/ /g, '+')
             });
         });
         chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
