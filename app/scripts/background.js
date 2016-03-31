@@ -20,10 +20,33 @@ chrome.runtime.onConnect.addListener(function(port) {
     });
 });
 
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.method) {
         case 'setStatus':
             setStatus(request, sender);
+            break;
+        case 'openGithubSearch':
+            chrome.tabs.create({
+                url: 'https://github.com/search?q=' + request.name + '&type=Users',
+                active: false,
+                openerTabId: sender.tab.id
+            });
+            break;
+        case 'openGithubProfile':
+            chrome.tabs.create({
+                url: request.url,
+                active: false,
+                openerTabId: request.openerTabId
+            });
+            break;
+        case 'getOpenerTabId':
+            sendResponse(sender.tab.openerTabId);
+            break;
+        case 'setGithubProfile':
+            chrome.tabs.sendMessage(request.openerTabId, {
+                method: 'setGithubProfileContent',
+                github: request.github
+            });
             break;
     }
 });

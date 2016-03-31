@@ -20,6 +20,13 @@ angular.module('App')
         }
     });
 
+    $scope.openGithub = function(username) {
+        chrome.tabs.create({
+            url: 'https://github.com/' + username,
+            active: true
+        });
+    };
+
     $scope.refresh = function() {
         port.postMessage({
             method: 'getProfile'

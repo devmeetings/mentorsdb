@@ -3,12 +3,12 @@
 
     function MainController() {
         var me = this;
-        chrome.extension.sendRequest({
+        chrome.runtime.sendMessage({
             method: 'setStatus',
             status: 'processing'
         });
-        this.existing = null;
-        this.current = new Profile({
+        me.existing = null;
+        me.current = new Profile({
             id: window.location.pathname.substr(4),
             name: LinkedinDataService.getName(),
             img: LinkedinDataService.getPhoto(),
@@ -20,16 +20,24 @@
             languages: LinkedinDataService.getLanguages(),
             education: LinkedinDataService.getEducation()
         });
-        chrome.extension.sendRequest({
-            method: 'setStatus',
-            status: 'new',
-            scoring: 0
-        });
-        this.getProfile(this.current.id).then(function(existing) {
-            chrome.extension.sendRequest({
+        me.getProfile(me.current.id).then(function(existing) {
+            me.existing = existing;
+            chrome.runtime.sendMessage({
                 method: 'setStatus',
                 status: 'existing',
                 scoring: 0
+            });
+
+        }, function() {
+            chrome.runtime.sendMessage({
+                method: 'setStatus',
+                status: 'new',
+                scoring: 0
+            });
+        }).then(function() {
+            chrome.runtime.sendMessage({
+                method: 'openGithubSearch',
+                name: me.current.name.replace(/ /g, '+')
             });
         });
         chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -40,6 +48,20 @@
                         existing: me.existing
                     }));
                     break;
+                case 'setGithubProfileContent':
+                    var github = new Github(request.github);
+                    var removed = false;
+                    if(me.existing !== null) {
+                        me.existing.github.forEach(function(existing) {
+                            if(existing.username === github.username && existing.removed) {
+                                removed = true;
+                            }
+                        });
+                    }
+                    if(!removed) {
+                        me.current.github.push(github);
+                    }
+                    break;
             }
         });
     }
@@ -49,9 +71,8 @@
         return new Promise(function(resolve, reject) {
             try {
                 Storage.getProfile(id, function(profile) {
-                    me.existing = profile || null;
-                    if(me.existing !== null) {
-                        resolve(me.existing);
+                    if(profile) {
+                        resolve(profile);
                     } else {
                         reject();
                     }
