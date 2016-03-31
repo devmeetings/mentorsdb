@@ -10,6 +10,8 @@ angular.module('App')
         existing: {}
     };
 
+    $scope.githubSearch = '';
+
     port.onMessage.addListener(function(response) {
         var json;
         if(typeof response === 'string' && response !== 'undefined' && response !== 'null') {
@@ -25,6 +27,23 @@ angular.module('App')
             url: 'https://github.com/' + username,
             active: true
         });
+    };
+
+    $scope.addGithubProfile = function(username) {
+        if(username) {
+            chrome.tabs.query({
+                active: true,
+                currentWindow: true
+            }, function(tabs) {
+                chrome.tabs.create({
+                    url: 'https://github.com/' + username,
+                    active: false,
+                    openerTabId: tabs[0].id
+                }, function(tab) {
+                    $scope.refresh();
+                });
+            });
+        }
     };
 
     $scope.refresh = function() {
