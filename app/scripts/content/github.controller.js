@@ -7,6 +7,8 @@
         if(body.className.split(' ').indexOf('page-profile') >= 0) {
             this.github = new Github({
                 username: GithubDataService.getUsername(),
+                avatar: GithubDataService.getAvatar(),
+                city: GithubDataService.getCity(),
                 email: GithubDataService.getEmail(),
                 joindate: GithubDataService.getJoindate(),
                 followers: GithubDataService.getFollowers(),

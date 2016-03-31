@@ -16,6 +16,19 @@ var GithubDataService = (function() {
         return textContent(document.querySelector('.vcard-username'));
     }
 
+    function getAvatar() {
+        var img = document.querySelector('.avatar');
+        var src;
+        if(img) {
+            src = img.src;
+        }
+        return src;
+    }
+
+    function getCity() {
+        return textContent(document.querySelector('.vcard-detail[itemprop="homeLocation"]'));
+    }
+
     function getEmail() {
         return textContent(document.querySelector('.email'));
     }
@@ -42,6 +55,8 @@ var GithubDataService = (function() {
 
     return {
         getUsername: getUsername,
+        getAvatar: getAvatar,
+        getCity: getCity,
         getEmail: getEmail,
         getJoindate: getJoindate,
         getFollowers: getFollowers,

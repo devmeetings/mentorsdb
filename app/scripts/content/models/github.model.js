@@ -2,6 +2,8 @@ var Github = (function() {
 
     function GithubModel(data) {
         this.username = data.username || '';
+        this.avatar = data.avatar || '';
+        this.city = data.city || '';
         this.email = data.email || '';
         this.joindate = data.joindate || '';
         this.followers = data.followers || 0;
