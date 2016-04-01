@@ -20,34 +20,7 @@
             languages: LinkedinDataService.getLanguages(),
             education: LinkedinDataService.getEducation()
         });
-        me.getProfile(me.current.id).then(function(existing) {
-            me.existing = new Profile(existing);
-            chrome.runtime.sendMessage({
-                method: 'setStatus',
-                status: 'existing',
-                scoring: me.existing.scoring.sum()
-            });
-            me.existing.github.forEach(function(data) {
-                var github = new Github(data);
-                if(github.removed === true) {
-                    me.current.push(github);
-                }
-            });
-            if(me.existing.scoring) {
-                me.current.scoring = me.existing.scoring;
-            }
-        }, function() {
-            chrome.runtime.sendMessage({
-                method: 'setStatus',
-                status: 'new',
-                scoring: 0
-            });
-        }).then(function() {
-            chrome.runtime.sendMessage({
-                method: 'openGithubSearch',
-                name: me.current.name.replace(/ /g, '+')
-            });
-        });
+        me.findExistingProfile();
         chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             switch(request.method) {
                 case 'getProfileFromContent':
@@ -55,6 +28,9 @@
                         current: me.current,
                         existing: me.existing
                     }));
+                    break;
+                case 'setProfileFromContent':
+                    me.findExistingProfile(true);
                     break;
                 case 'setGithubProfileContent':
                     var github = new Github(request.github);
@@ -76,6 +52,43 @@
             }
         });
     }
+
+    MainController.prototype.findExistingProfile = function(dont_search_for_githubs) {
+        var me = this;
+        me.getProfile(me.current.id).then(function(existing) {
+            me.existing = new Profile(existing);
+            chrome.runtime.sendMessage({
+                method: 'setStatus',
+                status: 'existing',
+                scoring: me.existing.scoring.sum()
+            });
+            me.current.comment = me.existing.comment;
+            me.current.status = me.existing.status;
+            me.current.tags = me.existing.tags;
+            me.existing.github.forEach(function(data) {
+                var github = new Github(data);
+                if(github.removed === true) {
+                    me.current.push(github);
+                }
+            });
+            if(me.existing.scoring) {
+                me.current.scoring = me.existing.scoring;
+            }
+        }, function() {
+            chrome.runtime.sendMessage({
+                method: 'setStatus',
+                status: 'new',
+                scoring: 0
+            });
+        }).then(function() {
+            if(!dont_search_for_githubs) {
+                chrome.runtime.sendMessage({
+                    method: 'openGithubSearch',
+                    name: me.current.name.replace(/ /g, '+')
+                });
+            }
+        });
+    };
 
     MainController.prototype.getProfile = function(id) {
         var me = this;

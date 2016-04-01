@@ -62,6 +62,9 @@ angular.module('App')
     $scope.save = function() {
         var profile = new Profile($scope.profile.current);
         Storage.setProfile(profile, function(res) {
+            port.postMessage({
+                method: 'setProfile'
+            });
             $scope.close();
         });
     };
