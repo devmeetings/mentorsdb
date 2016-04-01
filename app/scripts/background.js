@@ -1,6 +1,7 @@
 'use strict';
 
 var popupPush;
+var accessToken = '';
 
 /* bridge between popup and content script */
 chrome.runtime.onConnect.addListener(function(port) {
@@ -69,6 +70,29 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 popupPush.postMessage('refresh');
             }
             break;
+        case 'linkedinAuth':
+            requestLinkedin('https://www.linkedin.com/uas/oauth2/accessToken', {
+                method: 'post',
+                params: {
+                    grant_type: 'authorization_code',
+                    code: request.code,
+                    redirect_uri: 'https%3A%2F%2Fwww.linkedin.com%2Floggedin%2F',
+                    client_id: '77teh8bm878lwp',
+                    client_secret: 'TRBEpS4AII9zkyJD'
+                },
+                callback: function(response) {
+                    if(response.hasOwnProperty('error')) {
+                        alert(response.error_description);
+                    } else {
+                        accessToken = response.access_token;
+                        chrome.storage.sync.set({
+                            'accessToken': accessToken
+                        });
+                    }
+                },
+                auth: false
+            });
+            break;
     }
 });
 
@@ -96,3 +120,57 @@ function setStatus(request, sender) {
         tabId: sender.tab.id
     });
 }
+
+function requestLinkedin(url, options) {
+    var xhr = new XMLHttpRequest();
+    var settings = {
+        method: options.method || 'get',
+        callback: options.callback || function() {},
+        params: options.params || {},
+        auth: typeof options.auth === 'undefined'? true: options.auth
+    };
+    xhr.onload = function() {
+        var random;
+        if(this.status === 401) {
+            random = Math.round(Math.random()*Math.pow(10, 16));
+            chrome.tabs.create({
+                url: 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=77teh8bm878lwp&redirect_uri=https%3A%2F%2Fwww.linkedin.com%2Floggedin%2F&state=' + random,
+                active: true
+            });
+        } else {
+            settings.callback(JSON.parse(this.responseText));
+        }
+    };
+    xhr.open(settings.method, url, true);
+    if(settings.auth) {
+        xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
+    }
+    if(settings.method === 'post') {
+        var data = Object.keys(settings.params).map(function(key) {
+            return key + '=' + settings.params[key];
+        }).join('&');
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("Content-length", data.length);
+        xhr.setRequestHeader("Connection", "close");
+        xhr.send(data);
+    } else {
+        xhr.send();
+    }
+}
+
+chrome.storage.sync.get('accessToken', function(res) {
+    if (res.accessToken) {
+        accessToken = res.accessToken;
+    } else {
+        accessToken = '';
+    }
+    requestLinkedin('https://api.linkedin.com/v1/people/~?format=json', {
+        callback: function(response) {
+            if(response.hasOwnProperty('error')) {
+                alert(response.error_description);
+            } else {
+                alert(JSON.stringify(response));
+            }
+        }
+    });
+});

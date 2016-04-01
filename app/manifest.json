@@ -59,6 +59,16 @@
       ],
       "run_at": "document_idle",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/loggedin/*"
+      ],
+      "js": [
+        "scripts/content/linkedin-auth.controller.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ],
   "permissions": [
