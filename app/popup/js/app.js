@@ -12,6 +12,7 @@ angular.module('App')
     };
 
     $scope.githubSearch = '';
+    $scope.newmail = '';
 
     port.onMessage.addListener(function(response) {
         var json;
@@ -78,6 +79,16 @@ angular.module('App')
 
     $scope.close = function() {
         window.close();
+    };
+
+    $scope.addEmail = function(email) {
+        if(email) {
+            $scope.profile.current.email.push(email);
+        }
+    };
+
+    $scope.removeEmail = function(i) {
+        $scope.profile.current.email.splice(i, 1);
     };
 
     $scope.refresh();

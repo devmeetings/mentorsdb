@@ -13,7 +13,7 @@
             name: LinkedinDataService.getName(),
             img: LinkedinDataService.getPhoto(),
             description: LinkedinDataService.getDescription(),
-            email: '',
+            email: [],
             city: LinkedinDataService.getCity(),
             skills: LinkedinDataService.getSkills(),
             jobs: LinkedinDataService.getJobs(),
@@ -62,6 +62,7 @@
                 status: 'existing',
                 scoring: me.existing.scoring.sum()
             });
+            me.current.email = me.existing.email;
             me.current.comment = me.existing.comment;
             me.current.status = me.existing.status;
             me.current.tags = me.existing.tags;
