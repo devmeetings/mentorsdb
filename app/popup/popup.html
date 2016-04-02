@@ -10,7 +10,7 @@
     </head>
     <body>
         <div ng-controller="ProfileCtrl">
-            <form ng-if="profile.current" ng-submit="save()">
+            <div ng-if="profile.current">
                 <div class="form-group">
                     <label for="name" class="col-sm-3 control-label">Imię i nazwisko</label>
                     <div class="col-sm-9">
@@ -64,10 +64,17 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="col-sm-3 control-label">Adres e-mail</label>
+                    <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
                     <div class="col-sm-9">
-                        <s ng-if="profile.current.email !== profile.existing.email">{{profile.existing.email}}</s>
-                        <input type="text" id="email" class="form-control" ng-model="profile.current.email">
+                        <ul>
+                            <li ng-repeat="(i, email) in profile.current.email track by i">{{email}} <a ng-click="removeEmail(i)">[X]</a></li>
+                            <li ng-repeat="(i, email) in emailQueue track by i">{{email}} [poszukiwany]</li>
+                        </ul>
+                        <div class="form-inline">
+                            <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
+                            <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
+                        </div>
+                        <button class="btn btn-default" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Szukaj adresu e-mail</button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -167,15 +174,14 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-primary">
+                        <button class="btn btn-primary" ng-click="save()">
                             <span ng-if="!profile.existing">Dodaj</span>
                             <span ng-if="profile.existing">Aktualizuj</span>
                         </button>
                         <button class="btn btn-default" ng-click="close()">Anuluj</button>
-                        <button class="btn btn-default" ng-click="github()">GitHub</button>
                     </div>
                 </div>
-            </form>
+            </div>
             <nav class="navbar navbar-default text-center">
                 <button class="btn btn-default" ng-click="refresh()">Odśwież</button>
                 <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
