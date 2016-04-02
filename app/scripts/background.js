@@ -3,7 +3,7 @@
 var popupPush;
 var oauth_token = '';
 var email_processed;
-var mail = '153d7d207d741157';
+var mail = '';
 
 /* bridge between popup and content script */
 chrome.runtime.onConnect.addListener(function(port) {
@@ -160,16 +160,25 @@ function getRapportiveAuthToken() {
 
 function checkEmailInRapportive(email) {
     email_processed = email;
-    requestLinkedin('https://api.linkedin.com/v1/people/email=' + encodeURIComponent(email) + ':(public-profile-url)?format=json', {
-        callback: function(response) {
-            if(response.hasOwnProperty('error')) {
-                alert(response.error_description);
-            } else {
-                alert(JSON.stringify(response));
-            }
-            email_processed = undefined;
+    chrome.storage.sync.get({
+        mail: ''
+    }, function(items) {
+        mail = items.mail;
+        if(mail !== '') {
+            requestLinkedin('https://api.linkedin.com/v1/people/email=' + encodeURIComponent(email) + ':(public-profile-url)?format=json', {
+                callback: function(response) {
+                    if(response.hasOwnProperty('error')) {
+                        alert(response.error_description);
+                    } else {
+                        alert(JSON.stringify(response));
+                    }
+                    email_processed = undefined;
+                }
+            });
+        } else {
+            alert('Uzupełnij identyfikator e-maila do obsługi Rapportive w ustawieniach rozszerzenia.');
         }
     });
 }
 
-checkEmailInRapportive('piotr.zwolinski@devmeetings.org');
+//checkEmailInRapportive('piotr.zwolinski@devmeetings.org');
