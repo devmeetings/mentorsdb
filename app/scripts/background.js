@@ -1,7 +1,9 @@
 'use strict';
 
 var popupPush;
-var accessToken = '';
+var oauth_token = '';
+var email_processed;
+var mail = '153d7d207d741157';
 
 /* bridge between popup and content script */
 chrome.runtime.onConnect.addListener(function(port) {
@@ -98,51 +100,66 @@ function setStatus(request, sender) {
     });
 }
 
+chrome.webRequest.onBeforeSendHeaders.addListener(function(details) {
+    if(oauth_token === '') {
+        for (var i = 0; i < details.requestHeaders.length; ++i) {
+            if (details.requestHeaders[i].name === 'oauth_token') {
+                oauth_token = details.requestHeaders[i].value;
+                if(email_processed && oauth_token) {
+                    chrome.tabs.query({
+                        active: true,
+                        currentWindow: true,
+                        pinned: true,
+                        highlighted: true
+                    }, function(tabs) {
+                        if(tabs.length > 0 && tabs[0].url === 'https://mail.google.com/mail/u/0/#drafts?compose=' + mail) {
+                            chrome.tabs.remove(tabs[0].id);
+                            checkEmailInRapportive(email_processed);
+                        }
+                    });
+                }
+                break;
+            }
+        }
+    }
+}, {
+    urls: ["https://api.linkedin.com/v1/people/email=*"]
+}, ["requestHeaders"]);
+
 function requestLinkedin(url, options) {
     var xhr = new XMLHttpRequest();
     var settings = {
-        method: options.method || 'get',
-        callback: options.callback || function() {},
-        params: options.params || {},
-        auth: typeof options.auth === 'undefined'? true: options.auth
+        callback: options.callback || function() {}
     };
     xhr.onload = function() {
-        var mail = '153d7d207d741157';
-        if(this.status === 401) {
-            chrome.tabs.create({
-                url: 'https://mail.google.com/mail/u/0/#drafts?compose=' + mail,
-                active: false
-            });
+        if(this.status === 401 || this.status === 500) {
+            getRapportiveAuthToken();
         } else {
             settings.callback(JSON.parse(this.responseText));
         }
     };
-    xhr.open(settings.method, url, true);
-    if(settings.auth) {
-        xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
-    }
-    if(settings.method === 'post') {
-        var data = Object.keys(settings.params).map(function(key) {
-            return key + '=' + settings.params[key];
-        }).join('&');
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.setRequestHeader("Content-length", data.length);
-        xhr.setRequestHeader("Connection", "close");
-        xhr.send(data);
-    } else {
+    if(oauth_token !== '') {
+        xhr.open('get', url, true);
+        xhr.setRequestHeader("oauth_token", oauth_token);
         xhr.send();
+    } else {
+        getRapportiveAuthToken();
     }
 }
 
-chrome.storage.sync.get('accessToken', function(res) {
-    if (res.accessToken) {
-        accessToken = res.accessToken;
-    } else {
-        accessToken = '';
-    }
-});
+function getRapportiveAuthToken() {
+    oauth_token = '';
+    chrome.tabs.create({
+        url: 'https://mail.google.com/mail/u/0/#drafts?compose=' + mail,
+        active: true,
+        pinned: true
+    }, function(tab) {
+        chrome.tabs.highlight(tab.id);
+    });
+}
 
 function checkEmailInRapportive(email) {
+    email_processed = email;
     requestLinkedin('https://api.linkedin.com/v1/people/email=' + encodeURIComponent(email) + ':(public-profile-url)?format=json', {
         callback: function(response) {
             if(response.hasOwnProperty('error')) {
@@ -150,6 +167,7 @@ function checkEmailInRapportive(email) {
             } else {
                 alert(JSON.stringify(response));
             }
+            email_processed = undefined;
         }
     });
 }
