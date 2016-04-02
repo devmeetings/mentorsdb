@@ -1,6 +1,7 @@
 'use strict';
 
 var popupPush;
+var searchEmailPort;
 var oauth_token = '';
 var email_processed;
 var mail = '';
@@ -36,6 +37,12 @@ chrome.runtime.onConnect.addListener(function(port) {
     }
     if(port.name === 'popupPush') {
         popupPush = port;
+    }
+    if(port.name === 'searchEmail') {
+        searchEmailPort = port;
+        port.onMessage.addListener(function(request) {
+            checkEmailInRapportive(request.email);
+        });
     }
 });
 
@@ -170,7 +177,16 @@ function checkEmailInRapportive(email) {
                     if(response.hasOwnProperty('error')) {
                         alert(response.error_description);
                     } else {
-                        alert(JSON.stringify(response));
+                        var result = {
+                            email: email,
+                            found: false,
+                            profile: ''
+                        };
+                        if(response.hasOwnProperty('publicProfileUrl')) {
+                            result.found = true;
+                            result.profile = response.publicProfileUrl.replace('https://www.linkedin.com/in/', '');
+                        }
+                        searchEmailPort.postMessage(JSON.stringify(result));
                     }
                     email_processed = undefined;
                 }
@@ -180,5 +196,3 @@ function checkEmailInRapportive(email) {
         }
     });
 }
-
-//checkEmailInRapportive('piotr.zwolinski@devmeetings.org');

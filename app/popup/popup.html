@@ -67,8 +67,8 @@
                     <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
                     <div class="col-sm-9">
                         <ul>
-                            <li ng-repeat="(i, email) in profile.current.email">{{email}} <a ng-click="removeEmail(i)">[X]</a></li>
-                            <li ng-repeat="email in emailQueue">{{email}}</li>
+                            <li ng-repeat="(i, email) in profile.current.email track by i">{{email}} <a ng-click="removeEmail(i)">[X]</a></li>
+                            <li ng-repeat="(i, email) in emailQueue track by i">{{email}} [poszukiwany]</li>
                         </ul>
                         <div class="form-inline">
                             <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">

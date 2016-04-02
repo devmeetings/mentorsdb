@@ -109,6 +109,22 @@ angular.module('App')
         names.forEach(function(item) {
             $scope.emailQueue.push(item.join('.').toLowerCase() + '@gmail.com');
         });
+        names.forEach(function(item) {
+            var name = item[0][0] + item.slice(1).join('');
+            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
+        });
+        names.forEach(function(item) {
+            var name = item[0][0] + '.' + item.slice(1).join('.');
+            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
+        });
+        names.forEach(function(item) {
+            var name = item.slice(1).join('') + item[0][0];
+            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
+        });
+        names.forEach(function(item) {
+            var name =  item.slice(1).join('.') + '.' + item[0][0];
+            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
+        });
         $scope.processEmailQueue();
     };
 
@@ -118,11 +134,13 @@ angular.module('App')
                 email: $scope.emailQueue.pop()
             });
         }
+        $scope.$apply();
     };
 
     searchEmailPort.onMessage.addListener(function(response) {
-        if(response !== 'false') {
-            $scope.profile.current.email.push(response);
+        var result = JSON.parse(response);
+        if(result.found && result.profile === $scope.profile.current.id) {
+            $scope.profile.current.email.push(result.email);
             $scope.$apply();
         }
         $scope.processEmailQueue();
