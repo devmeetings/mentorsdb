@@ -122,6 +122,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function(details) {
                         if(tabs.length > 0 && tabs[0].url === 'https://mail.google.com/mail/u/0/#drafts?compose=' + mail) {
                             chrome.tabs.remove(tabs[0].id);
                             checkEmailInRapportive(email_processed);
+                            alert('Niestety, obecnie musisz jeszcze raz odpalić szukanie e-maili.');
                         }
                     });
                 }
