@@ -10,39 +10,32 @@
     </head>
     <body>
         <div ng-controller="ProfileCtrl">
+            <nav class="navbar navbar-default">
+                <button class="btn btn-primary" ng-click="save()">
+                    <span ng-if="!profile.existing">Dodaj</span>
+                    <span ng-if="profile.existing">Aktualizuj</span>
+                </button>
+                <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
+                <button class="btn btn-default" ng-click="close()">Anuluj</button>
+            </nav>
             <div ng-if="profile.current">
                 <div class="form-group">
-                    <label for="name" class="col-sm-3 control-label">Imię i nazwisko</label>
-                    <div class="col-sm-9">
-                        <s ng-if="profile.current.name !== profile.existing.name">{{profile.existing.name}}</s>
-                        <input type="text" id="name" class="form-control" ng-model="profile.current.name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="extra" class="col-sm-3 control-label">Dodatkowe punkty</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-3">
+                        <label class="control-label">Profil</label>
                         <input type="number" id="extra" class="form-control" ng-model="profile.current.scoring.extra">
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="status" class="control-label">Status</label>
-                    </div>
                     <div class="col-sm-9">
-                        <select id="status" class="form-control" ng-model="profile.current.status">
-                            <option value="lead">Lead</option>
-                            <option value="talk">Talk</option>
-                            <option value="reject">Reject</option>
-                            <option value="deal">Deal</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="comment" class="control-label">Komentarz</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <textarea id="comment" class="form-control" style="height:100px" ng-model="profile.current.comment"></textarea>
+                        <div class="form-inline">
+                            {{profile.current.name}},
+                            <input type="text" id="city" class="form-control" ng-model="profile.current.city">
+                            <select id="status" class="form-control" ng-model="profile.current.status">,
+                                <option value="lead">Lead</option>
+                                <option value="talk">Talk</option>
+                                <option value="reject">Reject</option>
+                                <option value="deal">Deal</option>
+                            </select>
+                        </div>
+                        <textarea id="comment" class="form-control" style="height:100px" ng-model="profile.current.comment" placeholder="Komentarz"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -89,13 +82,6 @@
                             <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
                         </div>
                         <button class="btn btn-default" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Szukaj adresu e-mail</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="city" class="col-sm-3 control-label">Miasto</label>
-                    <div class="col-sm-9">
-                        <s ng-if="profile.current.city !== profile.existing.city">{{profile.existing.city}}</s>
-                        <input type="text" id="city" class="form-control" ng-model="profile.current.city">
                     </div>
                 </div>
                 <div class="form-group">
@@ -186,20 +172,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <button class="btn btn-primary" ng-click="save()">
-                            <span ng-if="!profile.existing">Dodaj</span>
-                            <span ng-if="profile.existing">Aktualizuj</span>
-                        </button>
-                        <button class="btn btn-default" ng-click="close()">Anuluj</button>
-                    </div>
-                </div>
             </div>
-            <nav class="navbar navbar-default text-center">
-                <button class="btn btn-default" ng-click="refresh()">Odśwież</button>
-                <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
-            </nav>
         </div>
         <script src="../scripts/libs/jquery/dist/jquery.min.js"></script>
         <script src="../scripts/libs/angular/angular.min.js"></script>
