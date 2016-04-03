@@ -18,7 +18,7 @@
                 </div>
             </div>
             <ul>
-                <li ng-repeat="profile in profiles | filter:searchText" class="collection-item avatar srwe">
+                <li ng-repeat="profile in profiles | filter:searchFunction(searchText) track by profile.id" class="collection-item avatar srwe">
             	   <profile  profile="profile"></profile>
                 </li>
             </ul>
