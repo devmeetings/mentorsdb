@@ -1,9 +1,13 @@
 
 <div class="row">
-    <img src="{{profile.img}}" alt="" class="circle col s3">
+    <img ng-src="{{profile.img}}" alt="" class="img-circle col s2">
     <div class="col s9">
         <h2 class="title">{{profile.name}}</h2>
-        <p><a href="mailto:{{profile.email}}">{{profile.email}}</a></p>
+        <div class="emails">
+            <p ng-repeat="(i, email) in profile.email track by i" ng-class="{confirmed:email.confirmed}">
+                <a ng-href="mailto:{{email.address}}">{{email.address}}</a> [{{email.source}}]
+            </p>
+        </div>
         <p>City:    {{profile.city}} </p>
         <p>Status: {{profile.status}} </p>
         <ul>
