@@ -86,7 +86,10 @@ angular.module('App')
 
     $scope.addEmail = function(email) {
         if(email) {
-            $scope.profile.current.email.push(email);
+            $scope.profile.current.email.push(new Email({
+                address: email,
+                source: 'manual'
+            }));
         }
     };
 
@@ -131,6 +134,11 @@ angular.module('App')
         $scope.processEmailQueue();
     };
 
+    $scope.checkEmail = function(email) {
+        $scope.emailQueue.push(email);
+        $scope.processEmailQueue();
+    };
+
     $scope.processEmailQueue = function() {
         if($scope.emailQueue.length > 0) {
             searchEmailPort.postMessage({
@@ -142,10 +150,20 @@ angular.module('App')
 
     searchEmailPort.onMessage.addListener(function(response) {
         var result = JSON.parse(response);
-        if(result.found && result.profile === $scope.profile.current.id) {
-            $scope.profile.current.email.push(result.email);
-            $scope.$apply();
+        if($scope.profile.current.email.filter(function(email) {
+            var found = email.address === result.email;
+            if(found) {
+                email.confirmed = result.found;
+            }
+            return found;
+        }).length === 0 && result.found && result.profile === $scope.profile.current.id) {
+            $scope.profile.current.email.push(new Email({
+                address: result.email,
+                source: 'search',
+                confirmed: true
+            }));
         }
+        $scope.$apply();
         $scope.processEmailQueue();
     });
 

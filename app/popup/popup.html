@@ -66,9 +66,23 @@
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
                     <div class="col-sm-9">
-                        <ul>
-                            <li ng-repeat="(i, email) in profile.current.email track by i">{{email}} <a ng-click="removeEmail(i)">[X]</a></li>
-                            <li ng-repeat="(i, email) in emailQueue track by i">{{email}} [poszukiwany]</li>
+                        <ul class="emails">
+                            <li
+                                ng-repeat="(i, email) in profile.current.email track by i"
+                                ng-class="{confirmed:email.confirmed}">
+                                {{email.address}} [{{email.source}}]
+                                <a ng-if="email.confirmed === null" ng-click="checkEmail(email.address)">[check]</a>
+                                <a ng-click="removeEmail(i)">[X]</a>
+                            </li>
+                            <li
+                                ng-repeat="(i, github) in profile.current.github track by i"
+                                ng-if="!github.removed && github.email">
+                                {{github.email}} [github]
+                                <a ng-click="checkEmail(github.email)">[check]</a>
+                            </li>
+                            <li ng-repeat="(i, email) in emailQueue track by i">
+                                {{email}} [poszukiwany]
+                            </li>
                         </ul>
                         <div class="form-inline">
                             <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
@@ -199,6 +213,7 @@
         <script src="../scripts/content/models/education.model.js"></script>
         <script src="../scripts/content/models/github.model.js"></script>
         <script src="../scripts/content/models/scoring.model.js"></script>
+        <script src="../scripts/content/models/email.model.js"></script>
         <script src="js/directives.js"></script>
         <script src="js/directives/scoring.directive.js"></script>
         <script src="js/directives/taggle.directive.js"></script>

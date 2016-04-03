@@ -8,6 +8,19 @@ var LinkedinDataService = (function() {
         return textContent(document.querySelector('.full-name'));
     }
 
+    function getEmail() {
+        var result = [];
+        var email = textContent(document.getElementById('email'));
+        if(email) {
+            result.push(new Email({
+                address: email,
+                source: 'linkedin',
+                confirmed: true
+            }));
+        }
+        return result;
+    }
+
     function getCity() {
         return textContent(document.querySelector('.locality a'));
     }
@@ -99,6 +112,7 @@ var LinkedinDataService = (function() {
 
     return {
         getName: getName,
+        getEmail: getEmail,
         getCity: getCity,
         getPhoto: getPhoto,
         getDescription: getDescription,
