@@ -30,7 +30,7 @@ var GithubDataService = (function() {
     }
 
     function getEmail() {
-        return textContent(document.querySelector('.email'));
+        return textContent(document.querySelector('.vcard-detail[itemprop="email"]'));
     }
 
     function getJoindate() {
