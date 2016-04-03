@@ -125,6 +125,9 @@ angular.module('App')
             var name =  item.slice(1).join('.') + '.' + item[0][0];
             $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
         });
+        $scope.profile.current.github.forEach(function(github) {
+            $scope.emailQueue.push(github.username + '@gmail.com');
+        });
         $scope.processEmailQueue();
     };
 
