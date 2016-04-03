@@ -86,7 +86,10 @@ angular.module('App')
 
     $scope.addEmail = function(email) {
         if(email) {
-            $scope.profile.current.email.push(email);
+            $scope.profile.current.email.push(new Email({
+                address: email,
+                source: 'manual'
+            }));
         }
     };
 
@@ -143,7 +146,10 @@ angular.module('App')
     searchEmailPort.onMessage.addListener(function(response) {
         var result = JSON.parse(response);
         if(result.found && result.profile === $scope.profile.current.id) {
-            $scope.profile.current.email.push(result.email);
+            $scope.profile.current.email.push(new Email({
+                address: result.email,
+                source: 'search'
+            }));
             $scope.$apply();
         }
         $scope.processEmailQueue();

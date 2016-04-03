@@ -13,7 +13,7 @@
             name: LinkedinDataService.getName(),
             img: LinkedinDataService.getPhoto(),
             description: LinkedinDataService.getDescription(),
-            email: [],
+            email: LinkedinDataService.getEmail(),
             city: LinkedinDataService.getCity(),
             skills: LinkedinDataService.getSkills(),
             jobs: LinkedinDataService.getJobs(),
