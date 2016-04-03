@@ -14,7 +14,8 @@ var LinkedinDataService = (function() {
         if(email) {
             result.push(new Email({
                 address: email,
-                source: 'linkedin'
+                source: 'linkedin',
+                confirmed: true
             }));
         }
         return result;

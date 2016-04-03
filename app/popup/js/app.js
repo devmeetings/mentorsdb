@@ -150,13 +150,20 @@ angular.module('App')
 
     searchEmailPort.onMessage.addListener(function(response) {
         var result = JSON.parse(response);
-        if(result.found && result.profile === $scope.profile.current.id) {
+        if($scope.profile.current.email.filter(function(email) {
+            var found = email.address === result.email;
+            if(found) {
+                email.confirmed = result.found;
+            }
+            return found;
+        }).length === 0 && result.found && result.profile === $scope.profile.current.id) {
             $scope.profile.current.email.push(new Email({
                 address: result.email,
-                source: 'search'
+                source: 'search',
+                confirmed: true
             }));
-            $scope.$apply();
         }
+        $scope.$apply();
         $scope.processEmailQueue();
     });
 
