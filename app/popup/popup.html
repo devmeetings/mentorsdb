@@ -67,8 +67,8 @@
                     <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
                     <div class="col-sm-9">
                         <ul>
-                            <li ng-repeat="(i, email) in profile.current.email track by i">{{email.address}} [{{email.source}}] <a ng-click="removeEmail(i)">[X]</a></li>
-                            <li ng-repeat="(i, github) in profile.current.github track by i" ng-if="github.email">{{github.email}} [github]</li>
+                            <li ng-repeat="(i, email) in profile.current.email track by i">{{email.address}} [{{email.source}}] <a ng-if="email.source == 'manual'" ng-click="checkEmail(email.address)">[check]</a> <a ng-click="removeEmail(i)">[X]</a></li>
+                            <li ng-repeat="(i, github) in profile.current.github track by i" ng-if="github.email">{{github.email}} [github] <a ng-click="checkEmail(github.email)">[check]</a></li>
                             <li ng-repeat="(i, email) in emailQueue track by i">{{email}} [poszukiwany]</li>
                         </ul>
                         <div class="form-inline">

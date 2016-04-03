@@ -134,6 +134,11 @@ angular.module('App')
         $scope.processEmailQueue();
     };
 
+    $scope.checkEmail = function(email) {
+        $scope.emailQueue.push(email);
+        $scope.processEmailQueue();
+    };
+
     $scope.processEmailQueue = function() {
         if($scope.emailQueue.length > 0) {
             searchEmailPort.postMessage({
