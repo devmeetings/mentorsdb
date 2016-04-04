@@ -62,17 +62,23 @@ var LinkedinDataService = (function() {
         var wrapper = document.getElementById('background-experience');
         if(wrapper) {
             Array.prototype.forEach.call(wrapper.querySelectorAll('.section-item'), function(item) {
-                result.push({
-                    position: textContent(item.querySelector('header h4 a')),
-                    company: textContent(item.querySelector('header h4 ~ h5 a')),
-                    locality: textContent(item.querySelector('.locality')),
-                    period: textContent(item.querySelector('.experience-date-locale'))
+                var period;
+                try {
+                    period = textContent(item.querySelector('.experience-date-locale'))
                         .match(/\(.*\)/)[0]
                         .match(/(\d+) /)
                         .reverse()
                         .reduce(function(prev, cur, i) {
                             return prev + parseInt(cur) * Math.pow(12, i);
-                        }, 0),
+                        }, 0);
+                } catch(e) {
+                    period = 0;
+                }
+                result.push({
+                    position: textContent(item.querySelector('header h4 a')),
+                    company: textContent(item.querySelector('header h4 ~ h5 a')),
+                    locality: textContent(item.querySelector('.locality')),
+                    period: period,
                     current: item.className.split(' ').indexOf('current-position') >= 0
                 });
             });

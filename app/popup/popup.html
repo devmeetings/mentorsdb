@@ -10,126 +10,117 @@
     </head>
     <body>
         <div ng-controller="ProfileCtrl">
+            <nav class="navbar navbar-default">
+                <button class="btn btn-primary" ng-if="profile.current" ng-click="save()">
+                    <span ng-if="!profile.existing">Dodaj</span>
+                    <span ng-if="profile.existing">Aktualizuj</span>
+                </button>
+                <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
+                <button class="btn btn-default" ng-click="close()">Anuluj</button>
+            </nav>
             <div ng-if="profile.current">
                 <div class="form-group">
-                    <label for="name" class="col-sm-3 control-label">Imię i nazwisko</label>
-                    <div class="col-sm-9">
-                        <s ng-if="profile.current.name !== profile.existing.name">{{profile.existing.name}}</s>
-                        <input type="text" id="name" class="form-control" ng-model="profile.current.name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="extra" class="col-sm-3 control-label">Dodatkowe punkty</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-3">
+                        <label class="control-label">Profil</label>
+                        <p>Dodatkowe punkty:</p>
                         <input type="number" id="extra" class="form-control" ng-model="profile.current.scoring.extra">
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="status" class="control-label">Status</label>
-                    </div>
                     <div class="col-sm-9">
-                        <select id="status" class="form-control" ng-model="profile.current.status">
-                            <option value="lead">Lead</option>
-                            <option value="talk">Talk</option>
-                            <option value="reject">Reject</option>
-                            <option value="deal">Deal</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="comment" class="control-label">Komentarz</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <textarea id="comment" class="form-control" style="height:100px" ng-model="profile.current.comment"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="tags" class="control-label">Tagi</label>
-                    </div>
-                    <div class="col-sm-9">
+                        <div class="form-inline">
+                            {{profile.current.name}},
+                            <input type="text" id="city" class="form-control" ng-model="profile.current.city">,
+                            status: <select id="status" class="form-control" ng-model="profile.current.status">,
+                                <option value="lead">Lead</option>
+                                <option value="talk">Talk</option>
+                                <option value="reject">Reject</option>
+                                <option value="deal">Deal</option>
+                            </select>
+                        </div>
                         <div taggle id="tags" tags="profile.current.tags"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="description" class="control-label">Podsumowanie</label>
-                        <scoring score="profile.current.scoring.description"></scoring>
-                    </div>
-                    <div class="col-sm-9">
-                        <s ng-if="profile.current.description !== profile.existing.description">{{profile.existing.description}}</s>
-                        <textarea id="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
+                        <textarea id="comment" class="form-control" style="height:80px" ng-model="profile.current.comment" placeholder="Komentarz"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
                     <div class="col-sm-9">
-                        <ul class="emails">
-                            <li
-                                ng-repeat="(i, email) in profile.current.email track by i"
-                                ng-class="{confirmed:email.confirmed}">
-                                {{email.address}} [{{email.source}}]
-                                <a ng-if="email.confirmed === null" ng-click="checkEmail(email.address)">[check]</a>
-                                <a ng-click="removeEmail(i)">[X]</a>
-                            </li>
-                            <li
-                                ng-repeat="(i, github) in profile.current.github track by i"
-                                ng-if="!github.removed && github.email">
-                                {{github.email}} [github]
-                                <a ng-click="checkEmail(github.email)">[check]</a>
-                            </li>
-                            <li ng-repeat="(i, email) in emailQueue track by i">
-                                {{email}} [poszukiwany]
-                            </li>
-                        </ul>
-                        <div class="form-inline">
-                            <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
-                            <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
+                        <div class="emails" ng-class="{less: !more.emails, more: more.emails}">
+                            <ul>
+                                <li
+                                    ng-repeat="(i, email) in profile.current.email track by i"
+                                    ng-class="{confirmed:email.confirmed}">
+                                    {{email.address}} [{{email.source}}]
+                                    <a ng-if="email.confirmed === null" ng-click="checkEmail(email.address)">[check]</a>
+                                    <a ng-click="removeEmail(i)">[X]</a>
+                                </li>
+                                <li
+                                    ng-repeat="(i, github) in profile.current.github track by i"
+                                    ng-if="!github.removed && github.email">
+                                    {{github.email}} [github]
+                                    <a ng-if="more.emails" ng-click="checkEmail(github.email)"> - zweryfikuj</a>
+                                </li>
+                                <li ng-repeat="(i, email) in emailQueue track by i">
+                                    {{email}} [poszukiwany]
+                                </li>
+                                <li ng-if="!more.emails"><a ng-click="more.emails = true">więcej...</a></li>
+                                <li ng-if="more.emails"><a ng-click="more.emails = false">mniej.</a></li>
+                            </ul>
+                            <div class="form-inline" ng-if="more.emails">
+                                Dodaj ręcznie:
+                                <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
+                                <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
+                            </div>
+                            <button ng-if="more.emails" class="btn btn-link" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Automatycznie szukaj adresu e-mail</button>
                         </div>
-                        <button class="btn btn-default" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Szukaj adresu e-mail</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="city" class="col-sm-3 control-label">Miasto</label>
-                    <div class="col-sm-9">
-                        <s ng-if="profile.current.city !== profile.existing.city">{{profile.existing.city}}</s>
-                        <input type="text" id="city" class="form-control" ng-model="profile.current.city">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label class="control-label">Umiejętności</label>
+                        <label class="control-label">Skills</label>
                         <scoring score="profile.current.scoring.skills"></scoring>
                     </div>
                     <div class="col-sm-9">
                         <div class="bullets">
-                            <div class="bullet" ng-repeat="skill in profile.current.skills">
+                            <div class="bullet" ng-repeat="(i, skill) in profile.current.skills | orderBy:'count':true | limitTo:more.skills&&1000||3 track by i">
                                 <span class="label label-default">
                                     {{skill.name}}
                                     <span class="badge">{{skill.count}}</span>
                                 </span>
                             </div>
+                            <span ng-if="!more.skills && profile.current.skills.length - 3 > 0"><a ng-click="more.skills = true">więcej (+{{profile.current.skills.length - 3}})...</a></span>
+                            <span ng-if="more.skills"><a ng-click="more.skills = false">mniej.</a></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label class="control-label">Doświadczenie zawodowe</label>
+                        <label class="control-label">Praca</label>
                         <scoring score="profile.current.scoring.experience"></scoring>
                     </div>
                     <div class="col-sm-9">
-                        <div class="jobs">
-                            <div class="job" ng-repeat="job in profile.current.jobs">
+                        <div ng-if="!more.jobs">
+                            <span ng-repeat="(i, job) in profile.current.jobs | limitTo:more.jobs&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span ng-class="{bold: job.current}">{{job.position}}</span></span>; </span>
+                            <span ng-if="!more.jobs"><a ng-click="more.jobs = true">więcej<span ng-if="profile.current.jobs.length - 3 > 0"> (+{{profile.current.jobs.length - 3}})</span>...</a></span>
+                        </div>
+                        <div ng-if="more.jobs" class="jobs">
+                            <div class="job" ng-repeat="(i, job) in profile.current.jobs track by i">
                                 <div><strong>{{job.position}}</strong></div>
                                 <div>Firma: <i>{{job.company}}</i></div>
                                 <div>Miasto: {{job.locality}}</div>
                                 <div>Okres zatrudnienia: {{job.period}} miesięcy</div>
-                                <div ng-if="job.current">Obecnie zatrudniony</div>
+                                <div ng-if="job.current" class="bold">Obecnie zatrudniony</div>
                                 <hr>
                             </div>
+                            <div ng-if="more.jobs"><a ng-click="more.jobs = false">mniej.</a></div>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for="description" class="control-label">Opis</label>
+                        <scoring score="profile.current.scoring.description"></scoring>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="clamp">{{profile.current.description}}</div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -139,7 +130,7 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="strips">
-                            <div ng-repeat="language in profile.current.languages">
+                            <div ng-repeat="(i, language) in profile.current.languages track by i">
                                 <span class="label label-default">
                                     {{language.name}}
                                     <div class="badge">{{language.proficiency}}</div>
@@ -150,18 +141,23 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label class="control-label">Wykształcenie</label>
+                        <label class="control-label">Uczel.</label>
                         <scoring score="profile.current.scoring.education"></scoring>
                     </div>
                     <div class="col-sm-9">
-                        <div class="educationlist">
-                            <div class="education" ng-repeat="education in profile.current.education">
+                        <div ng-if="!more.education">
+                            <span ng-repeat="(i, education) in profile.current.education | limitTo:more.education&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span class="bold">{{education.school}}</span></span>; </span>
+                            <span ng-if="!more.education"><a ng-click="more.education = true">więcej<span ng-if="profile.current.education.length - 3 > 0"> (+{{profile.current.education.length - 3}})</span>...</a></span>
+                        </div>
+                        <div ng-if="more.education" class="educationlist">
+                            <div class="education" ng-repeat="(i, education) in profile.current.education track by i">
                                 <div><strong>{{education.school}}</strong></div>
                                 <div>Stopień: <i>{{education.degree}}</i></div>
                                 <div>Specjalność: {{education.major}}</div>
-                                <div>Okres: {{education.date}} miesięcy</div>
+                                <div>Okres: {{education.date}}</div>
                                 <hr>
                             </div>
+                            <div ng-if="more.education"><a ng-click="more.education = false">mniej.</a></div>
                         </div>
                     </div>
                 </div>
@@ -173,7 +169,7 @@
                     <div class="col-sm-9">
                         <div class="githubs">
                             <div class="github" ng-repeat="(i, github) in profile.current.github | filter:{removed:false} track by i">
-                                <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;">
+                                <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;margin-right:10px;">
                                 <button class="btn btn-danger" ng-click="github.removed = true" style="float:right;">X</button>
                                 <div><strong>{{github.city}}</strong></div>
                                 <div><a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span></div>
@@ -182,24 +178,11 @@
                         </div>
                         <div class="form-inline">
                             <input type="text" class="form-control" ng-model="githubSearch" placeholder="Wpisz nazwę użytkownika">
-                            <button class="btn btn-default" ng-click="addGithubProfile(githubSearch)">Dodaj</button>
+                            <button class="btn btn-default" ng-click="addGithubProfile(githubSearch)">Dodaj GitHub</button>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <button class="btn btn-primary" ng-click="save()">
-                            <span ng-if="!profile.existing">Dodaj</span>
-                            <span ng-if="profile.existing">Aktualizuj</span>
-                        </button>
-                        <button class="btn btn-default" ng-click="close()">Anuluj</button>
-                    </div>
-                </div>
             </div>
-            <nav class="navbar navbar-default text-center">
-                <button class="btn btn-default" ng-click="refresh()">Odśwież</button>
-                <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
-            </nav>
         </div>
         <script src="../scripts/libs/jquery/dist/jquery.min.js"></script>
         <script src="../scripts/libs/angular/angular.min.js"></script>

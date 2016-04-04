@@ -17,6 +17,13 @@ angular.module('App')
 
     $scope.emailQueue = [];
 
+    $scope.more = {
+        emails: false,
+        skills: false,
+        jobs: false,
+        education: false
+    };
+
     port.onMessage.addListener(function(response) {
         var json;
         if(typeof response === 'string' && response !== 'undefined' && response !== 'null') {
