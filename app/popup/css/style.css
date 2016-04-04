@@ -20,6 +20,10 @@ body {
     width:100%;
 }
 
+#tags {
+    position: relative;
+}
+
 .bullets .bullet {
     display: inline-block;
 }
@@ -27,6 +31,25 @@ body {
 .bullets .bullet .badge,
 .strips .badge {
     background-color: black;
+}
+
+.emails ul, .emails li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.emails.less ul li {
+    display: inline-block;
+}
+
+.emails ul li:after {
+    content: ', ';
+}
+
+.emails ul li:last-child:after {
+    content: '';
 }
 
 .emails .confirmed {

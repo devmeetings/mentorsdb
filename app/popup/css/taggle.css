@@ -258,9 +258,9 @@
 
 .taggle_placeholder {
   position: absolute;
-  color: #CCC;
-  top: 12px;
-  left: 8px;
+  color: black;
+  top: 5px;
+  left: 0px;
   -webkit-transition: opacity, 0.25s;
   -moz-transition: opacity, 0.25s;
   -o-transition: opacity, 0.25s;

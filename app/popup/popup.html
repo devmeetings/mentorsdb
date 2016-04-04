@@ -11,7 +11,7 @@
     <body>
         <div ng-controller="ProfileCtrl">
             <nav class="navbar navbar-default">
-                <button class="btn btn-primary" ng-click="save()">
+                <button class="btn btn-primary" ng-if="profile.current" ng-click="save()">
                     <span ng-if="!profile.existing">Dodaj</span>
                     <span ng-if="profile.existing">Aktualizuj</span>
                 </button>
@@ -22,6 +22,7 @@
                 <div class="form-group">
                     <div class="col-sm-3">
                         <label class="control-label">Profil</label>
+                        <p>Dodatkowe punkty:</p>
                         <input type="number" id="extra" class="form-control" ng-model="profile.current.scoring.extra">
                     </div>
                     <div class="col-sm-9">
@@ -35,15 +36,41 @@
                                 <option value="deal">Deal</option>
                             </select>
                         </div>
-                        <textarea id="comment" class="form-control" style="height:100px" ng-model="profile.current.comment" placeholder="Komentarz"></textarea>
+                        <div taggle id="tags" tags="profile.current.tags"></div>
+                        <textarea id="comment" class="form-control" style="height:80px" ng-model="profile.current.comment" placeholder="Komentarz"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <label for="tags" class="control-label">Tagi</label>
-                    </div>
+                    <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
                     <div class="col-sm-9">
-                        <div taggle id="tags" tags="profile.current.tags"></div>
+                        <div class="emails" ng-class="{less: !more.emails, more: more.emails}">
+                            <ul>
+                                <li
+                                    ng-repeat="(i, email) in profile.current.email track by i"
+                                    ng-class="{confirmed:email.confirmed}">
+                                    {{email.address}} [{{email.source}}]
+                                    <a ng-if="email.confirmed === null" ng-click="checkEmail(email.address)">[check]</a>
+                                    <a ng-click="removeEmail(i)">[X]</a>
+                                </li>
+                                <li
+                                    ng-repeat="(i, github) in profile.current.github track by i"
+                                    ng-if="!github.removed && github.email">
+                                    {{github.email}} [github]
+                                    <a ng-if="more.emails" ng-click="checkEmail(github.email)"> - zweryfikuj</a>
+                                </li>
+                                <li ng-repeat="(i, email) in emailQueue track by i">
+                                    {{email}} [poszukiwany]
+                                </li>
+                                <li ng-if="!more.emails"><a ng-click="more.emails = true">więcej...</a></li>
+                                <li ng-if="more.emails"><a ng-click="more.emails = false">mniej.</a></li>
+                            </ul>
+                            <div class="form-inline" ng-if="more.emails">
+                                Dodaj ręcznie:
+                                <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
+                                <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
+                            </div>
+                            <button ng-if="more.emails" class="btn btn-link" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Automatycznie szukaj adresu e-mail</button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -54,34 +81,6 @@
                     <div class="col-sm-9">
                         <s ng-if="profile.current.description !== profile.existing.description">{{profile.existing.description}}</s>
                         <textarea id="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
-                    <div class="col-sm-9">
-                        <ul class="emails">
-                            <li
-                                ng-repeat="(i, email) in profile.current.email track by i"
-                                ng-class="{confirmed:email.confirmed}">
-                                {{email.address}} [{{email.source}}]
-                                <a ng-if="email.confirmed === null" ng-click="checkEmail(email.address)">[check]</a>
-                                <a ng-click="removeEmail(i)">[X]</a>
-                            </li>
-                            <li
-                                ng-repeat="(i, github) in profile.current.github track by i"
-                                ng-if="!github.removed && github.email">
-                                {{github.email}} [github]
-                                <a ng-click="checkEmail(github.email)">[check]</a>
-                            </li>
-                            <li ng-repeat="(i, email) in emailQueue track by i">
-                                {{email}} [poszukiwany]
-                            </li>
-                        </ul>
-                        <div class="form-inline">
-                            <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
-                            <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
-                        </div>
-                        <button class="btn btn-default" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Szukaj adresu e-mail</button>
                     </div>
                 </div>
                 <div class="form-group">
