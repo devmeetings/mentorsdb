@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="bullets">
-                            <div class="bullet" ng-repeat="skill in profile.current.skills | orderBy:'count':true | limitTo:more.skills&&1000||3">
+                            <div class="bullet" ng-repeat="(i, skill) in profile.current.skills | orderBy:'count':true | limitTo:more.skills&&1000||3 track by i">
                                 <span class="label label-default">
                                     {{skill.name}}
                                     <span class="badge">{{skill.count}}</span>
@@ -98,11 +98,11 @@
                     </div>
                     <div class="col-sm-9">
                         <div ng-if="!more.jobs">
-                            <span ng-repeat="job in profile.current.jobs | limitTo:more.jobs&&1000||3"><span class="nowrap" ng-class="{bold: job.current}">{{job.position}}</span>; </span>
+                            <span ng-repeat="(i, job) in profile.current.jobs | limitTo:more.jobs&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span ng-class="{bold: job.current}">{{job.position}}</span></span>; </span>
                             <span ng-if="!more.jobs"><a ng-click="more.jobs = true">więcej<span ng-if="profile.current.jobs.length - 3 > 0"> (+{{profile.current.jobs.length - 3}})</span>...</a></span>
                         </div>
                         <div ng-if="more.jobs" class="jobs">
-                            <div class="job" ng-repeat="job in profile.current.jobs">
+                            <div class="job" ng-repeat="(i, job) in profile.current.jobs track by i">
                                 <div><strong>{{job.position}}</strong></div>
                                 <div>Firma: <i>{{job.company}}</i></div>
                                 <div>Miasto: {{job.locality}}</div>
@@ -130,7 +130,7 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="strips">
-                            <div ng-repeat="language in profile.current.languages">
+                            <div ng-repeat="(i, language) in profile.current.languages track by i">
                                 <span class="label label-default">
                                     {{language.name}}
                                     <div class="badge">{{language.proficiency}}</div>
@@ -146,11 +146,11 @@
                     </div>
                     <div class="col-sm-9">
                         <div ng-if="!more.education">
-                            <span ng-repeat="education in profile.current.education | limitTo:more.education&&1000||3"><span class="nowrap" class="bold">{{education.school}}</span>; </span>
+                            <span ng-repeat="(i, education) in profile.current.education | limitTo:more.education&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span class="bold">{{education.school}}</span></span>; </span>
                             <span ng-if="!more.education"><a ng-click="more.education = true">więcej<span ng-if="profile.current.education.length - 3 > 0"> (+{{profile.current.education.length - 3}})</span>...</a></span>
                         </div>
                         <div ng-if="more.education" class="educationlist">
-                            <div class="education" ng-repeat="education in profile.current.education">
+                            <div class="education" ng-repeat="(i, education) in profile.current.education track by i">
                                 <div><strong>{{education.school}}</strong></div>
                                 <div>Stopień: <i>{{education.degree}}</i></div>
                                 <div>Specjalność: {{education.major}}</div>
@@ -169,7 +169,7 @@
                     <div class="col-sm-9">
                         <div class="githubs">
                             <div class="github" ng-repeat="(i, github) in profile.current.github | filter:{removed:false} track by i">
-                                <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;">
+                                <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;margin-right:10px;">
                                 <button class="btn btn-danger" ng-click="github.removed = true" style="float:right;">X</button>
                                 <div><strong>{{github.city}}</strong></div>
                                 <div><a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span></div>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="form-inline">
                             <input type="text" class="form-control" ng-model="githubSearch" placeholder="Wpisz nazwę użytkownika">
-                            <button class="btn btn-default" ng-click="addGithubProfile(githubSearch)">Dodaj</button>
+                            <button class="btn btn-default" ng-click="addGithubProfile(githubSearch)">Dodaj GitHub</button>
                         </div>
                     </div>
                 </div>
