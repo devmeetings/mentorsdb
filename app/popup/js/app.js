@@ -19,7 +19,8 @@ angular.module('App')
 
     $scope.more = {
         emails: false,
-        skills: false
+        skills: false,
+        jobs: false
     };
 
     port.onMessage.addListener(function(response) {

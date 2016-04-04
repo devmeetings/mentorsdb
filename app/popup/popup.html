@@ -97,15 +97,20 @@
                         <scoring score="profile.current.scoring.experience"></scoring>
                     </div>
                     <div class="col-sm-9">
-                        <div class="jobs">
+                        <div ng-if="!more.jobs">
+                            <span ng-repeat="job in profile.current.jobs | limitTo:more.jobs&&1000||3"><span class="nowrap" ng-class="{bold: job.current}">{{job.position}}</span>; </span>
+                            <span ng-if="!more.jobs"><a ng-click="more.jobs = true">więcej...</a></span>
+                        </div>
+                        <div ng-if="more.jobs" class="jobs">
                             <div class="job" ng-repeat="job in profile.current.jobs">
                                 <div><strong>{{job.position}}</strong></div>
                                 <div>Firma: <i>{{job.company}}</i></div>
                                 <div>Miasto: {{job.locality}}</div>
                                 <div>Okres zatrudnienia: {{job.period}} miesięcy</div>
-                                <div ng-if="job.current">Obecnie zatrudniony</div>
+                                <div ng-if="job.current" class="bold">Obecnie zatrudniony</div>
                                 <hr>
                             </div>
+                            <div ng-if="more.jobs"><a ng-click="more.jobs = false">mniej.</a></div>
                         </div>
                     </div>
                 </div>
