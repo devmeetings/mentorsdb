@@ -28,8 +28,8 @@
                     <div class="col-sm-9">
                         <div class="form-inline">
                             {{profile.current.name}},
-                            <input type="text" id="city" class="form-control" ng-model="profile.current.city">
-                            <select id="status" class="form-control" ng-model="profile.current.status">,
+                            <input type="text" id="city" class="form-control" ng-model="profile.current.city">,
+                            status: <select id="status" class="form-control" ng-model="profile.current.status">,
                                 <option value="lead">Lead</option>
                                 <option value="talk">Talk</option>
                                 <option value="reject">Reject</option>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label class="control-label">Umiejętności</label>
+                        <label class="control-label">Skills</label>
                         <scoring score="profile.current.scoring.skills"></scoring>
                     </div>
                     <div class="col-sm-9">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label class="control-label">Doświadczenie zawodowe</label>
+                        <label class="control-label">Praca</label>
                         <scoring score="profile.current.scoring.experience"></scoring>
                     </div>
                     <div class="col-sm-9">
@@ -116,7 +116,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label for="description" class="control-label">Podsumowanie</label>
+                        <label for="description" class="control-label">Opis</label>
                         <scoring score="profile.current.scoring.description"></scoring>
                     </div>
                     <div class="col-sm-9">
@@ -141,7 +141,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label class="control-label">Wykształcenie</label>
+                        <label class="control-label">Uczel.</label>
                         <scoring score="profile.current.scoring.education"></scoring>
                     </div>
                     <div class="col-sm-9">
@@ -150,7 +150,7 @@
                                 <div><strong>{{education.school}}</strong></div>
                                 <div>Stopień: <i>{{education.degree}}</i></div>
                                 <div>Specjalność: {{education.major}}</div>
-                                <div>Okres: {{education.date}} miesięcy</div>
+                                <div>Okres: {{education.date}}</div>
                                 <hr>
                             </div>
                         </div>
