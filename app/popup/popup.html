@@ -145,7 +145,11 @@
                         <scoring score="profile.current.scoring.education"></scoring>
                     </div>
                     <div class="col-sm-9">
-                        <div class="educationlist">
+                        <div ng-if="!more.education">
+                            <span ng-repeat="education in profile.current.education | limitTo:more.education&&1000||3"><span class="nowrap" class="bold">{{education.school}}</span>; </span>
+                            <span ng-if="!more.education"><a ng-click="more.education = true">więcej...</a></span>
+                        </div>
+                        <div ng-if="more.education" class="educationlist">
                             <div class="education" ng-repeat="education in profile.current.education">
                                 <div><strong>{{education.school}}</strong></div>
                                 <div>Stopień: <i>{{education.degree}}</i></div>
@@ -153,6 +157,7 @@
                                 <div>Okres: {{education.date}}</div>
                                 <hr>
                             </div>
+                            <div ng-if="more.education"><a ng-click="more.education = false">mniej.</a></div>
                         </div>
                     </div>
                 </div>
