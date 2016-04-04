@@ -18,7 +18,8 @@ angular.module('App')
     $scope.emailQueue = [];
 
     $scope.more = {
-        emails: false
+        emails: false,
+        skills: false
     };
 
     port.onMessage.addListener(function(response) {

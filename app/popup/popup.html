@@ -75,27 +75,19 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <label for="description" class="control-label">Podsumowanie</label>
-                        <scoring score="profile.current.scoring.description"></scoring>
-                    </div>
-                    <div class="col-sm-9">
-                        <s ng-if="profile.current.description !== profile.existing.description">{{profile.existing.description}}</s>
-                        <textarea id="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
                         <label class="control-label">Umiejętności</label>
                         <scoring score="profile.current.scoring.skills"></scoring>
                     </div>
                     <div class="col-sm-9">
                         <div class="bullets">
-                            <div class="bullet" ng-repeat="skill in profile.current.skills">
+                            <div class="bullet" ng-repeat="skill in profile.current.skills | orderBy:'count':true | limitTo:more.skills&&1000||3">
                                 <span class="label label-default">
                                     {{skill.name}}
                                     <span class="badge">{{skill.count}}</span>
                                 </span>
                             </div>
+                            <span ng-if="!more.skills"><a ng-click="more.skills = true">więcej...</a></span>
+                            <span ng-if="more.skills"><a ng-click="more.skills = false">mniej.</a></span>
                         </div>
                     </div>
                 </div>
@@ -115,6 +107,16 @@
                                 <hr>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for="description" class="control-label">Podsumowanie</label>
+                        <scoring score="profile.current.scoring.description"></scoring>
+                    </div>
+                    <div class="col-sm-9">
+                        <s ng-if="profile.current.description !== profile.existing.description">{{profile.existing.description}}</s>
+                        <textarea id="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
