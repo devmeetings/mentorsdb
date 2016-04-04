@@ -120,8 +120,7 @@
                         <scoring score="profile.current.scoring.description"></scoring>
                     </div>
                     <div class="col-sm-9">
-                        <s ng-if="profile.current.description !== profile.existing.description">{{profile.existing.description}}</s>
-                        <textarea id="description" class="form-control" style="height:200px" ng-model="profile.current.description"></textarea>
+                        <div class="clamp">{{profile.current.description}}</div>
                     </div>
                 </div>
                 <div class="form-group">
