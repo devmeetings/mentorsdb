@@ -86,7 +86,7 @@
                                     <span class="badge">{{skill.count}}</span>
                                 </span>
                             </div>
-                            <span ng-if="!more.skills"><a ng-click="more.skills = true">więcej...</a></span>
+                            <span ng-if="!more.skills && profile.current.skills.length - 3 > 0"><a ng-click="more.skills = true">więcej (+{{profile.current.skills.length - 3}})...</a></span>
                             <span ng-if="more.skills"><a ng-click="more.skills = false">mniej.</a></span>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                     <div class="col-sm-9">
                         <div ng-if="!more.jobs">
                             <span ng-repeat="job in profile.current.jobs | limitTo:more.jobs&&1000||3"><span class="nowrap" ng-class="{bold: job.current}">{{job.position}}</span>; </span>
-                            <span ng-if="!more.jobs"><a ng-click="more.jobs = true">więcej...</a></span>
+                            <span ng-if="!more.jobs"><a ng-click="more.jobs = true">więcej<span ng-if="profile.current.jobs.length - 3 > 0"> (+{{profile.current.jobs.length - 3}})</span>...</a></span>
                         </div>
                         <div ng-if="more.jobs" class="jobs">
                             <div class="job" ng-repeat="job in profile.current.jobs">
@@ -147,7 +147,7 @@
                     <div class="col-sm-9">
                         <div ng-if="!more.education">
                             <span ng-repeat="education in profile.current.education | limitTo:more.education&&1000||3"><span class="nowrap" class="bold">{{education.school}}</span>; </span>
-                            <span ng-if="!more.education"><a ng-click="more.education = true">więcej...</a></span>
+                            <span ng-if="!more.education"><a ng-click="more.education = true">więcej<span ng-if="profile.current.education.length - 3 > 0"> (+{{profile.current.education.length - 3}})</span>...</a></span>
                         </div>
                         <div ng-if="more.education" class="educationlist">
                             <div class="education" ng-repeat="education in profile.current.education">
