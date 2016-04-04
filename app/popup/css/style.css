@@ -1,13 +1,12 @@
 html {
     position: relative;
-    width: 800px;
-    height: 600px;
+    width: 780px;
     overflow: auto;
 }
 
 body {
-    height: 100%;
     margin: 10px;
+    height: 100%;
 }
 
 .navbar {
