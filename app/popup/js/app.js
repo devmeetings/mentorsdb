@@ -39,6 +39,12 @@ angular.module('App')
         }
     });
 
+    $scope.scoreSum = function() {
+        return Object.keys($scope.profile.current.scoring).reduce(function(sum, key) {
+            return sum += $scope.profile.current.scoring[key];
+        }, 0);
+    };
+
     $scope.openGithub = function(username) {
         chrome.tabs.create({
             url: 'https://github.com/' + username,

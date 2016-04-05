@@ -17,6 +17,20 @@
                 </button>
                 <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
                 <button class="btn btn-default" ng-click="close()">Anuluj</button>
+                <div class="points pull-right">
+                    <ng-pluralize count="scoreSum()" when="{
+                        '-4': '-4 punkty',
+                        '-3': '-3 punkty',
+                        '-2': '-2 punkty',
+                        '-1': '-1 punkt',
+                        '0': '0 punktów',
+                        '1': '1 punkt',
+                        '2': '2 punkty',
+                        '3': '3 punkty',
+                        '4': '4 punkty',
+                        'other': '{} punktów'
+                    }"></ng-pluralize>
+                </div>
             </nav>
             <div ng-if="profile.current">
                 <div class="form-group">
