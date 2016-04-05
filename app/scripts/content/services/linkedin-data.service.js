@@ -4,6 +4,10 @@ var LinkedinDataService = (function() {
         return node? node.textContent: '';
     }
 
+    function getId() {
+        return window.location.pathname.substr(4).split('/')[0];
+    }
+
     function getName() {
         return textContent(document.querySelector('.full-name'));
     }
@@ -117,6 +121,7 @@ var LinkedinDataService = (function() {
     }
 
     return {
+        getId: getId,
         getName: getName,
         getEmail: getEmail,
         getCity: getCity,

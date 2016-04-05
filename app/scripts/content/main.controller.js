@@ -9,7 +9,7 @@
         });
         me.existing = null;
         me.current = new Profile({
-            id: window.location.pathname.substr(4),
+            id: LinkedinDataService.getId(),
             name: LinkedinDataService.getName(),
             img: LinkedinDataService.getPhoto(),
             description: LinkedinDataService.getDescription(),
