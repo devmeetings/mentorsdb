@@ -18,12 +18,12 @@
                 contributions: GithubDataService.getContributions()
             });
             chrome.runtime.sendMessage({
-                method: 'getOpenerTabId'
-            }, function(openerTabId) {
-                if(openerTabId !== null) {
+                method: 'getTab'
+            }, function(tab) {
+                if(tab.openerTabId !== null && tab.pinned) {
                     chrome.runtime.sendMessage({
                         method: 'setGithubProfile',
-                        openerTabId: openerTabId,
+                        openerTabId: tab.openerTabId,
                         github: me.github
                     });
                     window.close();

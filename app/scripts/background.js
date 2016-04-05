@@ -71,18 +71,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             chrome.tabs.create({
                 url: 'https://github.com/search?q=' + removeDiacritics(request.name) + '&type=Users',
                 active: false,
-                openerTabId: sender.tab.id
+                openerTabId: sender.tab.id,
+                pinned: true
             });
             break;
         case 'openGithubProfile':
             chrome.tabs.create({
                 url: request.url,
                 active: false,
-                openerTabId: request.openerTabId
+                openerTabId: request.openerTabId,
+                pinned: true
             });
             break;
-        case 'getOpenerTabId':
-            sendResponse(sender.tab.openerTabId);
+        case 'getTab':
+            sendResponse(sender.tab);
             break;
         case 'setGithubProfile':
             chrome.tabs.sendMessage(request.openerTabId, {
