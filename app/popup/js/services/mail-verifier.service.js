@@ -9,6 +9,10 @@ angular.module('services')
         this.profile = null;
     }
 
+    MailVerifier.prototype.addEmail = function(email) {
+        _this.queue.push(removeDiacritics(email));
+    };
+
     MailVerifier.prototype.searchEmail = function(profile) {
         var names = profile.name.split(' ').reduce(function permute(res, item, key, arr) {
             return res.concat(arr.length > 1 && arr.slice(0, key).concat(arr.slice(key + 1))
@@ -20,35 +24,35 @@ angular.module('services')
         }, []);
         _this.profile = profile;
         names.forEach(function(item) {
-            _this.queue.push(item.join('').toLowerCase() + '@gmail.com');
+            _this.addEmail(item.join('').toLowerCase() + '@gmail.com');
         });
         names.forEach(function(item) {
-            _this.queue.push(item.join('.').toLowerCase() + '@gmail.com');
+            _this.addEmail(item.join('.').toLowerCase() + '@gmail.com');
         });
         names.forEach(function(item) {
             var name = item[0][0] + item.slice(1).join('');
-            _this.queue.push(name.toLowerCase() + '@gmail.com');
+            _this.addEmail(name.toLowerCase() + '@gmail.com');
         });
         names.forEach(function(item) {
             var name = item[0][0] + '.' + item.slice(1).join('.');
-            _this.queue.push(name.toLowerCase() + '@gmail.com');
+            _this.addEmail(name.toLowerCase() + '@gmail.com');
         });
         names.forEach(function(item) {
             var name = item.slice(1).join('') + item[0][0];
-            _this.queue.push(name.toLowerCase() + '@gmail.com');
+            _this.addEmail(name.toLowerCase() + '@gmail.com');
         });
         names.forEach(function(item) {
             var name =  item.slice(1).join('.') + '.' + item[0][0];
-            _this.queue.push(name.toLowerCase() + '@gmail.com');
+            _this.addEmail(name.toLowerCase() + '@gmail.com');
         });
         profile.github.forEach(function(github) {
-            _this.queue.push(github.username + '@gmail.com');
+            _this.addEmail(github.username + '@gmail.com');
         });
         _this.processEmailQueue();
     };
 
     MailVerifier.prototype.checkEmail = function(email) {
-        _this.queue.push(email);
+        _this.addEmail(email);
         _this.processEmailQueue();
     };
 

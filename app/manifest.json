@@ -12,6 +12,7 @@
   "background": {
     "scripts": [
       "scripts/chromereload.js",
+      "scripts/helpers.js",
       "scripts/background.js"
     ]
   },
