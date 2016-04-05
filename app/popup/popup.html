@@ -58,7 +58,7 @@
                                     {{github.email}} [github]
                                     <a ng-if="more.emails" ng-click="checkEmail(github.email)"> - zweryfikuj</a>
                                 </li>
-                                <li ng-repeat="(i, email) in emailQueue track by i">
+                                <li ng-repeat="(i, email) in MailVerifier.queue track by i">
                                     {{email}} [poszukiwany]
                                 </li>
                                 <li ng-if="!more.emails"><a ng-click="more.emails = true">więcej...</a></li>
@@ -69,7 +69,7 @@
                                 <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
                                 <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
                             </div>
-                            <button ng-if="more.emails" class="btn btn-link" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Automatycznie szukaj adresu e-mail</button>
+                            <button ng-if="more.emails" class="btn btn-link" ng-click="MailVerifier.searchEmail(profile.current)" ng-disabled="MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
                         </div>
                     </div>
                 </div>
@@ -200,6 +200,8 @@
         <script src="js/directives.js"></script>
         <script src="js/directives/scoring.directive.js"></script>
         <script src="js/directives/taggle.directive.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/services/mail-verifier.service.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>
