@@ -13,6 +13,7 @@
     "scripts": [
       "scripts/chromereload.js",
       "scripts/helpers.js",
+      "scripts/content/storage.js",
       "scripts/background.js"
     ]
   },

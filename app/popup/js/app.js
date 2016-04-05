@@ -8,7 +8,8 @@ angular.module('App')
 
     $scope.profile = {
         current: null,
-        existing: {}
+        existing: {},
+        initial: {}
     };
 
     $scope.githubSearch = '';
@@ -29,6 +30,7 @@ angular.module('App')
             json = JSON.parse(response);
             $scope.profile.current = json.current;
             $scope.profile.existing = json.existing;
+            $scope.profile.initial = new Profile(json.current);
             $scope.$apply();
         }
     });
@@ -38,6 +40,18 @@ angular.module('App')
             $scope.refresh();
         }
     });
+
+    var background = chrome.extension.getBackgroundPage();
+    window.addEventListener("unload", function() {
+        var profile = new Profile($scope.profile.current);
+        var changed = JSON.stringify(profile) !== JSON.stringify($scope.profile.initial);
+        var exists = $scope.profile.existing? true: false;
+        background.setProfileOnClose({
+            profile: profile,
+            changed: changed,
+            exists: exists
+        });
+    }, true);
 
     $scope.scoreSum = function() {
         return Object.keys($scope.profile.current.scoring).reduce(function(sum, key) {
@@ -76,13 +90,12 @@ angular.module('App')
     };
 
     $scope.save = function() {
-        var profile = new Profile($scope.profile.current);
-        Storage.setProfile(profile, function(res) {
-            port.postMessage({
-                method: 'setProfile'
-            });
-            $scope.close();
+        port.postMessage({
+            method: 'setProfile',
+            profile: new Profile($scope.profile.current)
         });
+        $scope.profile.initial = new Profile($scope.profile.current);
+        $scope.close();
     };
 
     $scope.showAll = function() {

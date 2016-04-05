@@ -11,13 +11,10 @@
     <body>
         <div ng-controller="ProfileCtrl">
             <nav class="navbar navbar-default">
-                <button class="btn btn-primary" ng-if="profile.current" ng-click="save()">
-                    <span ng-if="!profile.existing">Dodaj</span>
-                    <span ng-if="profile.existing">Aktualizuj</span>
-                </button>
+                <button class="btn btn-primary" ng-if="profile.current && !profile.existing" ng-click="save()">Dodaj</button>
                 <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
                 <button class="btn btn-default" ng-click="close()">Anuluj</button>
-                <div class="points pull-right">
+                <div class="points pull-right" ng-if="profile.current">
                     <ng-pluralize count="scoreSum()" when="{
                         '-4': '-4 punkty',
                         '-3': '-3 punkty',
