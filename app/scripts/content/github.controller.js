@@ -10,6 +10,7 @@
                 avatar: GithubDataService.getAvatar(),
                 city: GithubDataService.getCity(),
                 email: GithubDataService.getEmail(),
+                url: GithubDataService.getUrl(),
                 joindate: GithubDataService.getJoindate(),
                 followers: GithubDataService.getFollowers(),
                 starred: GithubDataService.getStarred(),

@@ -185,8 +185,10 @@
                             <div class="github" ng-repeat="(i, github) in profile.current.github | filter:{removed:false} track by i">
                                 <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;margin-right:10px;">
                                 <button class="btn btn-danger" ng-click="github.removed = true" style="float:right;">X</button>
-                                <div><strong>{{github.city}}</strong></div>
-                                <div><a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span></div>
+                                <div><strong>{{github.city}}</strong>, {{github.contributions}} commitów</div>
+                                <div>
+                                    <a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span><span ng-if="github.url">, <a ng-href="{{github.url}}">{{github.url}}</a></span>
+                                </div>
                                 <hr>
                             </div>
                         </div>

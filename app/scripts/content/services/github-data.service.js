@@ -33,6 +33,10 @@ var GithubDataService = (function() {
         return textContent(document.querySelector('.vcard-detail[itemprop="email"]'));
     }
 
+    function getUrl() {
+        return textContent(document.querySelector('.vcard-detail[itemprop="url"]'));
+    }
+
     function getJoindate() {
         return attribute(document.querySelector('.join-date'), 'datetime');
     }
@@ -58,6 +62,7 @@ var GithubDataService = (function() {
         getAvatar: getAvatar,
         getCity: getCity,
         getEmail: getEmail,
+        getUrl: getUrl,
         getJoindate: getJoindate,
         getFollowers: getFollowers,
         getStarred: getStarred,
