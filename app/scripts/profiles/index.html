@@ -22,6 +22,15 @@
             	   <profile  profile="profile"></profile>
                 </li>
             </ul>
+            <button class="btn waves-effect waves-light" ng-click="exporting=!exporting;importing=false">Export</button>
+            <div ng-if="exporting">
+              <textarea disabled>{{ profiles }}</textarea>
+            </div>
+            <button class="btn waves-effect waves-light" ng-show="!importing" ng-click="importing=true;exporting=false">Import</button>
+            <div ng-if="importing">
+              <textarea ng-model="toImport"></textarea>
+              <button class="btn waves-effect waves-light" ng-click="import(toImport)">Import</button>
+            </div>
         </div>
         <script type="text/javascript" src="../libs/jquery/dist/jquery.min.js"></script>
         <script src="../libs/bootstrap/dist/js/bootstrap.min.js"></script>
