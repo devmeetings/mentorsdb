@@ -5,6 +5,7 @@ var Github = (function() {
         this.avatar = data.avatar || '';
         this.city = data.city || '';
         this.email = data.email || '';
+        this.url = data.url || '';
         this.joindate = data.joindate || '';
         this.followers = data.followers || 0;
         this.starred = data.starred || 0;

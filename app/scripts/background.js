@@ -24,14 +24,7 @@ chrome.runtime.onConnect.addListener(function(port) {
                     });
                     break;
                 case 'setProfile':
-                    chrome.tabs.query({
-                        active: true,
-                        currentWindow: true
-                    }, function(tabs) {
-                        chrome.tabs.sendMessage(tabs[0].id, {
-                            method: 'setProfileFromContent'
-                        });
-                    });
+                    saveProfile(request.profile);
             }
         });
     }
@@ -46,6 +39,29 @@ chrome.runtime.onConnect.addListener(function(port) {
     }
 });
 
+function setProfileOnClose(request) {
+    if(request.exists) {
+        saveProfile(request.profile);
+    } else if(request.changed) {
+        if(window.confirm('Profil został zmodyfikowany, ale osoba nie została dodana do bazy. Naciśnij OK, jeżeli chcesz ją dodać.')) {
+            saveProfile(request.profile);
+        }
+    }
+}
+
+function saveProfile(profile) {
+    Storage.setProfile(profile, function(res) {
+        chrome.tabs.query({
+            active: true,
+            currentWindow: true
+        }, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                method: 'setProfileFromContent'
+            });
+        });
+    });  
+}
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.method) {
         case 'setStatus':
@@ -53,20 +69,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             break;
         case 'openGithubSearch':
             chrome.tabs.create({
-                url: 'https://github.com/search?q=' + request.name + '&type=Users',
+                url: 'https://github.com/search?q=' + removeDiacritics(request.name) + '&type=Users',
                 active: false,
-                openerTabId: sender.tab.id
+                openerTabId: sender.tab.id,
+                pinned: true
             });
             break;
         case 'openGithubProfile':
             chrome.tabs.create({
                 url: request.url,
                 active: false,
-                openerTabId: request.openerTabId
+                openerTabId: request.openerTabId,
+                pinned: true
             });
             break;
-        case 'getOpenerTabId':
-            sendResponse(sender.tab.openerTabId);
+        case 'getTab':
+            sendResponse(sender.tab);
             break;
         case 'setGithubProfile':
             chrome.tabs.sendMessage(request.openerTabId, {

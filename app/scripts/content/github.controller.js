@@ -10,6 +10,7 @@
                 avatar: GithubDataService.getAvatar(),
                 city: GithubDataService.getCity(),
                 email: GithubDataService.getEmail(),
+                url: GithubDataService.getUrl(),
                 joindate: GithubDataService.getJoindate(),
                 followers: GithubDataService.getFollowers(),
                 starred: GithubDataService.getStarred(),
@@ -17,12 +18,12 @@
                 contributions: GithubDataService.getContributions()
             });
             chrome.runtime.sendMessage({
-                method: 'getOpenerTabId'
-            }, function(openerTabId) {
-                if(openerTabId !== null) {
+                method: 'getTab'
+            }, function(tab) {
+                if(tab.openerTabId !== null && tab.pinned) {
                     chrome.runtime.sendMessage({
                         method: 'setGithubProfile',
-                        openerTabId: openerTabId,
+                        openerTabId: tab.openerTabId,
                         github: me.github
                     });
                     window.close();

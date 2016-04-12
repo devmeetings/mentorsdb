@@ -1,21 +1,21 @@
-angular.module('App', ['directives']);
+angular.module('App', ['directives', 'services']);
 
 angular.module('App')
-.controller('ProfileCtrl', ['$scope', function($scope) {
+.controller('ProfileCtrl', ['$scope', 'MailVerifier', function($scope, MailVerifier) {
 
     var port = chrome.runtime.connect({name: "bridge"});
     var popupPushPort = chrome.runtime.connect({name: "popupPush"});
-    var searchEmailPort = chrome.runtime.connect({name: "searchEmail"});
 
     $scope.profile = {
         current: null,
-        existing: {}
+        existing: {},
+        initial: {}
     };
 
     $scope.githubSearch = '';
     $scope.newmail = '';
 
-    $scope.emailQueue = [];
+    $scope.MailVerifier = MailVerifier;
 
     $scope.more = {
         emails: false,
@@ -30,6 +30,7 @@ angular.module('App')
             json = JSON.parse(response);
             $scope.profile.current = json.current;
             $scope.profile.existing = json.existing;
+            $scope.profile.initial = new Profile(json.current);
             $scope.$apply();
         }
     });
@@ -39,6 +40,24 @@ angular.module('App')
             $scope.refresh();
         }
     });
+
+    var background = chrome.extension.getBackgroundPage();
+    window.addEventListener("unload", function() {
+        var profile = new Profile($scope.profile.current);
+        var changed = JSON.stringify(profile) !== JSON.stringify($scope.profile.initial);
+        var exists = $scope.profile.existing? true: false;
+        background.setProfileOnClose({
+            profile: profile,
+            changed: changed,
+            exists: exists
+        });
+    }, true);
+
+    $scope.scoreSum = function() {
+        return Object.keys($scope.profile.current.scoring).reduce(function(sum, key) {
+            return sum += $scope.profile.current.scoring[key];
+        }, 0);
+    };
 
     $scope.openGithub = function(username) {
         chrome.tabs.create({
@@ -71,13 +90,12 @@ angular.module('App')
     };
 
     $scope.save = function() {
-        var profile = new Profile($scope.profile.current);
-        Storage.setProfile(profile, function(res) {
-            port.postMessage({
-                method: 'setProfile'
-            });
-            $scope.close();
+        port.postMessage({
+            method: 'setProfile',
+            profile: new Profile($scope.profile.current)
         });
+        $scope.profile.initial = new Profile($scope.profile.current);
+        $scope.close();
     };
 
     $scope.showAll = function() {
@@ -103,76 +121,6 @@ angular.module('App')
     $scope.removeEmail = function(i) {
         $scope.profile.current.email.splice(i, 1);
     };
-
-    $scope.searchEmail = function() {
-        var names = $scope.profile.current.name.split(' ').reduce(function permute(res, item, key, arr) {
-            return res.concat(arr.length > 1 && arr.slice(0, key).concat(arr.slice(key + 1))
-                .reduce(permute, [])
-                .map(function(perm) {
-                    return [item].concat(perm);
-                }) || item
-            );
-        }, []);
-        names.forEach(function(item) {
-            $scope.emailQueue.push(item.join('').toLowerCase() + '@gmail.com');
-        });
-        names.forEach(function(item) {
-            $scope.emailQueue.push(item.join('.').toLowerCase() + '@gmail.com');
-        });
-        names.forEach(function(item) {
-            var name = item[0][0] + item.slice(1).join('');
-            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
-        });
-        names.forEach(function(item) {
-            var name = item[0][0] + '.' + item.slice(1).join('.');
-            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
-        });
-        names.forEach(function(item) {
-            var name = item.slice(1).join('') + item[0][0];
-            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
-        });
-        names.forEach(function(item) {
-            var name =  item.slice(1).join('.') + '.' + item[0][0];
-            $scope.emailQueue.push(name.toLowerCase() + '@gmail.com');
-        });
-        $scope.profile.current.github.forEach(function(github) {
-            $scope.emailQueue.push(github.username + '@gmail.com');
-        });
-        $scope.processEmailQueue();
-    };
-
-    $scope.checkEmail = function(email) {
-        $scope.emailQueue.push(email);
-        $scope.processEmailQueue();
-    };
-
-    $scope.processEmailQueue = function() {
-        if($scope.emailQueue.length > 0) {
-            searchEmailPort.postMessage({
-                email: $scope.emailQueue.pop()
-            });
-        }
-        $scope.$apply();
-    };
-
-    searchEmailPort.onMessage.addListener(function(response) {
-        var result = JSON.parse(response);
-        if($scope.profile.current.email.filter(function(email) {
-            var found = email.address === result.email;
-            if(found) {
-                email.confirmed = result.found;
-            }
-            return found;
-        }).length === 0 && result.found && result.profile === $scope.profile.current.id) {
-            $scope.profile.current.email.push(new Email({
-                address: result.email,
-                source: 'search',
-                confirmed: true
-            }));
-        }
-        $scope.$apply();
-        $scope.processEmailQueue();
-    });
 
     $scope.refresh();
 

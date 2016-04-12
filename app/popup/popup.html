@@ -11,12 +11,23 @@
     <body>
         <div ng-controller="ProfileCtrl">
             <nav class="navbar navbar-default">
-                <button class="btn btn-primary" ng-if="profile.current" ng-click="save()">
-                    <span ng-if="!profile.existing">Dodaj</span>
-                    <span ng-if="profile.existing">Aktualizuj</span>
-                </button>
+                <button class="btn btn-primary" ng-if="profile.current && !profile.existing" ng-click="save()">Dodaj</button>
                 <button class="btn btn-default" ng-click="showAll()">Pokaż wszystkich</button>
                 <button class="btn btn-default" ng-click="close()">Anuluj</button>
+                <div class="points pull-right" ng-if="profile.current">
+                    <ng-pluralize count="scoreSum()" when="{
+                        '-4': '-4 punkty',
+                        '-3': '-3 punkty',
+                        '-2': '-2 punkty',
+                        '-1': '-1 punkt',
+                        '0': '0 punktów',
+                        '1': '1 punkt',
+                        '2': '2 punkty',
+                        '3': '3 punkty',
+                        '4': '4 punkty',
+                        'other': '{} punktów'
+                    }"></ng-pluralize>
+                </div>
             </nav>
             <div ng-if="profile.current">
                 <div class="form-group">
@@ -58,7 +69,7 @@
                                     {{github.email}} [github]
                                     <a ng-if="more.emails" ng-click="checkEmail(github.email)"> - zweryfikuj</a>
                                 </li>
-                                <li ng-repeat="(i, email) in emailQueue track by i">
+                                <li ng-repeat="(i, email) in MailVerifier.queue track by i">
                                     {{email}} [poszukiwany]
                                 </li>
                                 <li ng-if="!more.emails"><a ng-click="more.emails = true">więcej...</a></li>
@@ -69,7 +80,7 @@
                                 <input type="text" class="form-control" ng-model="newmail" placeholder="Wpisz adres e-mail">
                                 <button class="btn btn-default" ng-click="addEmail(newmail);newmail=''">Dodaj</button>
                             </div>
-                            <button ng-if="more.emails" class="btn btn-link" ng-click="searchEmail()" ng-disabled="emailQueue.length > 0">Automatycznie szukaj adresu e-mail</button>
+                            <button ng-if="more.emails" class="btn btn-link" ng-click="MailVerifier.searchEmail(profile.current)" ng-disabled="MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
                         </div>
                     </div>
                 </div>
@@ -171,8 +182,10 @@
                             <div class="github" ng-repeat="(i, github) in profile.current.github | filter:{removed:false} track by i">
                                 <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;margin-right:10px;">
                                 <button class="btn btn-danger" ng-click="github.removed = true" style="float:right;">X</button>
-                                <div><strong>{{github.city}}</strong></div>
-                                <div><a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span></div>
+                                <div><strong>{{github.city}}</strong>, {{github.contributions}} commitów</div>
+                                <div>
+                                    <a ng-click="openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span><span ng-if="github.url">, <a ng-href="{{github.url}}">{{github.url}}</a></span>
+                                </div>
                                 <hr>
                             </div>
                         </div>
@@ -188,6 +201,7 @@
         <script src="../scripts/libs/angular/angular.min.js"></script>
         <script src="../scripts/libs/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../scripts/libs/taggle.js/assets/js/taggle.min.js"></script>
+        <script src="../scripts/helpers.js"></script>
         <script src="../scripts/content/storage.js"></script>
         <script src="../scripts/content/models/profile.model.js"></script>
         <script src="../scripts/content/models/skill.model.js"></script>
@@ -200,6 +214,8 @@
         <script src="js/directives.js"></script>
         <script src="js/directives/scoring.directive.js"></script>
         <script src="js/directives/taggle.directive.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/services/mail-verifier.service.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>
