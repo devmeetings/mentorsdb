@@ -1,0 +1,80 @@
+html {
+    position: relative;
+    width: 780px;
+    overflow: auto;
+}
+
+body {
+    margin: 10px;
+    height: 100%;
+}
+
+.navbar {
+    padding: 10px;
+}
+
+.form-group:after {
+    content: '';
+    clear: both;
+    display:block;
+    width:100%;
+}
+
+#tags {
+    position: relative;
+}
+
+.bullets .bullet {
+    display: inline-block;
+}
+
+.bullets .bullet .badge,
+.strips .badge {
+    background-color: black;
+}
+
+.emails ul, .emails li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.emails.less ul li {
+    display: inline-block;
+}
+
+.emails ul li:after {
+    content: ', ';
+}
+
+.emails ul li:last-child:after {
+    content: '';
+}
+
+.emails .confirmed {
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.points {
+    font-size: 20px;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); }
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:window-inactive  { background: black; }
