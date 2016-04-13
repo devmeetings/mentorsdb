@@ -1,12 +1,14 @@
 angular.module('App').factory('Profiles', function($q) {
+    var firebase = new Firebase('https://mentorsdb.firebaseio.com/profiles');
     return {
         getAll: function() {
             var deferred = $q.defer();
-            chrome.storage.local.get('profiles', function(res) {
-                if (res.profiles) { 
-                    var resArr = []
-                    for(var i in res.profiles) {
-                        resArr.push(res.profiles[i])
+            firebase.once('value', function(data) {
+                if(data.val()) {
+                    var resArr = [];
+                    var res = data.val();
+                    for(var i in res) {
+                        resArr.push(res[i])
                     }
                     deferred.resolve(resArr);
                 } else deferred.reject('no-profiles');

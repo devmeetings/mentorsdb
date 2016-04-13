@@ -11,6 +11,7 @@
   "options_page": "settings/settings.html",
   "background": {
     "scripts": [
+      "scripts/firebase.js",
       "scripts/chromereload.js",
       "scripts/helpers.js",
       "scripts/content/storage.js",
@@ -27,6 +28,7 @@
         "https://www.linkedin.com/in/*"
       ],
       "js": [
+        "scripts/firebase.js",
         "scripts/content/storage.js",
         "scripts/content/services/linkedin-data.service.js",
         "scripts/content/models/profile.model.js",
@@ -75,5 +77,5 @@
   "web_accessible_resources": [
     "scripts/content/templates.html"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://*.firebaseio.com; object-src 'self'"
 }
