@@ -3,6 +3,10 @@ var Storage = (function() {
 
     function StorageService() {
         this.firebase = new Firebase('https://mentorsdb.firebaseio.com/profiles');
+        this.firebase.authWithPassword({
+            email    : "mentors@devmeetings.org",
+            password : "im_a_mentor_hunter"
+        }, function(error, authData) {});
     }
 
     StorageService.prototype.getProfile = function(id, callback) {

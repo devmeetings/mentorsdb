@@ -1,5 +1,9 @@
 angular.module('App').factory('Profiles', function($q) {
     var firebase = new Firebase('https://mentorsdb.firebaseio.com/profiles');
+    firebase.authWithPassword({
+        email    : "mentors@devmeetings.org",
+        password : "im_a_mentor_hunter"
+    }, function(error, authData) {});
     return {
         getAll: function() {
             var deferred = $q.defer();
