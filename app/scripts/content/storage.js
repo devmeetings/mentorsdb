@@ -21,7 +21,12 @@ var Storage = (function() {
     };
 
     StorageService.prototype.setProfile = function(data, callback) {
-        this.firebase.child(data.id).set(data);
+        var me = this;
+        me.firebase.child(data.id).set(data, function() {
+            me.getProfile(data.id, function(res) {
+                callback(res);
+            });
+        });
     };
 
     return new StorageService;
