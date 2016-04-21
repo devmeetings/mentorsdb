@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -11,6 +11,7 @@
   "options_page": "settings/settings.html",
   "background": {
     "scripts": [
+      "scripts/firebase.js",
       "scripts/chromereload.js",
       "scripts/helpers.js",
       "scripts/content/storage.js",
@@ -27,6 +28,7 @@
         "https://www.linkedin.com/in/*"
       ],
       "js": [
+        "scripts/firebase.js",
         "scripts/content/storage.js",
         "scripts/content/services/linkedin-data.service.js",
         "scripts/content/models/profile.model.js",
@@ -75,5 +77,5 @@
   "web_accessible_resources": [
     "scripts/content/templates.html"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://*.firebaseio.com; object-src 'self'"
 }
