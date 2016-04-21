@@ -1,23 +1,34 @@
 'use strict';
-var Storage = {
-    getProfile: function(id, callback) {
-        chrome.storage.local.get('profiles', function(res) {
-            if (res.profiles && res.profiles[id]) {
-                callback(res.profiles[id]);
+var Storage = (function() {
+
+    function StorageService() {
+        this.firebase = new Firebase('https://mentorsdb.firebaseio.com/profiles');
+        this.firebase.authWithPassword({
+            email    : "mentors@devmeetings.org",
+            password : "im_a_mentor_hunter"
+        }, function(error, authData) {});
+    }
+
+    StorageService.prototype.getProfile = function(id, callback) {
+        this.firebase.child(id).once('value', function(res) {
+            var value = res.val();
+            if(value) {
+                callback(value);
             } else {
                 callback(false);
             }
         });
-    },
-    setProfile: function(data, callback) {
-        var profile = data;
-        chrome.storage.local.get('profiles', function(res) {
-            if(!res.profiles)
-                res.profiles = {};
-        	res.profiles[profile.id] = profile;
-            chrome.storage.local.set({'profiles':res.profiles}, function() {
-                callback(true);  
+    };
+
+    StorageService.prototype.setProfile = function(data, callback) {
+        var me = this;
+        me.firebase.child(data.id).set(data, function() {
+            me.getProfile(data.id, function(res) {
+                callback(res);
             });
         });
-    }
-};
+    };
+
+    return new StorageService;
+
+})();
