@@ -13,7 +13,7 @@ var Profile = (function() {
         this.education = this.makeModels(Education, data.education);
         this.github = this.makeModels(Github, data.github);
         this.scoring = data.scoring? new Scoring(data.scoring): new Scoring();
-        this.status = data.status || 'lead';
+        this.status = data.status || 'new';
         this.comment = data.comment || '';
         this.tags = data.tags || [];
     }
