@@ -1,29 +1,40 @@
 
-<div class="row">
-    <img ng-src="{{profile.img}}" alt="" class="img-circle col s2">
-    <div class="col s9">
-        <h2 class="title">{{profile.name}}</h2>
-        <ul class="contact">
-            <li ng-repeat="(i, email) in profile.email track by i" ng-class="{confirmed:email.confirmed}">
-                E-mail: <a ng-href="mailto:{{email.address}}">{{email.address}}</a> [{{email.source}}]
-            </li>
-            <li>
-                LinkedIn: <a ng-href="https://www.linkedin.com/in/{{profile.id}}" target="_blank">{{profile.id}}</a>
-            </li>
-            <li ng-repeat="(i, github) in profile.github track by i">
-                Github: <a ng-href="https://github.com/{{github.username}}" target="_blank">{{github.username}}</a>
-            </li>
-        </ul>
-        <p>City:    {{profile.city}} </p>
-        <p>Status: {{profile.status}} </p>
-        <ul>
-        <li ng-repeat="tag in profile.tags" class="tag">
-            <button class="{{tag}}" ng-click="updateStatus(profile)">{{tag}}</button>
-        </li>
-    </ul>
-    <p>
-    {{profile.comment}}
-    </p>
-</div>
-<a href="#!" class="secondary-content"><i class="mdi-action-grade"></i></a>
+<div class="profile">
+    <div
+        class="score"
+        ng-class="scoreGroup(profile.score)">
+        {{profile.score}}
+    </div>
+    <div
+        class="photo"
+        ng-style="{ backgroundImage: 'url('+profile.img+')' }">
+    </div>
+    <div class="info">
+        <div class="city pull-right">{{profile.city}}</div>
+        <h2>{{profile.name}}</h2>
+        <div class="status">
+            <span ng-class="{selected:profile.status==='no'}">No</span>
+            <span ng-class="{selected:profile.status==='new'}">New</span>
+            <span ng-class="{selected:profile.status==='contacted'}">Contacted</span>
+            <span ng-class="{selected:profile.status==='dialog'}">Dialog</span>
+            <span ng-class="{selected:profile.status==='rejected-he'}">Rejected-He</span>
+            <span ng-class="{selected:profile.status==='rejected-we'}">Rejected-We</span>
+            <span ng-class="{selected:profile.status==='in-future'}">In-future</span>
+            <span ng-class="{selected:profile.status==='deal'}">Deal</span>
+        </div>
+        <div class="emails">
+            <span ng-repeat="(i, email) in profile.email track by i" ng-class="{confirmed:email.confirmed}">
+                <img src="images/email.png">
+                <a ng-href="mailto:{{email.address}}">{{email.address}}</a>
+            </span>
+        </div>
+        <div class="profiles">
+            <a ng-href="https://www.linkedin.com/in/{{profile.id}}" title="{{profile.id}}" target="_blank" class="linkedin">
+                <img src="images/linkedin.png">
+            </a>
+            <a ng-repeat="(i, github) in profile.github track by i" ng-href="https://github.com/{{github.username}}" title="{{github.username}}" target="_blank" class="github">
+                <img src="images/github.png">
+            </a>
+        </div>
+    </div>
 </div>

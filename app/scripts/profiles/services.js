@@ -12,6 +12,11 @@ angular.module('App').factory('Profiles', function($q) {
                     var resArr = [];
                     var res = data.val();
                     for(var i in res) {
+                        if(res[i].hasOwnProperty('scoring')) {
+                            res[i].score = Object.keys(res[i].scoring).reduce(function(sum, key) {
+                                return sum + res[i].scoring[key];
+                            }, 0);
+                        }
                         resArr.push(res[i])
                     }
                     deferred.resolve(resArr);

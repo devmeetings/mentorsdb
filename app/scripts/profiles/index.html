@@ -6,37 +6,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../libs/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="../libs/bootstrap/dist/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="../libs/materialize/dist/css/materialize.min.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <div class="container" ng-controller="ProfilesCtrl">
-            <div class="input-field row">
-                <div class="col s12">
-                    <input ng-model="searchText" id="search" type="text"/>
-                    <label for="search">Search profile</label>
+        <div ng-controller="ProfilesCtrl">
+            <header class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <button
+                                class="btn btn-default"
+                                ng-click="refreshProfiles()"
+                                ng-disabled="vm.loading">
+                                <span
+                                    class="glyphicon glyphicon-refresh"
+                                    ng-class="{spin:vm.loading}">
+                                </span>
+                            </button>
+                            <div class="col-sm-10">
+                                <input
+                                    ng-model="searchText"
+                                    type="text"
+                                    placeholder="Szukaj profilu"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <ul>
-                <li ng-repeat="profile in profiles | filter:searchFunction(searchText) track by profile.id" class="collection-item avatar srwe">
-            	   <profile  profile="profile"></profile>
-                </li>
-            </ul>
-            <button class="btn waves-effect waves-light" ng-click="exporting=!exporting;importing=false">Export</button>
-            <div ng-if="exporting">
-              <textarea disabled>{{ profiles }}</textarea>
-            </div>
-            <button class="btn waves-effect waves-light" ng-show="!importing" ng-click="importing=true;exporting=false">Import</button>
-            <div ng-if="importing">
-              <textarea ng-model="toImport"></textarea>
-              <button class="btn waves-effect waves-light" ng-click="import(toImport)">Import</button>
+            </header>
+            <div class="container" infinite-scroll="showMore()" infinite-scroll-distance="1">
+                <div
+                ng-repeat="(i, profile) in vm.profiles | filter:searchFunction(searchText) | orderBy:'score':true | limitTo:vm.showCounter track by profile.id">
+                	<profile  profile="profile"></profile>
+                </div>
             </div>
         </div>
         <script src="../firebase.js"></script>
         <script type="text/javascript" src="../libs/jquery/dist/jquery.min.js"></script>
         <script src="../libs/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="../libs/materialize/dist/js/materialize.min.js"></script>
         <script src="../libs/angular/angular.min.js"></script>
+        <script src="libs/infinitescroll.js"></script>
         <script src="app.js"></script>
         <script src="directives.js"></script>
         <script src="services.js"></script>
