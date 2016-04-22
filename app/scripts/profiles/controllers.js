@@ -3,13 +3,19 @@ angular.module('App')
 
     $scope.profiles = [];
     $scope.searchText = "";
+    $scope.showCounter = 30;
 
     function refreshProfiles() {
+      $scope.showCounter = 30;
       Profiles.getAll().then(function(profiles) {
           $scope.profiles = profiles;
       });
     }
     refreshProfiles();
+
+    $scope.$watch('searchText', function() {
+      $scope.showCounter = 30;
+    });
 
     $scope.searchFunction = function(searchText) {
         var keywords = searchText.toLowerCase().split(' ');
@@ -40,6 +46,10 @@ angular.module('App')
 
         $window.alert('Import complete.');
       });
+    };
+
+    $scope.showMore = function() {
+      $scope.showCounter = Math.min($scope.showCounter + 30, $scope.profiles.length);
     };
 
 }]);
