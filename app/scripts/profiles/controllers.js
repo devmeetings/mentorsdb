@@ -1,20 +1,25 @@
 angular.module('App')
 .controller('ProfilesCtrl', ['$scope', '$window', 'Profiles', function($scope, $window, Profiles) {
 
-    $scope.profiles = [];
+    $scope.vm = {
+      profiles: [],
+      showCounter: 30,
+      loading: false
+    };
     $scope.searchText = "";
-    $scope.showCounter = 30;
 
     function refreshProfiles() {
-      $scope.showCounter = 30;
+      $scope.vm.loading = true;
       Profiles.getAll().then(function(profiles) {
-          $scope.profiles = profiles;
+          $scope.vm.profiles = profiles;
+          $scope.vm.loading = false;
+          $scope.vm.showCounter = 30;
       });
     }
     refreshProfiles();
 
     $scope.$watch('searchText', function() {
-      $scope.showCounter = 30;
+      $scope.vm.showCounter = 30;
     });
 
     $scope.searchFunction = function(searchText) {
@@ -32,24 +37,8 @@ angular.module('App')
         };
     };
 
-    $scope.import = function(profiles) {
-      try {
-        profiles = JSON.parse(profiles);
-      } catch (e) {
-        $window.alert('Malformed data: ' + e);
-        return;
-      }
-
-      Profiles.import(profiles).then(function () {
-        $scope.importing = false;
-        refreshProfiles();
-
-        $window.alert('Import complete.');
-      });
-    };
-
     $scope.showMore = function() {
-      $scope.showCounter = Math.min($scope.showCounter + 30, $scope.profiles.length);
+      $scope.vm.showCounter = Math.min($scope.vm.showCounter + 30, $scope.vm.profiles.length);
     };
 
 }]);
