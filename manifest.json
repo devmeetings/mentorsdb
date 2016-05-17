@@ -11,10 +11,10 @@
   "options_page": "settings/settings.html",
   "background": {
     "scripts": [
-      "scripts/firebase.js",
-      "scripts/helpers.js",
-      "scripts/content/storage.js",
-      "scripts/background.js"
+      "background/firebase.js",
+      "background/helpers.js",
+      "background/content/storage.js",
+      "background/background.js"
     ]
   },
   "browser_action": {
@@ -27,18 +27,18 @@
         "https://www.linkedin.com/in/*"
       ],
       "js": [
-        "scripts/firebase.js",
-        "scripts/content/storage.js",
-        "scripts/content/services/linkedin-data.service.js",
-        "scripts/content/models/profile.model.js",
-        "scripts/content/models/skill.model.js",
-        "scripts/content/models/job.model.js",
-        "scripts/content/models/language.model.js",
-        "scripts/content/models/education.model.js",
-        "scripts/content/models/github.model.js",
-        "scripts/content/models/scoring.model.js",
-        "scripts/content/models/email.model.js",
-        "scripts/content/main.controller.js"
+        "content-scripts/firebase.js",
+        "content-scripts/storage.js",
+        "content-scripts/services/linkedin-data.service.js",
+        "content-scripts/models/profile.model.js",
+        "content-scripts/models/skill.model.js",
+        "content-scripts/models/job.model.js",
+        "content-scripts/models/language.model.js",
+        "content-scripts/models/education.model.js",
+        "content-scripts/models/github.model.js",
+        "content-scripts/models/scoring.model.js",
+        "content-scripts/models/email.model.js",
+        "content-scripts/main.controller.js"
       ],
       "run_at": "document_idle",
       "all_frames": false
@@ -48,7 +48,7 @@
         "https://github.com/search?q=*"
       ],
       "js": [
-        "scripts/content/github-search.controller.js"
+        "content-scripts/github-search.controller.js"
       ],
       "run_at": "document_idle",
       "all_frames": false
@@ -58,9 +58,9 @@
         "https://github.com/*"
       ],
       "js": [
-        "scripts/content/services/github-data.service.js",
-        "scripts/content/models/github.model.js",
-        "scripts/content/github.controller.js"
+        "content-scripts/services/github-data.service.js",
+        "content-scripts/models/github.model.js",
+        "content-scripts/github.controller.js"
       ],
       "run_at": "document_idle",
       "all_frames": false

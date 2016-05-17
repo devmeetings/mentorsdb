@@ -1,46 +1,18 @@
-# MentorsDB
+# Pizza Portal
 
-Hunt mentors on social networks for professionals.
-A Chrome Extension will help you.
-
-## Development install
-
-### Prerequirements
-
-Install newest node and run in console:
-
-```node
-npm install -g bower
-npm install -g grunt grunt-cli
+## Before starting app
+```
+$ npm i
 ```
 
-### Install dependencies
-
-```node
-npm install
-bower install
+## Running dev mode
+```
+$ npm run dev
 ```
 
-## Development use
-
-### Start developing
-
-Install the extension on Chrome browser using "Load extension without package" button in developers mode.
-
-Watch for file changes:
-
-```node
-grunt debug
+## Running prod mode 
+```
+$ npm run build
 ```
 
-### Build
-
-```node
-grunt build
-```
-
-New version is generated in "package" folder.
-
-## Dependencies
-
-The extension needs Rapportive extension installed.
+Then app can be served directly from `/dist` directory.
