@@ -3,19 +3,8 @@
   "version": "2.0.0",
   "main": " ",
   "scripts": {
-    "start": "webpack-dev-server --progress --history-api-fallback --content-base ./src --open",
-    "build": "WEBPACK_ENV=production webpack --progress --hide-modules"
+    "start": "webpack --progress --watch --hide-modules"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/responsiveherode/projectpizza.git"
-  },
-  "author": "info@responsivehero.de",
-  "license": "SEE LICENSE IN LICENSE",
-  "bugs": {
-    "url": "https://github.com/responsiveherode/projectpizza/issues"
-  },
-  "homepage": "https://github.com/responsiveherode/projectpizza#readme",
   "dependencies": {
     "@angular/router": "^0.2.0",
     "angular": "^1.5.5",
