@@ -1,4 +1,4 @@
-var Language = (function() {
+const Language = (function() {
 
     function LanguageModel(data) {
         this.name = data.name || '';
@@ -8,3 +8,5 @@ var Language = (function() {
     return LanguageModel;
 
 })();
+
+export default Language;

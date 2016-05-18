@@ -1,4 +1,4 @@
-var GithubDataService = (function() {
+const GithubDataService = (function() {
 
     function textContent(node) {
         return node? node.textContent: '';
@@ -71,3 +71,5 @@ var GithubDataService = (function() {
     };
 
 })();
+
+export default GithubDataService;

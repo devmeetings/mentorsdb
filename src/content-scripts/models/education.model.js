@@ -1,4 +1,4 @@
-var Education = (function() {
+const Education = (function() {
 
     function EducationModel(data) {
         this.school = data.school || '';
@@ -10,3 +10,5 @@ var Education = (function() {
     return EducationModel;
 
 })();
+
+export default Education;

@@ -7,8 +7,12 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = {
 	entry: {
-		base: './src/base/index',
-    settings: './src/settings/index'
+		'base': './src/base/index',
+    'settings': './src/settings/index',
+    'background': './src/background/index',
+    'content-github-search': './src/content-scripts/github-search.controller',
+    'content-github': './src/content-scripts/github.controller',
+    'content-linkedin': './src/content-scripts/linkedin.controller'
 	},
 	output: {
 		publicPath: './',
@@ -20,10 +24,10 @@ const config = {
 	},
 	module: {
 		/* preLoaders: [
-			{test: /\.js$/, loader: 'eslint', exclude: /node_modules/}
+			{test: /\.js$/, loader: 'eslint', exclude: /(node_modules)|(libs)/}
 		], */
 		loaders: [
-			{test: /\.js$/, loader: ['ng-annotate', 'babel'], exclude: /node_modules/},
+			{test: /\.js$/, loader: ['ng-annotate', 'babel'], exclude: /(node_modules)|(libs)/},
 			{test: /\.json$/, loader: 'json', exclude: /node_modules/},
 			{test: /\.html$/, loader: 'html'},
 			{test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
@@ -39,22 +43,22 @@ const config = {
       'moment': 'moment'
     }),
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin("styles.css", {
+    new ExtractTextPlugin("[name]/styles.css", {
       allChunks: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      comments: false
     }),
     new CopyWebpackPlugin([
       {from: './_locales', to: '_locales'},
       {from: './assets', to: 'assets'},
+      {from: './src/popup', to: 'popup'},
       {from: './manifest.json'},
       {from: './src/base/index.html', to: 'base/index.html'},
       {from: './src/settings/index.html', to: 'settings/index.html'}
-    ], {})
+    ], {}),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    })
   ]
 };
 

@@ -1,13 +1,13 @@
 import angular from 'angular';
 
-import MentorModel from './models/mentor';
+// import MentorModel from './models/mentor';
 
-import MentorsService from './services/mentors';
+import FirebaseService from './services/firebase';
 
 const appCommonModule = angular.module('app.common', [])
 
-    .service('Mentor', MentorModel)
+    // .service('Mentor', MentorModel)
 
-    .service('mentorsService', MentorsService);
+    .service('Firebase', FirebaseService);
 
 export default appCommonModule;

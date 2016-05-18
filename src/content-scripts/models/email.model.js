@@ -1,4 +1,4 @@
-var Email = (function() {
+const Email = (function() {
 
     function EmailModel(data) {
         this.address = data.address || '';
@@ -9,3 +9,5 @@ var Email = (function() {
     return EmailModel;
 
 })();
+
+export default Email;

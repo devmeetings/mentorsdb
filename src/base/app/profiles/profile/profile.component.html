@@ -1,0 +1,39 @@
+<div class="profile">
+  <div
+    class="score"
+    ng-class="vm.scoreGroup(vm.profile.score)">
+    {{vm.profile.score}}
+  </div>
+  <div
+    class="photo"
+    ng-style="{ backgroundImage: 'url('+vm.profile.img+')' }">
+  </div>
+  <div class="info">
+    <div class="city pull-right">{{vm.profile.city}}</div>
+    <h2>{{vm.profile.name}}</h2>
+    <div class="status">
+      <span ng-class="{selected:vm.profile.status==='no'}">No</span>
+      <span ng-class="{selected:vm.profile.status==='new'}">New</span>
+      <span ng-class="{selected:vm.profile.status==='contacted'}">Contacted</span>
+      <span ng-class="{selected:vm.profile.status==='dialog'}">Dialog</span>
+      <span ng-class="{selected:vm.profile.status==='rejected-he'}">Rejected-He</span>
+      <span ng-class="{selected:vm.profile.status==='rejected-we'}">Rejected-We</span>
+      <span ng-class="{selected:vm.profile.status==='in-future'}">In-future</span>
+      <span ng-class="{selected:vm.profile.status==='deal'}">Deal</span>
+    </div>
+    <div class="emails">
+      <span ng-repeat="(i, email) in vm.profile.email track by i" ng-class="{confirmed:email.confirmed}">
+        <img src="email.png">
+        <a ng-href="mailto:{{email.address}}">{{email.address}}</a>
+      </span>
+    </div>
+    <div class="profiles">
+      <a ng-href="https://www.linkedin.com/in/{{vm.profile.id}}" title="{{vm.profile.id}}" target="_blank" class="linkedin">
+        <img src="linkedin.png">
+      </a>
+      <a ng-repeat="(i, github) in vm.profile.github track by i" ng-href="https://github.com/{{github.username}}" title="{{github.username}}" target="_blank" class="github">
+        <img src="github.png">
+      </a>
+    </div>
+  </div>
+</div>

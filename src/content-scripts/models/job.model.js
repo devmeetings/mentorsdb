@@ -1,4 +1,4 @@
-var Job = (function() {
+const Job = (function() {
 
     function JobModel(data) {
         this.position = data.position || '';
@@ -11,3 +11,5 @@ var Job = (function() {
     return JobModel;
 
 })();
+
+export default Job;

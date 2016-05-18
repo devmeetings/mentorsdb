@@ -1,4 +1,6 @@
-'use strict';
+import Github from './models/github.model';
+import GithubDataService from './services/github-data.service';
+
 (function() {
 
     function GithubController() {

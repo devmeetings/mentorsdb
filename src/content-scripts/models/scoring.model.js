@@ -1,4 +1,4 @@
-var Scoring = (function() {
+const Scoring = (function() {
 
     function ScoringModel(data) {
         data = data || {};
@@ -24,3 +24,5 @@ var Scoring = (function() {
     return ScoringModel;
 
 })();
+
+export default Scoring;

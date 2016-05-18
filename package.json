@@ -11,9 +11,12 @@
     "angular": "^1.5.5",
     "angular-messages": "^1.5.5",
     "bootstrap": "^3.3.6",
+    "firebase": "^3.0.0",
+    "jquery": "^2.2.3",
     "lodash": "^4.6.1",
     "moment": "^2.13.0",
     "moment-range": "^2.2.0",
+    "ng-infinite-scroll": "^1.2.1",
     "taggle": "^1.7.1"
   },
   "devDependencies": {

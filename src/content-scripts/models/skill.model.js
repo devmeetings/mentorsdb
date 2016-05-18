@@ -1,4 +1,4 @@
-var Skill = (function() {
+const Skill = (function() {
 
     function SkillModel(data) {
         this.name = data.name || '';
@@ -8,3 +8,5 @@ var Skill = (function() {
     return SkillModel;
 
 })();
+
+export default Skill;

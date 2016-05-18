@@ -1,4 +1,5 @@
-'use strict';
+import { removeDiacritics } from '../common/helpers';
+import Storage from '../common/services/storage';
 
 var popupPush;
 var searchEmailPort;

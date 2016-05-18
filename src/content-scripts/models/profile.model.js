@@ -1,4 +1,12 @@
-var Profile = (function() {
+import Email from './email.model';
+import Skill from './skill.model';
+import Job from './job.model';
+import Language from './language.model';
+import Education from './education.model';
+import Github from './github.model';
+import Scoring from './scoring.model';
+
+const Profile = (function() {
 
     function ProfileModel(data) {
         this.id = data.id || null;
@@ -32,3 +40,5 @@ var Profile = (function() {
     return ProfileModel;
 
 })();
+
+export default Profile;

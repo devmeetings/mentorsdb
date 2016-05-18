@@ -1,7 +1,11 @@
-'use strict';
+import Profile from './models/profile.model';
+import Github from './models/github.model';
+import LinkedinDataService from './services/linkedin-data.service';
+import Storage from '../common/services/storage';
+
 (function() {
 
-    function MainController() {
+    function LinkedinController() {
         var me = this;
         chrome.runtime.sendMessage({
             method: 'setStatus',
@@ -53,7 +57,7 @@
         });
     }
 
-    MainController.prototype.findExistingProfile = function(dont_search_for_githubs) {
+    LinkedinController.prototype.findExistingProfile = function(dont_search_for_githubs) {
         var me = this;
         me.getProfile(me.current.id).then(function(existing) {
             me.existing = new Profile(existing);
@@ -91,7 +95,7 @@
         });
     };
 
-    MainController.prototype.getProfile = function(id) {
+    LinkedinController.prototype.getProfile = function(id) {
         var me = this;
         return new Promise(function(resolve, reject) {
             try {
@@ -108,6 +112,6 @@
         });
     };
 
-    return new MainController;
+    return new LinkedinController;
 
 })();

@@ -1,4 +1,4 @@
-var LinkedinDataService = (function() {
+const LinkedinDataService = (function() {
 
     function textContent(node) {
         return node? node.textContent: '';
@@ -134,3 +134,5 @@ var LinkedinDataService = (function() {
     };
 
 })();
+
+export default LinkedinDataService;

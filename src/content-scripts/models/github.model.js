@@ -1,4 +1,4 @@
-var Github = (function() {
+const Github = (function() {
 
     function GithubModel(data) {
         this.username = data.username || '';
@@ -17,3 +17,5 @@ var Github = (function() {
     return GithubModel;
 
 })();
+
+export default Github;
