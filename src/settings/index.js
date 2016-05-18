@@ -1,6 +1,7 @@
-angular.module('App', []);
+import angular from 'angular';
 
-angular.module('App')
+angular
+.module('App', [])
 .controller('SettingsCtrl', ['$scope', function($scope) {
 
     $scope.settings = {
