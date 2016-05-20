@@ -8,6 +8,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const config = {
 	entry: {
 		'base': './src/base/index',
+    'popup': './src/popup/index',
     'settings': './src/settings/index',
     'background': './src/background/index',
     'content-github-search': './src/content-scripts/github-search.controller',
@@ -49,9 +50,9 @@ const config = {
     new CopyWebpackPlugin([
       {from: './_locales', to: '_locales'},
       {from: './assets', to: 'assets'},
-      {from: './src/popup', to: 'popup'},
       {from: './manifest.json'},
       {from: './src/base/index.html', to: 'base/index.html'},
+      {from: './src/popup/index.html', to: 'popup/index.html'},
       {from: './src/settings/index.html', to: 'settings/index.html'}
     ], {}),
     new webpack.ProvidePlugin({

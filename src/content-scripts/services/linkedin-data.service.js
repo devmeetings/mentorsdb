@@ -1,3 +1,5 @@
+import Email from '../models/email.model';
+
 const LinkedinDataService = (function() {
 
     function textContent(node) {
