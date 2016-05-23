@@ -5,9 +5,11 @@ const profilesService = function profilesService($q, Firebase) {
 
     class ProfilesService {
 
-        getAll() {
+        getPage(pageNo) {
           const deferred = $q.defer();
-          Firebase.once('value', function(data) {
+          const pageCount = 30;
+          Firebase.child('profiles')
+            .once('value', function(data) {
             if (data.val()) {
               const resArr = [];
               let res = data.val();

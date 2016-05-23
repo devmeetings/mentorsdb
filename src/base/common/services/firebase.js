@@ -3,7 +3,7 @@ import angular from 'angular';
 const firebaseService = function firebaseService() {
     'ngInject';
 
-    const firebase = new Firebase('https://mentorsdb.firebaseio.com/profiles');
+    const firebase = new Firebase('https://mentorsdb.firebaseio.com');
     
     firebase.authWithPassword({
         email    : "mentors@devmeetings.org",

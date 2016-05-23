@@ -3,7 +3,7 @@
     <button class="btn btn-default" ng-click="vm.showAll()">Pokaż wszystkich</button>
     <button class="btn btn-default" ng-click="vm.close()">Anuluj</button>
     <div class="points pull-right" ng-if="vm.profile.current">
-        <ng-pluralize count="scoreSum()" when="{
+        <ng-pluralize count="vm.scoreSum()" when="{
             '-4': '-4 punkty',
             '-3': '-3 punkty',
             '-2': '-2 punkty',

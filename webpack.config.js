@@ -32,7 +32,7 @@ const config = {
 			{test: /\.json$/, loader: 'json', exclude: /node_modules/},
 			{test: /\.html$/, loader: 'html'},
 			{test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
-      {test: /\.(gif|png|jpe?g)$/i, loader: 'file?name=images/[name]-[hash:6].[ext]'},
+      {test: /\.(gif|png|jpe?g)$/i, loader: 'file?name=/images/[name]-[hash:6].[ext]'},
       {test: /\.woff2?$/, loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'},
       {test: /\.(ttf|eot|svg)$/, loader: 'file?name=fonts/[name].[ext]'},
       {test: /\.less$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")}

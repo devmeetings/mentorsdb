@@ -9,8 +9,8 @@ const linkedinComponent = {
 
     const vm = this;
 
-    var port = chrome.runtime.connect({name: "bridge"});
-    var popupPushPort = chrome.runtime.connect({name: "popupPush"});
+    const port = chrome.runtime.connect({name: "bridge"});
+    const popupPushPort = chrome.runtime.connect({name: "popupPush"});
 
     vm.profile = {
       current: null,
@@ -31,6 +31,7 @@ const linkedinComponent = {
     };
 
     port.onMessage.addListener(function(response) {
+      console.log(response);
       var json;
       if(typeof response === 'string' && response !== 'undefined' && response !== 'null') {
         json = JSON.parse(response);

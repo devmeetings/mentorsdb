@@ -3,7 +3,7 @@ import '../libs/firebase';
 class StorageService {
 
   constructor(props) {
-    this.firebase = new Firebase('https://mentorsdb.firebaseio.com/profiles');
+    this.firebase = new Firebase('https://mentorsdb.firebaseio.com');
     this.firebase.authWithPassword({
       email    : "mentors@devmeetings.org",
       password : "im_a_mentor_hunter"
@@ -11,7 +11,7 @@ class StorageService {
   }
 
   getProfile(id, callback) {
-    this.firebase.child(id).once('value', function(res) {
+    this.firebase.child('profiles').child(id).once('value', function(res) {
       const value = res.val();
       if(value) {
         callback(value);
@@ -22,7 +22,7 @@ class StorageService {
   }
 
   setProfile(data, callback) {
-    this.firebase.child(data.id).set(data, () => {
+    this.firebase.child('profiles').child(data.id).set(data, () => {
       this.getProfile(data.id, function(res) {
         callback(res);
       });

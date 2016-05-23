@@ -20,6 +20,7 @@ chrome.runtime.onConnect.addListener(function(port) {
                         chrome.tabs.sendMessage(tabs[0].id, {
                             method: 'getProfileFromContent'
                         }, function(response) {
+                            console.log(port);
                             port.postMessage(response);
                         });
                     });
