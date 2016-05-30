@@ -1,4 +1,4 @@
-import 'taggle/src/taggle.js';
+import Taggle from 'taggle/src/taggle.js';
 
 const taggle = () => ({
   scope: {

@@ -1,15 +1,15 @@
 import template from './linkedin.component.html';
+import Profile from '../../../content-scripts/models/profile.model';
 
 const linkedinComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function linkedinController($scope, MailVerifier) {
+  controller: function linkedinController($scope, Bridge, MailVerifier) {
     'ngInject';
 
     const vm = this;
 
-    const port = chrome.runtime.connect({name: "bridge"});
     const popupPushPort = chrome.runtime.connect({name: "popupPush"});
 
     vm.profile = {
@@ -30,14 +30,12 @@ const linkedinComponent = {
       education: false
     };
 
-    port.onMessage.addListener(function(response) {
+    Bridge.port.onMessage.addListener(function(response) {
       console.log(response);
-      var json;
-      if(typeof response === 'string' && response !== 'undefined' && response !== 'null') {
-        json = JSON.parse(response);
-        vm.profile.current = json.current;
-        vm.profile.existing = json.existing;
-        vm.profile.initial = new Profile(json.current);
+      if(typeof response === 'object' && response !== 'undefined' && response !== 'null') {
+        vm.profile.current = response.current;
+        vm.profile.existing = response.existing;
+        vm.profile.initial = new Profile(response.current);
         $scope.$apply();
       }
     });
@@ -91,13 +89,13 @@ const linkedinComponent = {
     };
 
     vm.refresh = function() {
-      port.postMessage({
+      Bridge.port.postMessage({
         method: 'getProfile'
       });
     };
 
     vm.save = function() {
-      port.postMessage({
+      Bridge.port.postMessage({
         method: 'setProfile',
         profile: new Profile(vm.profile.current)
       });

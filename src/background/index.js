@@ -17,11 +17,10 @@ chrome.runtime.onConnect.addListener(function(port) {
                         active: true,
                         currentWindow: true
                     }, function(tabs) {
-                        chrome.tabs.sendMessage(tabs[0].id, {
+                        chrome.tabs.sendMessage(31, {
                             method: 'getProfileFromContent'
                         }, function(response) {
-                            console.log(port);
-                            port.postMessage(response);
+                            port.postMessage(JSON.parse(response));
                         });
                     });
                     break;
