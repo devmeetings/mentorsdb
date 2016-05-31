@@ -46,7 +46,7 @@
     <div class="form-group">
         <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
         <div class="col-sm-9">
-            <div class="emails" ng-class="{less: !more.emails, more: more.emails}">
+            <div class="emails" ng-class="{less: !vm.more.emails, more: vm.more.emails}">
                 <ul>
                     <li
                         ng-repeat="(i, email) in vm.profile.current.email track by i"
@@ -59,20 +59,20 @@
                         ng-repeat="(i, github) in vm.profile.current.github track by i"
                         ng-if="!github.removed && github.email">
                         {{github.email}} [github]
-                        <a ng-if="more.emails" ng-click="vm.checkEmail(github.email)"> - zweryfikuj</a>
+                        <a ng-if="vm.more.emails" ng-click="vm.checkEmail(github.email)"> - zweryfikuj</a>
                     </li>
-                    <li ng-repeat="(i, email) in MailVerifier.queue track by i">
+                    <li ng-repeat="(i, email) in vm.MailVerifier.queue track by i">
                         {{email}} [poszukiwany]
                     </li>
-                    <li ng-if="!more.emails"><a ng-click="vm.more.emails = true">więcej...</a></li>
-                    <li ng-if="more.emails"><a ng-click="vm.more.emails = false">mniej.</a></li>
+                    <li ng-if="!vm.more.emails"><a ng-click="vm.more.emails = true">więcej...</a></li>
+                    <li ng-if="vm.more.emails"><a ng-click="vm.more.emails = false">mniej.</a></li>
                 </ul>
-                <div class="form-inline" ng-if="more.emails">
+                <div class="form-inline" ng-if="vm.more.emails">
                     Dodaj ręcznie:
                     <input type="text" class="form-control" ng-model="vm.newmail" placeholder="Wpisz adres e-mail">
                     <button class="btn btn-default" ng-click="vm.addEmail(vm.newmail);newmail=''">Dodaj</button>
                 </div>
-                <button ng-if="more.emails" class="btn btn-link" ng-click="vm.MailVerifier.searchEmail(vm.profile.current)" ng-disabled="MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
+                <button ng-if="vm.more.emails" class="btn btn-link" ng-click="vm.MailVerifier.searchEmail(vm.profile.current)" ng-disabled="vm.MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
             </div>
         </div>
     </div>
@@ -83,14 +83,14 @@
         </div>
         <div class="col-sm-9">
             <div class="bullets">
-                <div class="bullet" ng-repeat="(i, skill) in vm.profile.current.skills | orderBy:'count':true | limitTo:more.skills&&1000||3 track by i">
+                <div class="bullet" ng-repeat="(i, skill) in vm.profile.current.skills | orderBy:'count':true | limitTo:vm.more.skills&&1000||3 track by i">
                     <span class="label label-default">
                         {{skill.name}}
                         <span class="badge">{{skill.count}}</span>
                     </span>
                 </div>
-                <span ng-if="!more.skills && vm.profile.current.skills.length - 3 > 0"><a ng-click="vm.more.skills = true">więcej (+{{vm.profile.current.skills.length - 3}})...</a></span>
-                <span ng-if="more.skills"><a ng-click="vm.more.skills = false">mniej.</a></span>
+                <span ng-if="!vm.more.skills && vm.profile.current.skills.length - 3 > 0"><a ng-click="vm.more.skills = true">więcej (+{{vm.profile.current.skills.length - 3}})...</a></span>
+                <span ng-if="vm.more.skills"><a ng-click="vm.more.skills = false">mniej.</a></span>
             </div>
         </div>
     </div>
@@ -100,11 +100,11 @@
             <scoring score="vm.profile.current.scoring.experience"></scoring>
         </div>
         <div class="col-sm-9">
-            <div ng-if="!more.jobs">
-                <span ng-repeat="(i, job) in vm.profile.current.jobs | limitTo:more.jobs&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span ng-class="{bold: job.current}">{{job.position}}</span></span>; </span>
-                <span ng-if="!more.jobs"><a ng-click="vm.more.jobs = true">więcej<span ng-if="vm.profile.current.jobs.length - 3 > 0"> (+{{vm.profile.current.jobs.length - 3}})</span>...</a></span>
+            <div ng-if="!vm.more.jobs">
+                <span ng-repeat="(i, job) in vm.profile.current.jobs | limitTo:vm.more.jobs&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span ng-class="{bold: job.current}">{{job.position}}</span></span>; </span>
+                <span ng-if="!vm.more.jobs"><a ng-click="vm.more.jobs = true">więcej<span ng-if="vm.profile.current.jobs.length - 3 > 0"> (+{{vm.profile.current.jobs.length - 3}})</span>...</a></span>
             </div>
-            <div ng-if="more.jobs" class="jobs">
+            <div ng-if="vm.more.jobs" class="jobs">
                 <div class="job" ng-repeat="(i, job) in vm.profile.current.jobs track by i">
                     <div><strong>{{job.position}}</strong></div>
                     <div>Firma: <i>{{job.company}}</i></div>
@@ -113,7 +113,7 @@
                     <div ng-if="job.current" class="bold">Obecnie zatrudniony</div>
                     <hr>
                 </div>
-                <div ng-if="more.jobs"><a ng-click="vm.more.jobs = false">mniej.</a></div>
+                <div ng-if="vm.more.jobs"><a ng-click="vm.more.jobs = false">mniej.</a></div>
             </div>
         </div>
     </div>
@@ -148,11 +148,11 @@
             <scoring score="vm.profile.current.scoring.education"></scoring>
         </div>
         <div class="col-sm-9">
-            <div ng-if="!more.education">
-                <span ng-repeat="(i, education) in vm.profile.current.education | limitTo:more.education&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span class="bold">{{education.school}}</span></span>; </span>
-                <span ng-if="!more.education"><a ng-click="vm.more.education = true">więcej<span ng-if="vm.profile.current.education.length - 3 > 0"> (+{{vm.profile.current.education.length - 3}})</span>...</a></span>
+            <div ng-if="!vm.more.education">
+                <span ng-repeat="(i, education) in vm.profile.current.education | limitTo:vm.more.education&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span class="bold">{{education.school}}</span></span>; </span>
+                <span ng-if="!vm.more.education"><a ng-click="vm.more.education = true">więcej<span ng-if="vm.profile.current.education.length - 3 > 0"> (+{{vm.profile.current.education.length - 3}})</span>...</a></span>
             </div>
-            <div ng-if="more.education" class="educationlist">
+            <div ng-if="vm.more.education" class="educationlist">
                 <div class="education" ng-repeat="(i, education) in vm.profile.current.education track by i">
                     <div><strong>{{education.school}}</strong></div>
                     <div>Stopień: <i>{{education.degree}}</i></div>
@@ -160,7 +160,7 @@
                     <div>Okres: {{education.date}}</div>
                     <hr>
                 </div>
-                <div ng-if="more.education"><a ng-click="vm.more.education = false">mniej.</a></div>
+                <div ng-if="vm.more.education"><a ng-click="vm.more.education = false">mniej.</a></div>
             </div>
         </div>
     </div>
