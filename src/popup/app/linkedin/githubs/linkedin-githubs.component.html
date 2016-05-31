@@ -1,0 +1,23 @@
+<div class="form-group">
+    <div class="col-sm-3">
+        <label class="control-label">GitHub</label>
+        <scoring score="vm.profile.current.scoring.github"></scoring>
+    </div>
+    <div class="col-sm-9">
+        <div class="githubs">
+            <div class="github" ng-repeat="(i, github) in vm.profile.current.github | filter:{removed:false} track by i">
+                <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;margin-right:10px;">
+                <button class="btn btn-danger" ng-click="github.removed = true" style="float:right;">X</button>
+                <div><strong>{{github.city}}</strong>, {{github.contributions}} commitów</div>
+                <div>
+                    <a ng-click="vm.openGithub(github.username)">{{github.username}}</a><span ng-if="github.email">, <a ng-href="mailto:{{github.email}}">{{github.email}}</a></span><span ng-if="github.url">, <a ng-href="{{github.url}}">{{github.url}}</a></span>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="form-inline">
+            <input type="text" class="form-control" ng-model="vm.githubSearch" placeholder="Wpisz nazwę użytkownika">
+            <button class="btn btn-default" ng-click="vm.addGithubProfile(vm.githubSearch)">Dodaj GitHub</button>
+        </div>
+    </div>
+</div>

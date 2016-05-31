@@ -1,0 +1,33 @@
+<div class="form-group">
+    <label for="email" class="col-sm-3 control-label">Adresy e-mail</label>
+    <div class="col-sm-9">
+        <div class="emails" ng-class="{less: !vm.more.emails, more: vm.more.emails}">
+            <ul>
+                <li
+                    ng-repeat="(i, email) in vm.profile.current.email track by i"
+                    ng-class="{confirmed:email.confirmed}">
+                    {{email.address}} [{{email.source}}]
+                    <a ng-if="email.confirmed === null" ng-click="vm.MailVerifier.checkEmail(email.address)"> - zweryfikuj</a>
+                    <a ng-click="vm.removeEmail(i)">[X]</a>
+                </li>
+                <li
+                    ng-repeat="(i, github) in vm.profile.current.github track by i"
+                    ng-if="!github.removed && github.email">
+                    {{github.email}} [github]
+                    <a ng-if="vm.more.emails" ng-click="vm.MailVerifier.checkEmail(github.email)"> - zweryfikuj</a>
+                </li>
+                <li ng-repeat="(i, email) in vm.MailVerifier.queue track by i">
+                    {{email}} [poszukiwany]
+                </li>
+                <li ng-if="!vm.more.emails"><a ng-click="vm.more.emails = true">więcej...</a></li>
+                <li ng-if="vm.more.emails"><a ng-click="vm.more.emails = false">mniej.</a></li>
+            </ul>
+            <div class="form-inline" ng-if="vm.more.emails">
+                Dodaj ręcznie:
+                <input type="text" class="form-control" ng-model="vm.newmail" placeholder="Wpisz adres e-mail">
+                <button class="btn btn-default" ng-click="vm.addEmail(vm.newmail);newmail=''">Dodaj</button>
+            </div>
+            <button ng-if="vm.more.emails" class="btn btn-link" ng-click="vm.MailVerifier.searchEmail(vm.profile.current)" ng-disabled="vm.MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="form-group">
+    <div class="col-sm-3">
+        <label class="control-label">Języki</label>
+        <scoring score="vm.profile.current.scoring.languages"></scoring>
+    </div>
+    <div class="col-sm-9">
+        <div class="strips">
+            <div ng-repeat="(i, language) in vm.profile.current.languages track by i">
+                <span class="label label-default">
+                    {{language.name}}
+                    <div class="badge">{{language.proficiency}}</div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

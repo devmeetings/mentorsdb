@@ -1,0 +1,30 @@
+<!doctype html>
+<html ng-app="App" ng-csp="">
+  <head>
+    <title>LinkedIn Settings</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div ng-controller="SettingsCtrl">
+      <form ng-submit="save()">
+        <div class="form-group">
+          <div class="col-sm-3">
+            <label for="email" class="control-label">Rapportive draft mail id</label>
+            <p>Zainstaluj Rapportive. Utwórz nowego e-maila w Gmailu i uzupełnij mu adresata. Skopiuj tu identyfikator tego e-maila. Nie usuwaj go - ten e-mail musi zostać w Roboczych dla poprawnego działania rozszerzenia.</p>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" id="email" class="form-control" ng-model="settings.mail">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

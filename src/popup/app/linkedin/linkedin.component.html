@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default">
+    <button class="btn btn-primary" ng-if="vm.linkedinService.profile.current && !vm.linkedinService.profile.existing" ng-click="vm.save()">Dodaj</button>
+    <button class="btn btn-default" ng-click="vm.showAll()">Pokaż wszystkich</button>
+    <button class="btn btn-default" ng-click="vm.close()">Anuluj</button>
+    <div class="points pull-right" ng-if="vm.linkedinService.profile.current">
+        <ng-pluralize count="vm.scoreSum()" when="{
+            '-4': '-4 punkty',
+            '-3': '-3 punkty',
+            '-2': '-2 punkty',
+            '-1': '-1 punkt',
+            '0': '0 punktów',
+            '1': '1 punkt',
+            '2': '2 punkty',
+            '3': '3 punkty',
+            '4': '4 punkty',
+            'other': '{} punktów'
+        }"></ng-pluralize>
+    </div>
+</nav>
+<div ng-if="vm.linkedinService.profile.current">
+    <linkedin-general profile="vm.linkedinService.profile"></linkedin-general>
+    <linkedin-emails profile="vm.linkedinService.profile"></linkedin-emails>
+    <linkedin-skills profile="vm.linkedinService.profile"></linkedin-skills>
+    <linkedin-jobs profile="vm.linkedinService.profile"></linkedin-jobs>
+    <linkedin-description profile="vm.linkedinService.profile"></linkedin-description>
+    <linkedin-languages profile="vm.linkedinService.profile"></linkedin-languages>
+    <linkedin-education profile="vm.linkedinService.profile"></linkedin-education>
+    <linkedin-githubs profile="vm.linkedinService.profile"></linkedin-githubs>
+</div>

@@ -1,0 +1,39 @@
+import Github from './models/github.model';
+import GithubDataService from './services/github-data.service';
+
+(function() {
+
+    function GithubController() {
+        var me = this;
+        var body = document.querySelector('body');
+        if(body.className.split(' ').indexOf('page-profile') >= 0) {
+            this.github = new Github({
+                username: GithubDataService.getUsername(),
+                avatar: GithubDataService.getAvatar(),
+                city: GithubDataService.getCity(),
+                email: GithubDataService.getEmail(),
+                url: GithubDataService.getUrl(),
+                joindate: GithubDataService.getJoindate(),
+                followers: GithubDataService.getFollowers(),
+                starred: GithubDataService.getStarred(),
+                following: GithubDataService.getFollowing(),
+                contributions: GithubDataService.getContributions()
+            });
+            chrome.runtime.sendMessage({
+                method: 'getTab'
+            }, function(tab) {
+                if(tab.openerTabId !== null && tab.pinned) {
+                    chrome.runtime.sendMessage({
+                        method: 'setGithubProfile',
+                        openerTabId: tab.openerTabId,
+                        github: me.github
+                    });
+                    window.close();
+                }
+            });
+        }
+    }
+
+    return new GithubController;
+
+})();

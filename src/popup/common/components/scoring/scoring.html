@@ -1,0 +1,11 @@
+<span class="btn-group btn-group-xs pull-right">
+  <div
+    ng-repeat="value in vm.scores"
+    class="btn btn-default"
+    ng-class="{
+      active: vm.score === value
+    }"
+    ng-click="vm.updateScore(value)">
+    {{value}}
+  </div>
+</span>
