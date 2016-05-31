@@ -1,4 +1,7 @@
 import angular from 'angular';
+import {
+  removeDiacritics,
+} from '../../../common/helpers';
 
 const mailVerifierService = function mailVerifierService($rootScope) {
   'ngInject';

@@ -5,12 +5,10 @@ const linkedinComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function linkedinController($scope, Bridge, MailVerifier) {
+  controller: function linkedinController($scope, Bridge) {
     'ngInject';
 
     const vm = this;
-
-    const popupPushPort = chrome.runtime.connect({name: "popupPush"});
 
     vm.profile = {
       current: null,
@@ -18,20 +16,7 @@ const linkedinComponent = {
       initial: {}
     };
 
-    vm.githubSearch = '';
-    vm.newmail = '';
-
-    vm.MailVerifier = MailVerifier;
-
-    vm.more = {
-      emails: false,
-      skills: false,
-      jobs: false,
-      education: false
-    };
-
     Bridge.port.onMessage.addListener(function(response) {
-      console.log(response);
       if(typeof response === 'object' && response !== 'undefined' && response !== 'null') {
         vm.profile.current = response.current;
         vm.profile.existing = response.existing;
@@ -40,7 +25,7 @@ const linkedinComponent = {
       }
     });
 
-    popupPushPort.onMessage.addListener(function(response) {
+    Bridge.popupPushPort.onMessage.addListener(function(response) {
       if(response === 'refresh') {
         vm.refresh();
       }
@@ -62,30 +47,6 @@ const linkedinComponent = {
       return Object.keys(vm.profile.current.scoring).reduce(function(sum, key) {
         return sum += vm.profile.current.scoring[key];
       }, 0);
-    };
-
-    vm.openGithub = function(username) {
-      chrome.tabs.create({
-        url: 'https://github.com/' + username,
-        active: true
-      });
-    };
-
-    vm.addGithubProfile = function(username) {
-      if(username) {
-        chrome.tabs.query({
-          active: true,
-          currentWindow: true
-        }, function(tabs) {
-          chrome.tabs.create({
-            url: 'https://github.com/' + username,
-            active: false,
-            openerTabId: tabs[0].id
-          }, function(tab) {
-            vm.refresh();
-          });
-        });
-      }
     };
 
     vm.refresh = function() {
@@ -112,19 +73,6 @@ const linkedinComponent = {
 
     vm.close = function() {
       window.close();
-    };
-
-    vm.addEmail = function(email) {
-      if(email) {
-        vm.profile.current.email.push(new Email({
-          address: email,
-          source: 'manual'
-        }));
-      }
-    };
-
-    vm.removeEmail = function(i) {
-      vm.profile.current.email.splice(i, 1);
     };
 
     vm.refresh();
