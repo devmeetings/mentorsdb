@@ -17,7 +17,7 @@ chrome.runtime.onConnect.addListener(function(port) {
                         active: true,
                         currentWindow: true
                     }, function(tabs) {
-                        chrome.tabs.sendMessage(31, {
+                        chrome.tabs.sendMessage(tabs[0].id, {
                             method: 'getProfileFromContent'
                         }, function(response) {
                             port.postMessage(JSON.parse(response));
