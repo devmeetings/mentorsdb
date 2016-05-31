@@ -4,7 +4,9 @@ const linkedinGithubsComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function linkedinGithubsController() {
+  controller: function linkedinGithubsController(linkedinService) {
+    'ngInject';
+    
     const vm = this;
 
     vm.githubSearch = '';
@@ -27,7 +29,7 @@ const linkedinGithubsComponent = {
             active: false,
             openerTabId: tabs[0].id
           }, function(tab) {
-            vm.refresh();
+            linkedinService.refresh();
           });
         });
       }
