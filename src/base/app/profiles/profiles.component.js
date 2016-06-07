@@ -4,7 +4,7 @@ const profilesComponent = {
     template,
     restrict: 'E',
     bindings: { $router: '<' },
-    controller: function profilesController($scope, profilesListService) {
+    controller: function profilesController($scope, profilesListService, $firebaseArray) {
         'ngInject';
 
         const vm = this;
@@ -40,6 +40,17 @@ const profilesComponent = {
           vm.pageNo = Math.min(vm.pageNo + 1, 1000);
           profilesListService.getPage(vm.pageNo);
         };
+
+        vm.scoringTotal = () => {
+          const ref = firebase.database().ref('profiles');
+          const now = new Date();
+          return $firebaseArray(ref).$loaded().then(profiles => {
+            profiles.forEach(profile => {
+              profile.createDate = now;
+              profile.modifyDate = now;
+              profiles.$save(profile);
+            });
+          });
         };
 
         vm.refreshProfiles();

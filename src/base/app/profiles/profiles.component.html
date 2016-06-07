@@ -23,6 +23,7 @@
   </div>
 </header>
 <div class="container">
+  <button ng-click="vm.scoringTotal()">Scoring total</button>
   <div
   ng-repeat="(i, profile) in vm.profilesListService.data.list | filter:vm.searchFunction(vm.searchText) | orderBy:'score':true track by profile.id">
     <profile profile="profile"></profile>
