@@ -9,7 +9,7 @@ chrome.runtime.onConnect.addListener(function(port) {
     }
 });
 
-function setProfileOnClose(request) {
+export function setProfileOnClose(request) {
     if(request.exists) {
         saveProfile(request.profile);
     } else if(request.changed) {
@@ -19,7 +19,7 @@ function setProfileOnClose(request) {
     }
 }
 
-function saveProfile(profile) {
+export function saveProfile(profile) {
     Storage.setProfile(profile, function(res) {
         chrome.tabs.query({
             active: true,
@@ -31,6 +31,3 @@ function saveProfile(profile) {
         });
     });  
 }
-
-export setProfileOnClose;
-export saveProfile;

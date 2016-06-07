@@ -1,35 +1,18 @@
 import angular from 'angular';
 
-const profilesService = function profilesService($q, Firebase) {
+const profilesService = function profilesService($q, $firebaseArray) {
     'ngInject';
 
-    class ProfilesService {
 
-        getPage(pageNo) {
-          const deferred = $q.defer();
-          const pageCount = 30;
-          Firebase.child('profiles')
-            .once('value', function(data) {
-            if (data.val()) {
-              const resArr = [];
-              let res = data.val();
-              for(let i in res) {
-                if(res[i].hasOwnProperty('scoring')) {
-                  res[i].score = Object.keys(res[i].scoring).reduce(function(sum, key) {
-                    return sum + res[i].scoring[key];
-                  }, 0);
-                }
-                resArr.push(res[i])
-              }
-              deferred.resolve(resArr);
-            } else deferred.reject('no-profiles');
-          });
-          return deferred.promise;
-        }
+    const getPage = (pageNo) => {
+      pageNo = pageNo || 1;
+      const ref = firebase.database().ref('profiles').orderByChild('score').limitToLast(pageNo * 30);
+      return $firebaseArray(ref).$loaded();
+    };
 
-    }
-
-    return new ProfilesService();
+    return {
+      getPage,
+    };
 };
 
 export default profilesService;

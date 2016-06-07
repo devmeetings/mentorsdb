@@ -6,18 +6,17 @@ const profilesListService = function profilesListService(profilesService) {
     loading: false,
   };
 
-  const getList = () => {
+  const getPage = (pageNo) => {
     data.loading = true;
-    return profilesService.getPage().then(profiles => {
+    return profilesService.getPage(pageNo).then(profiles => {
       data.list = profiles;
       data.loading = false;
-      return profiles;
     });
   };
 
   return {
     data,
-    getList,
+    getPage,
   };
 };
 

@@ -10,18 +10,16 @@ const profilesComponent = {
         const vm = this;
 
         vm.profilesListService = profilesListService;
-        vm.showCounter = 30;
+        vm.pageNo = 1;
         vm.searchText = '';
 
         vm.refreshProfiles = () => {
           vm.loading = true;
-          profilesListService.getList().then(function() {
-              vm.showCounter = 30;
-          });
+          profilesListService.getPage();
         };
 
         $scope.$watch('vm.searchText', () => {
-          vm.showCounter = 30;
+          vm.pageNo = 1;
         });
 
         vm.searchFunction = searchText => {
@@ -39,7 +37,9 @@ const profilesComponent = {
         };
 
         vm.showMore = function() {
-          vm.showCounter = Math.min(vm.showCounter + 30, vm.profilesListService.data.list.length);
+          vm.pageNo = Math.min(vm.pageNo + 1, 1000);
+          profilesListService.getPage(vm.pageNo);
+        };
         };
 
         vm.refreshProfiles();
