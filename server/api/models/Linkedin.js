@@ -1,15 +1,8 @@
-/**
- * Linkedin.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
- */
-
 module.exports = {
-
   attributes: {
     id: {
-      type: 'string'
+      type: 'string',
+      primaryKey: true
     },
     name: {
       type: 'string'
@@ -32,12 +25,24 @@ module.exports = {
     scoring: {
       type: 'json'
     },
+    tags: {
+      type: 'array'
+    },
     education: {
+      collection: 'education',
+      via: 'linkedin'
     },
     jobs: {
+      collection: 'job',
+      via: 'linkedin'
     },
     skills: {
+      collection: 'skill',
+      via: 'linkedin'
+    },
+    emails: {
+      collection: 'email',
+      via: 'linkedin'
     }
   }
 };
-
