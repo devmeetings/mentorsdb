@@ -1,17 +1,10 @@
-/**
- * LinkedinController
- *
- * @description :: Server-side logic for managing Linkedins
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
- */
+var firebase = require('firebase');
+firebase.initializeApp({
+  serviceAccount: "config/firebase.json",
+  databaseURL: 'https://mentorsdb.firebaseio.com',
+});
 
 module.exports = {
-	
-
-
-  /**
-   * `LinkedinController.index()`
-   */
   index: function (req, res) {
     console.log('index called');
     return res.json({
@@ -19,43 +12,41 @@ module.exports = {
     });
   },
 
-
-  /**
-   * `LinkedinController.create()`
-   */
   create: function (req, res) {
-    return res.json({
-      todo: 'create() is not implemented yet!'
+    var params = req.params.all()
+    Linkedin.create(params).exec(function(err, created) {
+      return res.json(created);
     });
   },
 
-
-  /**
-   * `LinkedinController.update()`
-   */
   update: function (req, res) {
     return res.json({
       todo: 'update() is not implemented yet!'
     });
   },
 
-
-  /**
-   * `LinkedinController.delete()`
-   */
   delete: function (req, res) {
     return res.json({
       todo: 'delete() is not implemented yet!'
     });
   },
 
-
-  /**
-   * `LinkedinController.find()`
-   */
   find: function (req, res) {
     return res.json({
       todo: 'find() is not implemented yet!'
+    });
+  },
+
+  import: function(req, res) {
+    var ref = firebase.database().ref('profiles');
+    ref.once('value', function(snapshot) {
+      var data = snapshot.val();
+      for(key in data) {
+        Linkedin.create(data[key]).exec(function() {});
+      }
+      res.json({
+        status: true
+      });
     });
   }
 };
