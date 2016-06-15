@@ -36,7 +36,8 @@ module.exports.routes = {
   'get /linkedin': 'LinkedinController.getAll',
   'post /linkedin': 'LinkedinController.create',
   'get /linkedin/:id': 'LinkedinController.find',
-  'put /linkedin/:id': 'LinkedinController.update'
+  'put /linkedin/:id': 'LinkedinController.update',
+  'get /statuses': 'TrelloController.lists'
 
   /***************************************************************************
   *                                                                          *
