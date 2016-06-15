@@ -7,7 +7,7 @@ if (!firebase.apps.length) {
 }
 
 module.exports = {
-  index: function (req, res) {
+  getAll: function (req, res) {
     var params = req.params.all();
     /*var query = {};
     query.sort = 'score DESC';
@@ -51,27 +51,29 @@ module.exports = {
   },
 
   create: function (req, res) {
-    var params = req.params.all();
-    Linkedin.create(params).exec(function(err, created) {
-      return res.json(created);
+    var body = req.body;
+    Linkedin.create(body).exec(function(err, created) {
+      res.json(created);
     });
   },
 
   update: function (req, res) {
-    return res.json({
-      todo: 'update() is not implemented yet!'
-    });
-  },
-
-  delete: function (req, res) {
-    return res.json({
-      todo: 'delete() is not implemented yet!'
+    var id = req.params.id;
+    var body = req.body;
+    Linkedin.update({
+      id: id
+    }, body)
+    .exec(function(err, updated) {
+      res.json(updated);
     });
   },
 
   find: function (req, res) {
-    return res.json({
-      todo: 'find() is not implemented yet!'
+    var id = req.params.id;
+    Linkedin.findOne({
+      id: id
+    }).exec(function(err, result) {
+      res.json(result);
     });
   },
 

@@ -32,10 +32,11 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
-  '/import': 'LinkedinController.import'
+  '/import': 'LinkedinController.import',
+  'get /linkedin': 'LinkedinController.getAll',
+  'post /linkedin': 'LinkedinController.create',
+  'get /linkedin/:id': 'LinkedinController.find',
+  'put /linkedin/:id': 'LinkedinController.update'
 
   /***************************************************************************
   *                                                                          *
