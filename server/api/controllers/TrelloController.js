@@ -8,5 +8,37 @@ module.exports = {
         return list.name;
       }));
     });
+  },
+
+  generate: function(req, res) {
+    Profile
+      .find()
+      .limit(5)
+      .populate('linkedin')
+      .exec(function(err, profiles) {
+        var profile;
+        function pushCard(err, trelloCard) {
+          if(typeof trelloCard === 'object') {
+            Profile.update({
+              id: profile.id
+            }, {
+              trello: trelloCard.id
+            }).exec(function() {});
+          }
+          if(profiles.length > 0) {
+            profile = profiles.pop();
+            trello.addCard(profile.linkedin.name, profile.linkedin.comment, '5762552263f4a88b0e94c9f5', pushCard, {
+              pos: 'top',
+              due: null,
+              urlSource: profile.linkedin.img
+            });
+          } else {
+            res.json({
+              "status": "done"
+            });
+          }
+        }
+        pushCard();
+      });
   }
 };

@@ -27,11 +27,7 @@ module.exports = {
       var pageCount = Math.ceil(count / limit);
       Linkedin.native(function(err, collection) {
         collection
-          .find({
-            $where: function() {
-              return false;
-            }
-          })
+          .find()
           .sort({
             score: -1
           })
@@ -78,14 +74,16 @@ module.exports = {
   },
 
   import: function(req, res) {
-    var ref = firebase.database().ref('profiles');
-    ref.once('value', function(snapshot) {
-      var data = snapshot.val();
-      for(key in data) {
-        Linkedin.create(data[key]).exec(function() {});
-      }
-      res.json({
-        status: true
+    Linkedin.destroy().exec(function() {
+      var ref = firebase.database().ref('profiles');
+      ref.once('value', function(snapshot) {
+        var data = snapshot.val();
+        for(key in data) {
+          Linkedin.create(data[key]).exec(function() {});
+        }
+        res.json({
+          status: true
+        });
       });
     });
   }

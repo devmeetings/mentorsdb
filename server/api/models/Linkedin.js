@@ -43,6 +43,10 @@ module.exports = {
     emails: {
       collection: 'email',
       via: 'linkedin'
+    },
+    profile: {
+      collection: 'profile',
+      via: 'linkedin'
     }
   }
 };
