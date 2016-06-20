@@ -4,6 +4,7 @@ var trello = new Trello("ab3e486648b4909be5427ab953859e8a", "c5d4d43264e520d1041
 
 module.exports = {
   boardId: '57625508dc20256493fb9899',
+  listId: '5762552263f4a88b0e94c9f5',
 
   lists: function (req, res) {
     var trelloController = this;
@@ -42,7 +43,7 @@ module.exports = {
       trello.addCard(
         profile.linkedin.name,
         profile.linkedin.comment,
-        '5762552263f4a88b0e94c9f5',
+        trelloController.listId,
         function(err, trelloCard) {
           Profile.update({
             id: profile.id
@@ -79,6 +80,13 @@ module.exports = {
           urlSource: profile.linkedin.img
         }
       );
+    });
+  },
+
+  addCardCallback: function(req, res) {
+    console.log('trello callback', req);
+    res.json({
+      'status': 'done'
     });
   }
 };
