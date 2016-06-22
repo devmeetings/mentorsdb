@@ -45,7 +45,7 @@ module.exports.routes = {
   'put /profiles/:id': 'ProfileController.update',
 
   '/trello/generate': 'TrelloController.generate',
-  'get /statuses': 'TrelloController.lists'
+  'get /statuses': 'TrelloController.lists',
   'get /trello/callback': 'TrelloController.addCardCallback'
 
   /***************************************************************************
