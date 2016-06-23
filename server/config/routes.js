@@ -46,7 +46,7 @@ module.exports.routes = {
 
   '/trello/generate': 'TrelloController.generate',
   'get /statuses': 'TrelloController.lists',
-  'get /trello/callback': 'TrelloController.addCardCallback'
+  '/trello/callback': 'TrelloController.callback'
 
   /***************************************************************************
   *                                                                          *

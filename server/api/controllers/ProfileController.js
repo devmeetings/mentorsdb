@@ -36,7 +36,6 @@ module.exports = {
 
   find: function (req, res) {
     var id = req.params.id;
-    console.log('find', id);
     Profile
     .findOne({
       id: id

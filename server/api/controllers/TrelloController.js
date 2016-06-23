@@ -83,10 +83,60 @@ module.exports = {
     });
   },
 
-  addCardCallback: function(req, res) {
-    console.log('trello callback', req);
+  callback: function(req, res) {
+    var data = req.body;
+    switch(data.action.type) {
+      case 'createCard':
+        this.createCardCallback(data);
+        break;
+      case 'updateCard':
+        this.updateCardCallback(data);
+        break;
+      case 'addAttachmentToCard':
+        this.addAttachmentCallback(data);
+        break;
+      case 'deleteAttachmentFromCard':
+        break;
+      case 'commentCard':
+        break;
+      case 'addLabelToCard':
+        break;
+      default:
+        console.log('Trello callback: unhandled action "' + data.action.type + '"');
+    }
     res.json({
       'status': 'done'
     });
+  },
+
+  createCardCallback: function(data) {
+    var card = data.action.data.card;
+    var trelloId = card.id;
+    Profile
+    .findOne({
+      trello: trelloId
+    })
+    .exec(function(err, profile) {
+      if (!profile) {
+        Profile.create({
+          name: card.name,
+          trello: trelloId
+        }).exec(function(err, created) {});
+      }
+    });
+  },
+
+  updateCardCallback: function(data) {
+    var trelloId = data.action.data.card.id;
+    Profile
+    .findOne({
+      trello: trelloId
+    })
+    .exec(function(err, profile) {
+    });
+  },
+
+  addAttachmentCallback: function(data) {
+
   }
 };
