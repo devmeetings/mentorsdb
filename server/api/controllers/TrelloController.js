@@ -1,6 +1,6 @@
 require('es6-promise').polyfill();
-var Trello = require("trello");
-var trello = new Trello("ab3e486648b4909be5427ab953859e8a", "c5d4d43264e520d104151f44ec389cb473edbfe0b1f2ab8f8f1b05e40390fecd");
+var TrelloAPI = require("trello");
+var trello = new TrelloAPI("ab3e486648b4909be5427ab953859e8a", "c5d4d43264e520d104151f44ec389cb473edbfe0b1f2ab8f8f1b05e40390fecd");
 
 module.exports = {
   boardId: '57625508dc20256493fb9899',
@@ -111,32 +111,33 @@ module.exports = {
 
   createCardCallback: function(data) {
     var card = data.action.data.card;
-    var trelloId = card.id;
+    console.log(card);
     Profile
     .findOne({
-      trello: trelloId
+      trello: card.id
     })
     .exec(function(err, profile) {
       if (!profile) {
         Profile.create({
           name: card.name,
-          trello: trelloId
+          trello: card
         }).exec(function(err, created) {});
       }
     });
   },
 
   updateCardCallback: function(data) {
-    var trelloId = data.action.data.card.id;
-    Profile
-    .findOne({
-      trello: trelloId
-    })
-    .exec(function(err, profile) {
-    });
+    var card = data.action.data.card;
+    Trello
+    .update({
+      id: card.id
+    },
+    card);
   },
 
   addAttachmentCallback: function(data) {
-
+    var card = data.action.data.card;
+    var attachment = data.action.data.attachment;
+    console.log(attachment);
   }
 };

@@ -15,11 +15,10 @@ module.exports = {
       type: 'string'
     },
     trello: {
-      type: 'string'
+      model: 'trello'
     },
     linkedin: {
-      model: 'linkedin',
-      unique: true
+      model: 'linkedin'
     }
   }
 };
