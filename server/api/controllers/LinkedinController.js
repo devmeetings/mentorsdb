@@ -81,9 +81,6 @@ module.exports = {
         for(key in data) {
           var linkedin = data[key];
           var github = linkedin.github;
-          if(github) {
-            console.log(github);
-          }
           linkedin.github = undefined;
           Profile.create({
             name: linkedin.name,

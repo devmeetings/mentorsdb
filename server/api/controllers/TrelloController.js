@@ -7,6 +7,7 @@ module.exports = {
   boardId: '57625508dc20256493fb9899',
   listId: '5762552263f4a88b0e94c9f5',
   linkedinUrlTest: new RegExp("https?://(www\.)?linkedin.com/in/([^?]+)"),
+  githubUrlTest: new RegExp("https?://(www\.)?github.com/([^?/]+)"),
 
   lists: function (req, res) {
     var trelloController = this;
@@ -140,6 +141,7 @@ module.exports = {
     var card = data.action.data.card;
     var attachment = data.action.data.attachment;
     var linkedinTest = this.linkedinUrlTest.exec(attachment.url);
+    var githubTest = this.githubUrlTest.exec(attachment.url);
     if(linkedinTest !== null) {
       var linkedinUsername = linkedinTest[2];
       Linkedin.findOrCreate({
@@ -150,6 +152,17 @@ module.exports = {
         }, {
           linkedin: linkedin
         }).exec(function(err, created) {});
+      });
+    }
+    if(githubTest !== null) {
+      var githubUsername = githubTest[2];
+      Profile.find({
+        trello: ObjectId(card.id)
+      }, function(err, profile) {
+        Github.findOrCreate({
+          username: githubUsername,
+          profile: profile[0]
+        }, function(err, github) {});
       });
     }
   }
