@@ -1,11 +1,3 @@
-var firebase = require('firebase');
-if (!firebase.apps.length) {
-  firebase.initializeApp({
-    serviceAccount: "config/firebase.json",
-    databaseURL: 'https://mentorsdb.firebaseio.com',
-  });
-}
-
 module.exports = {
   getAll: function (req, res) {
     var params = req.params.all();
@@ -43,25 +35,6 @@ module.exports = {
     .populate('linkedin')
     .exec(function(err, result) {
       res.json(result);
-    });
-  },
-
-  generate: function(req, res) {
-    Profile.destroy().exec(function() {
-      Linkedin
-        .find()
-        .exec(function(err, data) {
-          data.forEach(function(linkedin) {
-            Profile.create({
-              name: linkedin.name,
-              city: linkedin.city,
-              linkedin: linkedin.id
-            }).exec(function(err, created) {});
-          });
-          res.json({
-            "status": "done"
-          });
-        });
     });
   }
 };

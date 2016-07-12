@@ -1,10 +1,12 @@
 require('es6-promise').polyfill();
+var ObjectId = require('mongodb').ObjectID;
 var TrelloAPI = require("trello");
 var trello = new TrelloAPI("ab3e486648b4909be5427ab953859e8a", "c5d4d43264e520d104151f44ec389cb473edbfe0b1f2ab8f8f1b05e40390fecd");
 
 module.exports = {
   boardId: '57625508dc20256493fb9899',
   listId: '5762552263f4a88b0e94c9f5',
+  linkedinUrlTest: new RegExp("https?://(www\.)?linkedin.com/in/([^?]+)"),
 
   lists: function (req, res) {
     var trelloController = this;
@@ -19,7 +21,7 @@ module.exports = {
     var trelloController = this;
     Profile
       .find()
-      .limit(5)
+      .limit(15)
       .populate('linkedin')
       .exec(function(err, profiles) {
         var profile;
@@ -46,9 +48,9 @@ module.exports = {
         trelloController.listId,
         function(err, trelloCard) {
           Profile.update({
-            id: profile.id
+            id: ObjectId(profile.id)
           }, {
-            trello: trelloCard.id
+            trello: trelloCard
           }).exec(function() {});
           if(profile.linkedin.tags && profile.linkedin.tags.length > 0) {
             trello.getLabelsForBoard(trelloController.boardId, function(err, labels) {
@@ -111,10 +113,9 @@ module.exports = {
 
   createCardCallback: function(data) {
     var card = data.action.data.card;
-    console.log(card);
     Profile
     .findOne({
-      trello: card.id
+      trello: ObjectId(card.id)
     })
     .exec(function(err, profile) {
       if (!profile) {
@@ -130,14 +131,26 @@ module.exports = {
     var card = data.action.data.card;
     Trello
     .update({
-      id: card.id
+      id: ObjectId(card.id)
     },
-    card);
+    card).exec(function(err, created) {});
   },
 
   addAttachmentCallback: function(data) {
     var card = data.action.data.card;
     var attachment = data.action.data.attachment;
-    console.log(attachment);
+    var linkedinTest = this.linkedinUrlTest.exec(attachment.url);
+    if(linkedinTest !== null) {
+      var linkedinUsername = linkedinTest[2];
+      Linkedin.findOrCreate({
+        id: linkedinUsername
+      }, function(err, linkedin) {
+        Profile.update({
+          trello: ObjectId(card.id)
+        }, {
+          linkedin: linkedin
+        }).exec(function(err, created) {});
+      });
+    }
   }
 };

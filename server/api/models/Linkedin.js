@@ -32,6 +32,10 @@ module.exports = {
       collection: 'education',
       via: 'linkedin'
     },
+    languages: {
+      collection: 'language',
+      via: 'linkedin'
+    },
     jobs: {
       collection: 'job',
       via: 'linkedin'
@@ -40,7 +44,7 @@ module.exports = {
       collection: 'skill',
       via: 'linkedin'
     },
-    emails: {
+    email: {
       collection: 'email',
       via: 'linkedin'
     },

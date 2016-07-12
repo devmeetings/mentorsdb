@@ -28,7 +28,7 @@
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js --port 80"
+    "start": "node app.js --port 3000"
   },
   "main": "app.js",
   "repository": {

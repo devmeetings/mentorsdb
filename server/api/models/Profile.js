@@ -19,6 +19,10 @@ module.exports = {
     },
     linkedin: {
       model: 'linkedin'
+    },
+    github: {
+      collection: 'github',
+      via: 'profile'
     }
   }
 };

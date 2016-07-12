@@ -79,11 +79,30 @@ module.exports = {
       ref.once('value', function(snapshot) {
         var data = snapshot.val();
         for(key in data) {
-          Linkedin.create(data[key]).exec(function() {});
+          var linkedin = data[key];
+          var github = linkedin.github;
+          if(github) {
+            console.log(github);
+          }
+          linkedin.github = undefined;
+          Profile.create({
+            name: linkedin.name,
+            city: linkedin.city,
+            linkedin: linkedin,
+            github: github
+          }).exec(function(err, created) {});
         }
         res.json({
           status: true
         });
+      });
+    });
+  },
+
+  generate: function(req, res) {
+    Profile.destroy().exec(function() {
+      res.json({
+        "status": "done"
       });
     });
   }

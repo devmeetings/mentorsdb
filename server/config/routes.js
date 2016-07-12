@@ -37,8 +37,8 @@ module.exports.routes = {
   'post /linkedin': 'LinkedinController.create',
   'get /linkedin/:id': 'LinkedinController.find',
   'put /linkedin/:id': 'LinkedinController.update',
+  '/profiles/generate': 'LinkedinController.generate',
 
-  '/profiles/generate': 'ProfileController.generate',
   'get /profiles': 'ProfileController.getAll',
   'post /profiles': 'ProfileController.create',
   'get /profiles/:id': 'ProfileController.find',
