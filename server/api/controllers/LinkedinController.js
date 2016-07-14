@@ -47,8 +47,16 @@ module.exports = {
   },
 
   create: function (req, res) {
-    var body = req.body;
-    Linkedin.create(body).exec(function(err, created) {
+    var linkedin = req.body;
+    linkedin.profile = {
+      name: linkedin.name,
+      city: linkedin.city
+    };
+    Linkedin
+    .findOrCreate({
+      id: linkedin.id
+    }, linkedin)
+    .exec(function(err, created) {
       res.json(created);
     });
   },
@@ -92,14 +100,6 @@ module.exports = {
         res.json({
           status: true
         });
-      });
-    });
-  },
-
-  generate: function(req, res) {
-    Profile.destroy().exec(function() {
-      res.json({
-        "status": "done"
       });
     });
   }
