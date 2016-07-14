@@ -36,5 +36,26 @@ module.exports = {
     .exec(function(err, result) {
       res.json(result);
     });
+  },
+
+  one: function (req, res) {
+    Profile
+    .findOne(req.query)
+    .populateAll()
+    .then(function(profile) {
+      var linkedin = Linkedin.find({
+        id: profile.linkedin.id
+      })
+      .populateAll()
+      .then(function(linkedin) {
+        return linkedin;
+      });
+      return [profile, linkedin];
+    })
+    .spread(function(profile, linkedin) {
+      profile = profile.toObject();
+      profile.linkedin = linkedin;
+      res.json(profile);
+    });
   }
 };
