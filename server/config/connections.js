@@ -58,11 +58,11 @@ module.exports.connections = {
   ***************************************************************************/
   mongodb: {
     adapter: 'sails-mongo',
-    host: 'localhost',
+    host: 'mongo9.mydevil.net',
     port: 27017,
-    user: 'root', //optional
-    password: 'pass', //optional
-    database: 'mentorsdb' //optional
+    user: 'mo11695_mentors', //optional
+    password: 'p2qJpJ2BeMnUFVnZnWwX', //optional
+    database: 'mo11695_mentors' //optional
   },
 
   /***************************************************************************
