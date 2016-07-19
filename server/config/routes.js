@@ -39,7 +39,7 @@ module.exports.routes = {
   'put /linkedin/:id': 'LinkedinController.update',
 
   'get /profiles': 'ProfileController.getAll',
-  'get /profiles/one': 'ProfileController.one',
+  'get /profile': 'ProfileController.getOne',
   'get /profiles/:id': 'ProfileController.find',
 
   '/trello/generate': 'TrelloController.generate',

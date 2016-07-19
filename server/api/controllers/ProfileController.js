@@ -38,7 +38,7 @@ module.exports = {
     });
   },
 
-  one: function (req, res) {
+  getOne: function (req, res) {
     Profile
     .findOne(req.query)
     .populateAll()
