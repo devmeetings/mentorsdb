@@ -1,32 +1,28 @@
-import '../libs/firebase';
-
 class StorageService {
 
-  constructor(props) {
-    this.firebase = new Firebase('https://mentorsdb.firebaseio.com');
-    this.firebase.authWithPassword({
-      email    : "mentors@devmeetings.org",
-      password : "im_a_mentor_hunter"
-    }, function(error, authData) {});
-  }
-
   getProfile(id, callback) {
-    this.firebase.child('profiles').child(id).once('value', function(res) {
-      const value = res.val();
-      if(value) {
-        callback(value);
-      } else {
-        callback(false);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `https://mentorsdb.yado.pl/profile?linkedin=${id}`, true);
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status !== 200) {
+          console.error('XHR error');
+          callback(false);
+        } else {
+          const res = JSON.parse(xhr.responseText);
+          callback(res.linkedin);
+        }
       }
-    });
+    };
+    xhr.send();
   }
 
   setProfile(data, callback) {
-    this.firebase.child('profiles').child(data.id).set(data, () => {
+    /* this.firebase.child('profiles').child(data.id).set(data, () => {
       this.getProfile(data.id, function(res) {
         callback(res);
       });
-    });
+    }); */
   }
 
 }

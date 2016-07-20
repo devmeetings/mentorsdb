@@ -1,6 +1,5 @@
 import angular from 'angular';
 import '@angular/router/angular1/angular_1_router';
-import '../common/libs/firebase';
 import 'lodash';
 import 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';

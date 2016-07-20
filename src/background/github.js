@@ -1,3 +1,7 @@
+import {
+    removeDiacritics
+} from '../common/helpers';
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.method) {
         case 'openGithubSearch':

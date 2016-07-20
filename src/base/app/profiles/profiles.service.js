@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-const profilesService = function profilesService($q, Firebase) {
+const profilesService = function profilesService($q) {
     'ngInject';
 
     class ProfilesService {
@@ -8,7 +8,7 @@ const profilesService = function profilesService($q, Firebase) {
         getPage(pageNo) {
           const deferred = $q.defer();
           const pageCount = 30;
-          Firebase.child('profiles')
+          /* Firebase.child('profiles')
             .once('value', function(data) {
             if (data.val()) {
               const resArr = [];
@@ -23,7 +23,7 @@ const profilesService = function profilesService($q, Firebase) {
               }
               deferred.resolve(resArr);
             } else deferred.reject('no-profiles');
-          });
+          }); */
           return deferred.promise;
         }
 
