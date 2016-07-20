@@ -1,29 +1,17 @@
-import Email from './email.model';
-import Skill from './skill.model';
-import Job from './job.model';
-import Language from './language.model';
-import Education from './education.model';
+import Trello from './trello.model';
+import Linkedin from './linkedin.model';
 import Github from './github.model';
-import Scoring from './scoring.model';
 
 const Profile = (function() {
 
     function ProfileModel(data) {
         this.id = data.id || null;
         this.name = data.name || null;
-        this.img = data.img || null;
-        this.email = this.makeModels(Email, data.email);
         this.city = data.city || null;
-        this.description = data.description || null;
-        this.skills = this.makeModels(Skill, data.skills);
-        this.jobs = this.makeModels(Job, data.jobs);
-        this.languages = this.makeModels(Language, data.languages);
-        this.education = this.makeModels(Education, data.education);
+        this.nationality = data.nationality || null;
+        this.trello = data.trello? new Trello(data.trello) : null;
+        this.linkedin = this.makeModels(Linkedin, data.linkedin);
         this.github = this.makeModels(Github, data.github);
-        this.scoring = data.scoring? new Scoring(data.scoring): new Scoring();
-        this.status = data.status || 'new';
-        this.comment = data.comment || '';
-        this.tags = data.tags || [];
     }
 
     ProfileModel.prototype.makeModels = function(model, data) {

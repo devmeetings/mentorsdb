@@ -11,7 +11,7 @@ import LinkedinLanguagesComponent from './languages/linkedin-languages.component
 import LinkedinEducationComponent from './education/linkedin-education.component';
 import LinkedinGithubsComponent from './githubs/linkedin-githubs.component';
 
-import LinkedinService from './linkedin.service';
+import ProfileService from './profile.service';
 
 const linkedinModule = angular.module('app.linkedin', [])
 .component('linkedinComponent', LinkedinComponent)
@@ -22,7 +22,7 @@ const linkedinModule = angular.module('app.linkedin', [])
 .component('linkedinDescription', LinkedinDescriptionComponent)
 .component('linkedinLanguages', LinkedinLanguagesComponent)
 .component('linkedinEducation', LinkedinEducationComponent)
-.component('linkedinGithubs', LinkedinGithubsComponent)
-.service('linkedinService', LinkedinService);
+.component('githubs', LinkedinGithubsComponent)
+.service('profileService', ProfileService);
 
 export default linkedinModule;

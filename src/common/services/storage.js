@@ -10,7 +10,7 @@ class StorageService {
           callback(false);
         } else {
           const res = JSON.parse(xhr.responseText);
-          callback(res.linkedin);
+          callback(res);
         }
       }
     };

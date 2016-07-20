@@ -1,22 +1,41 @@
 import template from './app.html';
 
 const appComponent = {
-    template,
-    restrict: 'E',
-    controller: function appController() { },
-    controllerAs: 'vm',
-    $routeConfig: [
-        {
-            path: '/linkedin',
-            name: 'Linkedin',
-            component: 'linkedinComponent',
-            useAsDefault: true,
-        },
-        {
-            path: '/**',
-            redirectTo: ['Linkedin'],
-        },
-    ],
+  template,
+  restrict: 'E',
+  bindings: { $router: '<' },
+  controller: function appController() {
+    const vm = this;
+
+    vm.showAll = function() {
+      chrome.tabs.create({
+      url: chrome.runtime.getURL('base/index.html'),
+      active: true
+      });
+    };
+
+    vm.close = function() {
+      window.close();
+    };
+  },
+  controllerAs: 'vm',
+  $routeConfig: [
+    {
+      path: '/linkedin',
+      name: 'Linkedin',
+      component: 'linkedinComponent',
+      useAsDefault: true,
+    },
+    {
+      path: '/github',
+      name: 'Github',
+      component: 'githubComponent',
+    },
+    {
+      path: '/**',
+      redirectTo: ['Linkedin'],
+    },
+  ],
 };
 
 export default appComponent;

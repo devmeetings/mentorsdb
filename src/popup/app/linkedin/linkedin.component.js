@@ -4,36 +4,29 @@ const linkedinComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function linkedinController(linkedinService) {
+  controller: function linkedinController(profileService) {
     'ngInject';
 
     const vm = this;
 
-    vm.linkedinService = linkedinService;
+    vm.profileService = profileService;
 
     vm.scoreSum = function() {
-      return Object.keys(vm.linkedinService.profile.current.scoring).reduce(function(sum, key) {
-        return sum += vm.linkedinService.profile.current.scoring[key];
+      return Object.keys(vm.profileService.profile.current.linkedin[0].scoring).reduce(function(sum, key) {
+        return sum += vm.profileService.profile.current.linkedin[0].scoring[key];
       }, 0);
     };
 
     vm.save = function() {
-      vm.linkedinService.save();
+      vm.profileService.save();
       vm.close();
-    };
-
-    vm.showAll = function() {
-      chrome.tabs.create({
-        url: chrome.runtime.getURL('base/index.html'),
-        active: true
-      });
     };
 
     vm.close = function() {
       window.close();
     };
 
-    vm.linkedinService.refresh();
+    vm.profileService.refresh();
   },
   controllerAs: 'vm',
 };

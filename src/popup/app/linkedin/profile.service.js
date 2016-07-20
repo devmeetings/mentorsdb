@@ -1,6 +1,6 @@
 import Profile from '../../../content-scripts/models/profile.model';
 
-const linkedinService = function linkedinService($rootScope, Bridge) {
+const profileService = function profileService($rootScope, Bridge) {
   'ngInject';
 
   const profile = {
@@ -24,11 +24,11 @@ const linkedinService = function linkedinService($rootScope, Bridge) {
     }
   });
 
-  var background = chrome.extension.getBackgroundPage();
+  const background = chrome.extension.getBackgroundPage();
   window.addEventListener("unload", function() {
-    var profile = new Profile(profile.current);
-    var changed = JSON.stringify(profile) !== JSON.stringify(profile.initial);
-    var exists = profile.existing? true: false;
+    const profile = new Profile(profile.current);
+    const changed = JSON.stringify(profile) !== JSON.stringify(profile.initial);
+    const exists = profile.existing? true: false;
     background.setProfileOnClose({
       profile: profile,
       changed: changed,
@@ -57,4 +57,4 @@ const linkedinService = function linkedinService($rootScope, Bridge) {
   };
 };
 
-export default linkedinService;
+export default profileService;

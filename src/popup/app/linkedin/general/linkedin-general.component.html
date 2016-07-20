@@ -2,13 +2,13 @@
     <div class="col-sm-3">
         <label class="control-label">Profil</label>
         <p>Dodatkowe punkty:</p>
-        <input type="number" id="extra" class="form-control" ng-model="vm.profile.current.scoring.extra">
+        <input type="number" id="extra" class="form-control" ng-model="vm.profile.current.linkedin[0].scoring.extra">
     </div>
     <div class="col-sm-9">
         <div class="form-inline">
-            {{vm.profile.current.name}},
-            <input type="text" id="city" class="form-control" ng-model="vm.profile.current.city">,
-            status: <select id="status" class="form-control" ng-model="vm.profile.current.status">,
+            {{vm.profile.current.linkedin[0].name}},
+            <input type="text" id="city" class="form-control" ng-model="vm.profile.current.linkedin[0].city">,
+            status: <select id="status" class="form-control" ng-model="vm.profile.current.linkedin[0].status">,
                 <option value="no">No</option>
                 <option value="new">New</option>
                 <option value="contacted">Contacted</option>
@@ -19,7 +19,7 @@
                 <option value="deal">Deal</option>
             </select>
         </div>
-        <div taggle id="tags" tags="vm.profile.current.tags"></div>
-        <textarea id="comment" class="form-control" style="height:80px" ng-model="vm.profile.current.comment" placeholder="Komentarz"></textarea>
+        <div taggle id="tags" tags="vm.profile.current.linkedin[0].tags"></div>
+        <textarea id="comment" class="form-control" style="height:80px" ng-model="vm.profile.current.linkedin[0].comment" placeholder="Komentarz"></textarea>
     </div>
 </div>

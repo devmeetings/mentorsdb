@@ -21,7 +21,7 @@ const linkedinEmailsComponent = {
 
     vm.addEmail = function(email) {
       if(email) {
-        vm.profile.current.email.push(new Email({
+        vm.profile.current.linkedin[0].email.push(new Email({
           address: email,
           source: 'manual'
         }));
@@ -29,7 +29,7 @@ const linkedinEmailsComponent = {
     };
 
     vm.removeEmail = function(i) {
-      vm.profile.current.email.splice(i, 1);
+      vm.profile.current.linkedin[0].email.splice(i, 1);
     };
   },
   controllerAs: 'vm',
