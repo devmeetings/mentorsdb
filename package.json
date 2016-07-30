@@ -9,6 +9,7 @@
   "dependencies": {
     "@angular/router": "^0.2.0",
     "angular": "^1.5.5",
+    "angular-component-router-active": "0.0.5",
     "angular-messages": "^1.5.5",
     "bootstrap": "^3.3.6",
     "firebase": "^3.0.0",
@@ -34,7 +35,7 @@
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-loader": "^1.2.0",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.3",
     "file-loader": "^0.8.5",
     "html-loader": "^0.4.3",
     "imports-loader": "^0.6.5",
@@ -46,7 +47,7 @@
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.1.0-beta.4",
-    "webpack-dev-server": "^2.0.0-beta"
+    "webpack": "^2.1.0-beta.20",
+    "webpack-dev-server": "^2.1.0-beta.0"
   }
 }
