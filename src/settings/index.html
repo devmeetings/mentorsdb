@@ -9,7 +9,7 @@
   <body>
     <div ng-controller="SettingsCtrl">
       <form ng-submit="save()">
-        <div class="form-group">
+        <div class="form-group row">
           <div class="col-sm-3">
             <label for="email" class="control-label">Rapportive draft mail id</label>
             <p>Zainstaluj Rapportive. Utwórz nowego e-maila w Gmailu i uzupełnij mu adresata. Skopiuj tu identyfikator tego e-maila. Nie usuwaj go - ten e-mail musi zostać w Roboczych dla poprawnego działania rozszerzenia.</p>
@@ -24,6 +24,14 @@
           </div>
         </div>
       </form>
+      <hr>
+      <div class="row">
+        <ul>
+          <li ng-repeat="board in boards">
+            {{board.name}} <button class="btn btn-default" ng-click="addTrackedBoard(board)">Trackuj</button>
+          </li>
+        </ul>
+      </div>
     </div>
     <script src="index.js"></script>
   </body>
