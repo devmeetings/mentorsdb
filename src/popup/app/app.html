@@ -1,7 +1,16 @@
 <nav class="navbar navbar-default">
-    <button class="btn btn-default" router-active="active" ng-link="['Linkedin']">Linkedin</button>
-    <button class="btn btn-default" router-active="active" ng-link="['Github']">Github</button>
-    <button class="btn btn-default" router-active="active" ng-link="['Trello']">Trello</button>
+    <button class="btn btn-default" router-active="active" ng-link="['Linkedin']">
+    	Linkedin ({{vm.profileService.profile.current.linkedin.length}})
+    </button>
+    <button class="btn btn-default" router-active="active" ng-link="['Github']">
+    	Github ({{vm.profileService.profile.current.github.length}})
+    </button>
+    <button class="btn btn-default" router-active="active" ng-link="['Trello']">
+    	Trello ({{vm.profileService.profile.current.trello && 1 || 0}})
+    </button>
+    <button class="btn btn-default" router-active="active" ng-link="['Email']">
+    	Email ({{vm.profileService.profile.current.email.length}})
+    </button>
     <div class="pull-right">
     	<button class="btn btn-default" ng-click="vm.showAll()">Pokaż wszystkich</button>
     	<button class="btn btn-default" ng-click="vm.close()">Anuluj</button>

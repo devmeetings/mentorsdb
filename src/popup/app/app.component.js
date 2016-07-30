@@ -4,8 +4,12 @@ const appComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function appController() {
+  controller: function appController(profileService) {
+    'ngInject';
+    
     const vm = this;
+
+    vm.profileService = profileService;
 
     vm.showAll = function() {
       chrome.tabs.create({
@@ -35,6 +39,11 @@ const appComponent = {
       path: '/trello',
       name: 'Trello',
       component: 'trelloComponent',
+    },
+    {
+      path: '/email',
+      name: 'Email',
+      component: 'emailComponent',
     },
     {
       path: '/**',
