@@ -3,7 +3,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
 	entry: {
@@ -28,37 +28,98 @@ const config = {
 			{test: /\.js$/, loader: 'eslint', exclude: /(node_modules)|(libs)/}
 		], */
 		loaders: [
-			{test: /\.js$/, loader: ['ng-annotate', 'babel'], exclude: /(node_modules)|(libs)/},
-			{test: /\.json$/, loader: 'json', exclude: /node_modules/},
-			{test: /\.html$/, loader: 'html'},
-			{test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
-      {test: /\.(gif|png|jpe?g)$/i, loader: 'file?name=/images/[name]-[hash:6].[ext]'},
-      {test: /\.woff2?$/, loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'},
-      {test: /\.(ttf|eot|svg)$/, loader: 'file?name=fonts/[name].[ext]'},
-      {test: /\.less$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")}
+			{
+        test: /\.js$/,
+        loader: [
+          'ng-annotate',
+          'babel'
+        ],
+        exclude: /(node_modules)|(libs)/
+      },
+			{
+        test: /\.json$/,
+        loader: 'json',
+        exclude: /node_modules/
+      },
+			{
+        test: /\.html$/,
+        loader: 'html'
+      },
+			{
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader'
+        })
+      },
+      {
+        test: /\.(gif|png|jpe?g)$/i,
+        loader: 'file?name=/images/[name]-[hash:6].[ext]'
+      },
+      {
+        test: /\.woff2?$/,
+        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.(ttf|eot|svg)$/,
+        loader: 'file?name=fonts/[name].[ext]'
+      },
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader!less-loader'
+        })
+      }
 		]
 	},
-  postcss: [autoprefixer({browsers: ['ie >= 9', 'last 2 versions']})],
+  postcss: [
+    autoprefixer({
+      browsers: [
+        'ie >= 9',
+        'last 2 versions'
+      ]
+    })
+  ],
   plugins: [
     new webpack.ProvidePlugin({
       'moment': 'moment'
     }),
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin("[name]/styles.css", {
+    new ExtractTextPlugin({
+      filename: '[name]/styles.css',
       allChunks: true
     }),
     new CopyWebpackPlugin([
-      {from: './_locales', to: '_locales'},
-      {from: './assets', to: 'assets'},
-      {from: './manifest.json'},
-      {from: './src/base/index.html', to: 'base/index.html'},
-      {from: './src/popup/index.html', to: 'popup/index.html'},
-      {from: './src/settings/index.html', to: 'settings/index.html'}
+      {
+        from: './_locales',
+        to: '_locales'
+      },
+      {
+        from: './assets',
+        to: 'assets'
+      },
+      {
+        from: './manifest.json',
+        to: '.'
+      },
+      {
+        from: './src/base/index.html',
+        to: 'base/index.html'
+      },
+      {
+        from: './src/popup/index.html',
+        to: 'popup/index.html'
+      },
+      {
+        from: './src/settings/index.html',
+        to: 'settings/index.html'
+      }
     ], {}),
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery"
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
     })
   ]
 };

@@ -1,10 +1,13 @@
-import template from './linkedin-githubs.component.html';
+import template from './githubs.component.html';
 
-const linkedinGithubsComponent = {
+const githubsComponent = {
   template,
   restrict: 'E',
-  bindings: { $router: '<' },
-  controller: function linkedinGithubsController(linkedinService) {
+  bindings: {
+    $router: '<',
+    profile: '=',
+  },
+  controller: function githubsController(profileService) {
     'ngInject';
     
     const vm = this;
@@ -29,7 +32,7 @@ const linkedinGithubsComponent = {
             active: false,
             openerTabId: tabs[0].id
           }, function(tab) {
-            linkedinService.refresh();
+            profileService.refresh();
           });
         });
       }
@@ -38,4 +41,4 @@ const linkedinGithubsComponent = {
   controllerAs: 'vm',
 };
 
-export default linkedinGithubsComponent;
+export default githubsComponent;

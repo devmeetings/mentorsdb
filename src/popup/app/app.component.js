@@ -32,6 +32,11 @@ const appComponent = {
       component: 'githubComponent',
     },
     {
+      path: '/trello',
+      name: 'Trello',
+      component: 'trelloComponent',
+    },
+    {
       path: '/**',
       redirectTo: ['Linkedin'],
     },

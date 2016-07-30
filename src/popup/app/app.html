@@ -1,8 +1,11 @@
 <nav class="navbar navbar-default">
-    <button class="btn btn-default" ng-click="$router.navigate('./Linkedin')">Linkedin</button>
-    <button class="btn btn-default" ng-click="$router.navigate('./Github')">Github</button>
-    <button class="btn btn-default" ng-click="vm.showAll()">Pokaż wszystkich</button>
-    <button class="btn btn-default" ng-click="vm.close()">Anuluj</button>
+    <button class="btn btn-default" router-active="active" ng-link="['Linkedin']">Linkedin</button>
+    <button class="btn btn-default" router-active="active" ng-link="['Github']">Github</button>
+    <button class="btn btn-default" router-active="active" ng-link="['Trello']">Trello</button>
+    <div class="pull-right">
+    	<button class="btn btn-default" ng-click="vm.showAll()">Pokaż wszystkich</button>
+    	<button class="btn btn-default" ng-click="vm.close()">Anuluj</button>
+    </div>
 </nav>
 
 <ng-outlet></ng-outlet>
