@@ -8,6 +8,7 @@
   </head>
   <body>
     <div ng-controller="SettingsCtrl">
+      <h1>Weryfikacja adresów e-mail</h1>
       <form ng-submit="save()">
         <div class="form-group row">
           <div class="col-sm-3">
@@ -25,13 +26,24 @@
         </div>
       </form>
       <hr>
-      <div class="row">
-        <ul>
-          <li ng-repeat="board in boards">
-            {{board.name}} <button class="btn btn-default" ng-click="addTrackedBoard(board)">Trackuj</button>
-          </li>
-        </ul>
-      </div>
+      <h1>Powiązane tablice Trello</h1>
+      <table class="table">
+        <tr>
+          <th>Board</th>
+          <th>Status</th>
+        </tr>
+        <tr ng-repeat="board in boards">
+          <td>{{board.name}}</td>
+          <td>
+            <span ng-if="!board.tracked">
+              <button class="btn btn-default" ng-click="addTrackedBoard(board)">Trackuj</button>
+            </span>
+            <span ng-if="board.tracked">
+              <button class="btn btn-danger" ng-click="removeTrackedBoard(board)">Usuń</button>
+            </span>
+          </td>
+        </tr>
+      </table>
     </div>
     <script src="index.js"></script>
   </body>

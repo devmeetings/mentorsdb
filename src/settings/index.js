@@ -10,7 +10,7 @@ angular
 .module('App', [
     'restangular',
 ])
-.controller('SettingsCtrl', ['$scope', 'Restangular', function($scope, Restangular) {
+.controller('SettingsCtrl', ['$scope', '$window', 'Restangular', function($scope, $window, Restangular) {
 
     $scope.boards = [];
 
@@ -26,15 +26,28 @@ angular
     });
 
     $scope.getBoards = () => {
-        Restangular.all('/trello/boards').getList().then(boards => {
-            $scope.boards = boards;
+        Restangular.all('/trello/boards/tracked').getList().then(tracked => {
+            Restangular.all('/trello/boards').getList().then(boards => {
+                $scope.boards = boards.map(board => {
+                    board.tracked = tracked.find(item => item.boardId === board.id);
+                    return board;
+                });
+            });
         });
     };
 
     $scope.addTrackedBoard = board => {
         Restangular.all('/trello/boards/tracked').post({
             boardId: board.id,
-        });
+        })
+        .then($scope.getBoards);
+    };
+
+    $scope.removeTrackedBoard = board => {
+        if ($window.confirm('Czy na pewno chcesz cofnąć trackowanie?')) {
+            Restangular.all(`/trello/boards/tracked/${board.id}`).remove()
+            .then($scope.getBoards);
+        }
     };
 
     $scope.save = function() {
