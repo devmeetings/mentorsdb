@@ -14,6 +14,10 @@ const trelloService = function trelloService(MentorsAPI) {
       });
     }
 
+    detach(profileId) {
+      return MentorsAPI.all(`/profiles/${profileId}/trello`).remove();
+    }
+
   }
 
   return new TrelloService;

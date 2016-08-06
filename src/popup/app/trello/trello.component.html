@@ -1,16 +1,27 @@
 <div ng-if="!vm.profileService.profile.existing.trello">
-	<p>Ten profile jeszcze nie został dodany na Trello.</p>
+	<div class="alert alert-info">
+		<p>Ten profile jeszcze nie został dodany na Trello.</p>
+	</div>
 	<div ng-repeat="board in vm.trackedBoards">
 		<h4>{{board.name}}</h4>
-		<ul>
-	    <li ng-repeat="list in board.lists">
-	      {{list.name}}
-	      <button class="btn btn-default" ng-click="vm.addToList(board, list)">Wybierz</button>
-	    </li>
-	  </ul>
+		<table class="table">
+			<tr>
+				<th>Nazwa listy</th>
+				<th>Akcja</th>
+			</tr>
+			<tr ng-repeat="list in board.lists">
+				<td>{{list.name}}</td>
+				<td>
+					<button class="btn btn-default" ng-click="vm.addToList(board, list)">Powiąż</button>
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>
 <div ng-if="vm.profileService.profile.existing.trello">
-	<p><a class="btn btn-default" ng-click="vm.openTrello(vm.profileService.profile.existing.trello)">Otwórz Trello</a></p>
+	<p>
+		<a class="btn btn-default" ng-click="vm.openTrello(vm.profileService.profile.existing.trello)">Otwórz Trello</a>
+		<a class="btn btn-danger" ng-click="vm.removeTrello(vm.profileService.profile.existing.trello)">Odwiąż Trello</a>
+	</p>
 	<pre>{{vm.profileService.profile.existing.trello|json}}</pre>
 </div>

@@ -4,7 +4,7 @@ const trelloComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function trelloController(profileService, trelloService) {
+  controller: function trelloController($window, profileService, trelloService) {
     'ngInject';
 
     const vm = this;
@@ -19,7 +19,9 @@ const trelloComponent = {
     };
 
     vm.addToList = (board, list) => {
-    	trelloService.addToList(profileService.profile.existing.id, board.boardId, list.id);
+    	trelloService.addToList(profileService.profile.existing.id, board.boardId, list.id).then(trello => {
+        profileService.profile.existing.trello = trello;
+      });
     };
 
     vm.openTrello = trello => {
@@ -27,6 +29,14 @@ const trelloComponent = {
         url: `https://trello.com/c/${trello.id}`,
         active: true
       });
+    };
+
+    vm.removeTrello = () => {
+      if ($window.confirm('Czy na pewno chcesz odwiązać kartę Trello do tego profilu?')) {
+        trelloService.detach(profileService.profile.existing.id).then(() => {
+          profileService.profile.existing.trello = undefined;
+        });
+      }
     };
 
     vm.$routerOnActivate = next => {
