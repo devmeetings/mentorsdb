@@ -1,6 +1,6 @@
 import Profile from '../../../content-scripts/models/profile.model';
 
-const profileService = function profileService($rootScope, Bridge) {
+const profileService = function profileService($rootScope, Bridge, MentorsAPI) {
   'ngInject';
 
   const profile = {
@@ -42,18 +42,19 @@ const profileService = function profileService($rootScope, Bridge) {
     });
   };
 
-  const save = () => {
-    Bridge.port.postMessage({
-      method: 'setProfile',
-      profile: new Profile(profile.current),
-    });
-    profile.initial = new Profile(profile.current);
+  const add = () => {
+    return MentorsAPI.all(`/profiles/${profile.existing.id}/linkedin`).post(profile.current.linkedin);
+  };
+
+  const update = () => {
+    return MentorsAPI.all(`/profiles/${profile.existing.id}/linkedin`).post(profile.current.linkedin);
   };
 
   return {
     profile,
     refresh,
-    save,
+    add,
+    update,
   };
 };
 

@@ -21,8 +21,13 @@ const linkedinComponent = {
       return scoreSum;
     };
 
-    vm.save = function() {
-      vm.profileService.save();
+    vm.add = function() {
+      vm.profileService.add();
+      vm.close();
+    };
+
+    vm.update = function() {
+      vm.profileService.update();
       vm.close();
     };
 

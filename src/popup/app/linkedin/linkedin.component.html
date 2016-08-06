@@ -1,6 +1,11 @@
 <nav class="navbar navbar-default">
-    <button class="btn btn-primary" ng-if="vm.profileService.profile.current.linkedin && !vm.profileService.profile.existing.linkedin" ng-click="vm.save()">Dodaj</button>
-    <span ng-if="vm.profileService.profile.current.linkedin && vm.profileService.profile.existing.linkedin">Zapisany w bazie mentorów</span>
+    <span ng-if="vm.profileService.profile.current.linkedin && !vm.profileService.profile.existing.linkedin">
+        <button class="btn btn-primary" ng-click="vm.add()">Dodaj</button>
+    </span>
+    <span ng-if="vm.profileService.profile.current.linkedin && vm.profileService.profile.existing.linkedin">
+        <button class="btn btn-primary" ng-click="vm.update()">Aktualizuj</button>
+        <span>Zapisany w bazie mentorów</span>
+    </span>
 
     <div class="points pull-right" ng-if="vm.profileService.profile.current.linkedin">
         <ng-pluralize count="vm.scoreSum()" when="{
