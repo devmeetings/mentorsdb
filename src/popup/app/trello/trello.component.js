@@ -22,6 +22,13 @@ const trelloComponent = {
     	trelloService.addToList(profileService.profile.existing.id, board.boardId, list.id);
     };
 
+    vm.openTrello = trello => {
+      chrome.tabs.create({
+        url: `https://trello.com/c/${trello.id}`,
+        active: true
+      });
+    };
+
     vm.$routerOnActivate = next => {
     	vm.getTrackedBoards();
     };

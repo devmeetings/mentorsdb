@@ -11,6 +11,6 @@
 	</div>
 </div>
 <div ng-if="vm.profileService.profile.existing.trello">
-	<p><a class="btn btn-default" ng-href="https://trello.com/c/{{vm.profileService.profile.current.trello.idShort}}">Otwórz Trello</a></p>
-	<pre>{{vm.profileService.profile.current.trello|json}}</pre>
+	<p><a class="btn btn-default" ng-click="vm.openTrello(vm.profileService.profile.existing.trello)">Otwórz Trello</a></p>
+	<pre>{{vm.profileService.profile.existing.trello|json}}</pre>
 </div>

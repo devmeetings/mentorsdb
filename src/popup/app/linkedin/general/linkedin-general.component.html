@@ -7,17 +7,7 @@
     <div class="col-sm-9">
         <div class="form-inline">
             {{vm.profile.current.linkedin.name}},
-            <input type="text" id="city" class="form-control" ng-model="vm.profile.current.linkedin.city">,
-            status: <select id="status" class="form-control" ng-model="vm.profile.current.linkedin.status">,
-                <option value="no">No</option>
-                <option value="new">New</option>
-                <option value="contacted">Contacted</option>
-                <option value="dialog">Dialog</option>
-                <option value="rejected-He">Rejected-He</option>
-                <option value="rejected-We">Rejected-We</option>
-                <option value="in-future">In-future</option>
-                <option value="deal">Deal</option>
-            </select>
+            <input type="text" id="city" class="form-control" ng-model="vm.profile.current.linkedin.city">
         </div>
         <div taggle id="tags" tags="vm.profile.current.linkedin.tags"></div>
         <textarea id="comment" class="form-control" style="height:80px" ng-model="vm.profile.current.linkedin.comment" placeholder="Komentarz"></textarea>

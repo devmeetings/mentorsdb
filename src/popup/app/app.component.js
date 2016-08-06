@@ -13,8 +13,8 @@ const appComponent = {
 
     vm.showAll = function() {
       chrome.tabs.create({
-      url: chrome.runtime.getURL('base/index.html'),
-      active: true
+        url: chrome.runtime.getURL('base/index.html'),
+        active: true
       });
     };
 

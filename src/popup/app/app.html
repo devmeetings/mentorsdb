@@ -1,15 +1,15 @@
 <nav class="navbar navbar-default">
     <button class="btn btn-default" router-active="active" ng-link="['Linkedin']">
-    	Linkedin ({{vm.profileService.profile.current.linkedin.length}})
+    	Linkedin ({{vm.profileService.profile.existing.linkedin && 1 || 0}})
     </button>
     <button class="btn btn-default" router-active="active" ng-link="['Github']">
-    	Github ({{vm.profileService.profile.current.github.length}})
+    	Github ({{vm.profileService.profile.existing.github.length}})
     </button>
     <button class="btn btn-default" router-active="active" ng-link="['Trello']">
-    	Trello ({{vm.profileService.profile.current.trello && 1 || 0}})
+    	Trello ({{vm.profileService.profile.existing.trello && 1 || 0}})
     </button>
     <button class="btn btn-default" router-active="active" ng-link="['Email']">
-    	Email ({{vm.profileService.profile.current.email.length}})
+    	Email ({{vm.profileService.profile.existing.email.length}})
     </button>
     <div class="pull-right">
     	<button class="btn btn-default" ng-click="vm.showAll()">Pokaż wszystkich</button>

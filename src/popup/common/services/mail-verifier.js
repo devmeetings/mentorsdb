@@ -50,9 +50,11 @@ const mailVerifierService = function mailVerifierService($rootScope) {
       var name =  item.slice(1).join('.') + '.' + item[0][0];
       _this.addEmail(name.toLowerCase() + '@gmail.com');
     });
-    profile.github.forEach(function(github) {
-      _this.addEmail(github.username + '@gmail.com');
-    });
+    if(profile.github) {
+      profile.github.forEach(function(github) {
+        _this.addEmail(github.username + '@gmail.com');
+      });
+    }
     _this.processEmailQueue();
   };
 

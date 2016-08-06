@@ -11,8 +11,8 @@ const profileService = function profileService($rootScope, Bridge) {
 
   Bridge.port.onMessage.addListener(response => {
     if(typeof response === 'object' && response !== 'undefined' && response !== 'null') {
-      profile.current = response.current;
-      profile.existing = response.existing;
+      profile.current = new Profile(response.current);
+      profile.existing = new Profile(response.existing);
       profile.initial = new Profile(response.current);
       $rootScope.$apply();
     }

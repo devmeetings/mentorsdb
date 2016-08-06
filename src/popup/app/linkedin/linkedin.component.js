@@ -12,9 +12,13 @@ const linkedinComponent = {
     vm.profileService = profileService;
 
     vm.scoreSum = function() {
-      return Object.keys(vm.profileService.profile.current.linkedin.scoring).reduce(function(sum, key) {
-        return sum += vm.profileService.profile.current.linkedin.scoring[key];
-      }, 0);
+      let scoreSum = 0;
+      if(vm.profileService.profile.current.linkedin.scoring) {
+        scoreSum = Object.keys(vm.profileService.profile.current.linkedin.scoring).reduce(function(sum, key) {
+          return sum += vm.profileService.profile.current.linkedin.scoring[key];
+        }, 0);
+      }
+      return scoreSum;
     };
 
     vm.save = function() {
