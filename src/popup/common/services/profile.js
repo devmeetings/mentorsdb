@@ -24,7 +24,7 @@ const profileService = function profileService($rootScope, Bridge) {
     }
   });
 
-  const background = chrome.extension.getBackgroundPage();
+  /* const background = chrome.extension.getBackgroundPage();
   window.addEventListener("unload", function() {
     const profile = new Profile(profile.current);
     const changed = JSON.stringify(profile) !== JSON.stringify(profile.initial);
@@ -34,7 +34,7 @@ const profileService = function profileService($rootScope, Bridge) {
       changed: changed,
       exists: exists
     });
-  }, true);
+  }, true); */
 
   const refresh = () => {
     Bridge.port.postMessage({
