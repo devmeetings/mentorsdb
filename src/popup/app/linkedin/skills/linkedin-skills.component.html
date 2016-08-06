@@ -1,17 +1,17 @@
 <div class="form-group">
     <div class="col-sm-3">
         <label class="control-label">Skills</label>
-        <scoring score="vm.profile.current.linkedin[0].scoring.skills"></scoring>
+        <scoring score="vm.profile.current.linkedin.scoring.skills"></scoring>
     </div>
     <div class="col-sm-9">
         <div class="bullets">
-            <div class="bullet" ng-repeat="(i, skill) in vm.profile.current.linkedin[0].skills | orderBy:'count':true | limitTo:vm.more.skills&&1000||3 track by i">
+            <div class="bullet" ng-repeat="(i, skill) in vm.profile.current.linkedin.skills | orderBy:'count':true | limitTo:vm.more.skills&&1000||3 track by i">
                 <span class="label label-default">
                     {{skill.name}}
                     <span class="badge">{{skill.count}}</span>
                 </span>
             </div>
-            <span ng-if="!vm.more.skills && vm.profile.current.linkedin[0].skills.length - 3 > 0"><a ng-click="vm.more.skills = true">więcej (+{{vm.profile.current.linkedin[0].skills.length - 3}})...</a></span>
+            <span ng-if="!vm.more.skills && vm.profile.current.linkedin.skills.length - 3 > 0"><a ng-click="vm.more.skills = true">więcej (+{{vm.profile.current.linkedin.skills.length - 3}})...</a></span>
             <span ng-if="vm.more.skills"><a ng-click="vm.more.skills = false">mniej.</a></span>
         </div>
     </div>

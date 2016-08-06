@@ -1,4 +1,4 @@
-<div ng-if="!vm.profileService.profile.current.trello">
+<div ng-if="!vm.profileService.profile.existing.trello">
 	<p>Ten profile jeszcze nie został dodany na Trello.</p>
 	<div ng-repeat="board in vm.trackedBoards">
 		<h4>{{board.name}}</h4>
@@ -10,7 +10,7 @@
 	  </ul>
 	</div>
 </div>
-<div ng-if="vm.profileService.profile.current.trello">
+<div ng-if="vm.profileService.profile.existing.trello">
 	<p><a class="btn btn-default" ng-href="https://trello.com/c/{{vm.profileService.profile.current.trello.idShort}}">Otwórz Trello</a></p>
 	<pre>{{vm.profileService.profile.current.trello|json}}</pre>
 </div>

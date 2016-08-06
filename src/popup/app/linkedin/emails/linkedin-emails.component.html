@@ -4,14 +4,14 @@
         <div class="emails">
             <ul>
                 <li
-                    ng-repeat="(i, email) in vm.profile.current.linkedin[0].email track by i"
+                    ng-repeat="(i, email) in vm.profile.current.linkedin.email track by i"
                     ng-class="{confirmed:email.confirmed}">
                     {{email.address}} [{{email.source}}]
                     <a ng-if="email.confirmed === null" ng-click="vm.MailVerifier.checkEmail(email.address)"> - zweryfikuj</a>
                     <a ng-click="vm.removeEmail(i)">[X]</a>
                 </li>
                 <li
-                    ng-repeat="(i, github) in vm.profile.current.linkedin[0].github track by i"
+                    ng-repeat="(i, github) in vm.profile.current.linkedin.github track by i"
                     ng-if="!github.removed && github.email">
                     {{github.email}} [github]
                     <a ng-click="vm.MailVerifier.checkEmail(github.email)"> - zweryfikuj</a>
@@ -25,7 +25,7 @@
                 <input type="text" class="form-control" ng-model="vm.newmail" placeholder="Wpisz adres e-mail">
                 <button class="btn btn-default" ng-click="vm.addEmail(vm.newmail);newmail=''">Dodaj</button>
             </div>
-            <button class="btn btn-link" ng-click="vm.MailVerifier.searchEmail(vm.profile.current.linkedin[0])" ng-disabled="vm.MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
+            <button class="btn btn-link" ng-click="vm.MailVerifier.searchEmail(vm.profile.current.linkedin)" ng-disabled="vm.MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
         </div>
     </div>
 </div>

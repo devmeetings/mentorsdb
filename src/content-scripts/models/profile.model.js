@@ -10,7 +10,7 @@ const Profile = (function() {
         this.city = data.city || null;
         this.nationality = data.nationality || null;
         this.trello = data.trello? new Trello(data.trello) : null;
-        this.linkedin = this.makeModels(Linkedin, data.linkedin);
+        this.linkedin = data.linkedin? new Linkedin(data.linkedin) : null;
         this.github = this.makeModels(Github, data.github);
     }
 
