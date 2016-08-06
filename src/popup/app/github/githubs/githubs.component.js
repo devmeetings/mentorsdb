@@ -14,6 +14,15 @@ const githubsComponent = {
 
     vm.githubSearch = '';
 
+    vm.add = (i, github) => {
+      vm.profile.existing.github.push(github);
+      vm.profile.current.github.splice(i, 1);
+    };
+
+    vm.remove = (i, github) => {
+      vm.profile.existing.github.splice(i, 1);
+    };
+
     vm.openGithub = function(username) {
       chrome.tabs.create({
         url: 'https://github.com/' + username,

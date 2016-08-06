@@ -1,6 +1,7 @@
 import Trello from './trello.model';
 import Linkedin from './linkedin.model';
 import Github from './github.model';
+import Email from './email.model';
 
 const Profile = (function() {
 
@@ -12,6 +13,7 @@ const Profile = (function() {
         this.trello = data.trello? new Trello(data.trello) : null;
         this.linkedin = data.linkedin? new Linkedin(data.linkedin) : null;
         this.github = this.makeModels(Github, data.github);
+        this.email = this.makeModels(Email, data.email);
     }
 
     ProfileModel.prototype.makeModels = function(model, data) {

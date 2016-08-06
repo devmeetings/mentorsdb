@@ -2,8 +2,9 @@ import angular from 'angular';
 import {
   removeDiacritics,
 } from '../../../common/helpers';
+import Email from '../../../content-scripts/models/email.model';
 
-const mailVerifierService = function mailVerifierService($rootScope) {
+const mailVerifierService = function mailVerifierService($rootScope, profileService) {
   'ngInject';
 
   var _this;
@@ -11,15 +12,15 @@ const mailVerifierService = function mailVerifierService($rootScope) {
 
   function MailVerifier() {
     this.queue = [];
-    this.profile = null;
+    this.profile = profileService.profile.current;
   }
 
   MailVerifier.prototype.addEmail = function(email) {
     _this.queue.push(removeDiacritics(email));
   };
 
-  MailVerifier.prototype.searchEmail = function(profile) {
-    var names = profile.name.split(' ').reduce(function permute(res, item, key, arr) {
+  MailVerifier.prototype.searchEmail = function() {
+    var names = _this.profile.name.split(' ').reduce(function permute(res, item, key, arr) {
       return res.concat(arr.length > 1 && arr.slice(0, key).concat(arr.slice(key + 1))
         .reduce(permute, [])
         .map(function(perm) {
@@ -27,7 +28,6 @@ const mailVerifierService = function mailVerifierService($rootScope) {
         }) || item
       );
     }, []);
-    _this.profile = profile;
     names.forEach(function(item) {
       _this.addEmail(item.join('').toLowerCase() + '@gmail.com');
     });
@@ -50,8 +50,8 @@ const mailVerifierService = function mailVerifierService($rootScope) {
       var name =  item.slice(1).join('.') + '.' + item[0][0];
       _this.addEmail(name.toLowerCase() + '@gmail.com');
     });
-    if(profile.github) {
-      profile.github.forEach(function(github) {
+    if(_this.profile.github) {
+      _this.profile.github.forEach(function(github) {
         _this.addEmail(github.username + '@gmail.com');
       });
     }
@@ -74,7 +74,7 @@ const mailVerifierService = function mailVerifierService($rootScope) {
 
   searchEmailPort.onMessage.addListener(function(response) {
     var result = JSON.parse(response);
-    var confirmed = result.found && result.profile === _this.profile.id;
+    var confirmed = result.found && result.profile === _this.profile.linkedin.id;
     if(_this.profile.email.filter(function(email) {
       var found = email.address === result.email;
       if(found) {
