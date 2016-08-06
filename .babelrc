@@ -3,6 +3,6 @@
     "transform-runtime"
   ],
   "presets": [
-    "es2015", "es2015-webpack", "stage-0"
+    "es2015", "stage-0"
   ]
 }
