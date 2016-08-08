@@ -22,6 +22,6 @@
   <input type="date" ng-model="vm.criteria.to">
 </label>
 
-<button>Pokaż</button>
+<button ng-click="vm.redrawChart()">Pokaż</button>
 
 <div google-chart chart="vm.chart"></div>
