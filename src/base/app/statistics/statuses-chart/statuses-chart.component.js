@@ -3,10 +3,23 @@ import template from './statuses-chart.component.html';
 const statusesChartComponent = {
     template,
     restrict: 'E',
-    controller: function statusesChartController() {
+    controller: function statusesChartController(trelloService) {
         'ngInject';
 
         const vm = this;
+
+        vm.users = [];
+        vm.boards = [];
+        vm.criteria = {};
+
+        vm.init = () => {
+          trelloService.getUsers().then(users => {
+            vm.users = users;
+          });
+          trelloService.getBoards().then(boards => {
+            vm.boards = boards;
+          });
+        };
 
         vm.chart = {
           type: 'ColumnChart',
@@ -23,6 +36,8 @@ const statusesChartComponent = {
             ]
           }
         };
+
+        vm.init();
     },
     controllerAs: 'vm',
 };

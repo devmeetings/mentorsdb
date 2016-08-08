@@ -1,1 +1,27 @@
+<label>
+  <span>Użytkownik:</span>
+  <select ng-model="vm.criteria.user" ng-options="user.username as user.fullName for user in vm.users track by user.username">
+    <option value="">Wszyscy</option>
+  </select>
+</label>
+
+<label>
+  <span>Board:</span>
+  <select ng-model="vm.criteria.board" ng-options="board.boardId as board.name for board in vm.boards track by board.id">
+    <option value="">Wszyscy</option>
+  </select>
+</label>
+
+<label>
+  <span>Od:</span>
+  <input type="date" ng-model="vm.criteria.from">
+</label>
+
+<label>
+  <span>Do:</span>
+  <input type="date" ng-model="vm.criteria.to">
+</label>
+
+<button>Pokaż</button>
+
 <div google-chart chart="vm.chart"></div>
