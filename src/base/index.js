@@ -1,11 +1,11 @@
 import angular from 'angular';
 import '@angular/router/angular1/angular_1_router';
 import 'lodash';
-import 'ng-infinite-scroll';
 import 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'bootstrap/dist/js/bootstrap';
+import 'angular-google-chart';
 
 import Components from './app/app';
 import Common from './common/common';
@@ -14,7 +14,7 @@ import './less/main.less';
 
 angular.module('main', [
   'ngComponentRouter',
-  'infinite-scroll',
+  'googlechart',
 
   Components.name,
   Common.name,

@@ -7,14 +7,14 @@ const appComponent = {
     controllerAs: 'vm',
     $routeConfig: [
         {
-            path: '/profiles',
-            name: 'Profiles',
-            component: 'profilesComponent',
+            path: '/statistics',
+            name: 'Statistics',
+            component: 'statisticsComponent',
             useAsDefault: true,
         },
         {
             path: '/**',
-            redirectTo: ['Profiles'],
+            redirectTo: ['Statistics'],
         },
     ],
 };

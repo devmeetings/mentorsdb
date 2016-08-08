@@ -1,11 +1,11 @@
 import angular from 'angular';
 
-import Profiles from './profiles/profiles';
+import Statistics from './statistics/statistics';
 
 import AppComponent from './app.component';
 
 const appComponentsModule = angular.module('app', [
-    Profiles.name,
+    Statistics.name,
 ])
 .component('app', AppComponent);
 
