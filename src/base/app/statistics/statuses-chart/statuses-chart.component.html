@@ -24,4 +24,4 @@
 
 <button ng-click="vm.redrawChart()">Pokaż</button>
 
-<div google-chart chart="vm.chart"></div>
+<nvd3 ng-if="vm.loaded" options="vm.options" data="vm.data"></nvd3>
