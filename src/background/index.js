@@ -5,6 +5,6 @@ import './set-status';
 import './get-tab';
 import './get-profile';
 import {
-    setProfileOnClose,
+    // setProfileOnClose,
     saveProfile,
 } from './save-profile';

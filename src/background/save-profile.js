@@ -9,7 +9,7 @@ chrome.runtime.onConnect.addListener(function(port) {
     }
 });
 
-export const setProfileOnClose = (request) => {
+/* export const setProfileOnClose = (request) => {
     if(request.exists) {
         saveProfile(request.profile);
     } else if(request.changed) {
@@ -17,7 +17,7 @@ export const setProfileOnClose = (request) => {
             saveProfile(request.profile);
         }
     }
-};
+}; */
 
 export const saveProfile = (profile) => {
     Storage.setProfile(profile, function(res) {

@@ -17,7 +17,6 @@ import chromeService from './services/chrome.service';
             chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 switch(request.method) {
                     case 'getProfileFromContent':
-                        console.info(me.linkedin);
                         sendResponse(JSON.stringify({
                             linkedin: me.linkedin,
                         }));
@@ -25,9 +24,7 @@ import chromeService from './services/chrome.service';
                     case 'setGithubProfileContent':
                         const github = new Github(request.github);
                         me.linkedin.github.push(github);
-                        chrome.runtime.sendMessage({
-                            method: 'refreshPopup'
-                        });
+                        chromeService.refreshPopup();
                         break;
                 }
             });

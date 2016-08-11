@@ -10,10 +10,11 @@ const ChromeService = (function() {
         });
     }
 
-    function setStatus(status) {
+    function setStatus(status, scoring) {
         chrome.runtime.sendMessage({
             method: 'setStatus',
-            status,
+            status, // new, existing, processing
+            scoring,
         });
     }
 
@@ -21,7 +22,7 @@ const ChromeService = (function() {
         chrome.runtime.sendMessage({
             method: 'setGithubProfile',
             openerTabId: tabId,
-            github: githubProfile
+            github: githubProfile,
         });
     }
 
@@ -33,11 +34,25 @@ const ChromeService = (function() {
         });
     }
 
+    function refreshPopup() {
+        chrome.runtime.sendMessage({
+            method: 'refreshPopup',
+        });
+    }
+
+    function openGithubSearch(name) {
+        chrome.runtime.sendMessage({
+            method: 'openGithubSearch',
+            name: name.replace(/ /g, '+'),
+        });
+    }
+
     return {
         getTab,
         setStatus,
         setGithubProfile,
         openGithubProfile,
+        refreshPopup,
     };
 
 })();
