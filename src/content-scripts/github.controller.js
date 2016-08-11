@@ -1,36 +1,21 @@
-import Github from './models/github.model';
-import GithubDataService from './services/github-data.service';
+import githubDataService from './services/github-data.service';
+import chromeService from './services/chrome.service';
 
 (function() {
 
-    function GithubController() {
-        var me = this;
-        var body = document.querySelector('body');
-        if(body.className.split(' ').indexOf('page-profile') >= 0) {
-            this.github = new Github({
-                username: GithubDataService.getUsername(),
-                avatar: GithubDataService.getAvatar(),
-                city: GithubDataService.getCity(),
-                email: GithubDataService.getEmail(),
-                url: GithubDataService.getUrl(),
-                joindate: GithubDataService.getJoindate(),
-                followers: GithubDataService.getFollowers(),
-                starred: GithubDataService.getStarred(),
-                following: GithubDataService.getFollowing(),
-                contributions: GithubDataService.getContributions()
-            });
-            chrome.runtime.sendMessage({
-                method: 'getTab'
-            }, function(tab) {
-                if(tab.openerTabId !== null && tab.pinned) {
-                    chrome.runtime.sendMessage({
-                        method: 'setGithubProfile',
-                        openerTabId: tab.openerTabId,
-                        github: me.github
-                    });
-                    window.close();
-                }
-            });
+    class GithubController {
+
+        constructor() {
+            var me = this;
+            if(githubDataService.isProfilePage()) {
+                this.github = githubDataService.getGithub();
+                chromeService.getTab().then(tab => {
+                    if(tab.openerTabId !== null && tab.pinned) {
+                        chromeService.setGithubProfile(tab.openerTabId, me.github);
+                        window.close();
+                    }
+                });
+            }
         }
     }
 

@@ -1,17 +1,15 @@
+import chromeService from './services/chrome.service';
+import githubDataService from './services/github-data.service';
+
 (function() {
 
     function GithubSearchController() {
         var me = this;
-        var users = document.querySelectorAll('.user-list-item');
-        chrome.runtime.sendMessage({
-            method: 'getTab'
-        }, function(tab) {
+        chromeService.getTab().then(tab => {
             if(tab.openerTabId !== null && tab.pinned) {
-                Array.prototype.forEach.call(users, function(user) {
-                    chrome.runtime.sendMessage({
-                        method: 'openGithubProfile',
-                        url: user.querySelector('a').href,
-                        openerTabId: tab.openerTabId
+                githubDataService.getUsersProfilesUrls().then(profileUrls => {
+                    profleUrls.forEach(profileUrl => {
+                        chromeService.openGithubProfile(profileUrl, tab.openerTabId);
                     });
                 });
                 window.close();

@@ -1,6 +1,27 @@
 import Email from '../models/email.model';
+import Linkedin from '../models/linkedin.model';
 
 const LinkedinDataService = (function() {
+
+    function getLinkedin() {
+        return new Linkedin({
+            id: getId(),
+            name: getName(),
+            img: getPhoto(),
+            description: getDescription(),
+            email: getEmail(),
+            city: getCity(),
+            skills: getSkills(),
+            jobs: getJobs(),
+            languages: getLanguages(),
+            education: getEducation()
+        });
+    }
+
+    function getUsersProfilesUrls() {
+        const users = document.querySelectorAll('.user-list-item');
+        return Array.prototype.map.call(users, user => user.querySelector('a').href);
+    }
 
     function textContent(node) {
         return node? node.textContent: '';
@@ -123,16 +144,8 @@ const LinkedinDataService = (function() {
     }
 
     return {
-        getId: getId,
-        getName: getName,
-        getEmail: getEmail,
-        getCity: getCity,
-        getPhoto: getPhoto,
-        getDescription: getDescription,
-        getSkills: getSkills,
-        getJobs: getJobs,
-        getLanguages: getLanguages,
-        getEducation: getEducation
+        getLinkedin,
+        getUsersProfilesUrls,
     };
 
 })();

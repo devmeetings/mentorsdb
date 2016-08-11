@@ -1,4 +1,26 @@
+import Github from '../models/github.model';
+
 const GithubDataService = (function() {
+
+    function getGithub() {
+        return new Github({
+            username: getUsername(),
+            avatar: getAvatar(),
+            city: getCity(),
+            email: getEmail(),
+            url: getUrl(),
+            joindate: getJoindate(),
+            followers: getFollowers(),
+            starred: getStarred(),
+            following: getFollowing(),
+            contributions: getContributions(),
+        });
+    }
+
+    function isProfilePage() {
+        const body = document.querySelector('body');
+        return body.className.split(' ').indexOf('page-profile') >= 0;
+    }
 
     function textContent(node) {
         return node? node.textContent: '';
@@ -58,16 +80,8 @@ const GithubDataService = (function() {
     }
 
     return {
-        getUsername: getUsername,
-        getAvatar: getAvatar,
-        getCity: getCity,
-        getEmail: getEmail,
-        getUrl: getUrl,
-        getJoindate: getJoindate,
-        getFollowers: getFollowers,
-        getStarred: getStarred,
-        getFollowing: getFollowing,
-        getContributions: getContributions
+        getGithub,
+        isProfilePage,
     };
 
 })();

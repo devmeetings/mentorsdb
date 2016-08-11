@@ -42,6 +42,16 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI) {
     });
   };
 
+  const getProfile = criteria => {
+    return MentorsAPI.all('/profiles').getList('', criteria);
+  };
+
+  const getProfileByLinkedin = linkedin => {
+    return getProfile({
+      linkedin,
+    });
+  };
+
   const add = () => {
     return MentorsAPI.all(`/profiles/${profile.existing.id}/linkedin`).post(profile.current.linkedin);
   };
@@ -53,6 +63,8 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI) {
   return {
     profile,
     refresh,
+    getProfile,
+    getProfileByLinkedin,
     add,
     update,
   };
