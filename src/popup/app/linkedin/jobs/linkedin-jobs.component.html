@@ -1,15 +1,15 @@
 <div class="form-group">
     <div class="col-sm-3">
         <label class="control-label">Praca</label>
-        <scoring score="vm.profile.current.linkedin.scoring.experience"></scoring>
+        <scoring score="vm.profile.scoring.experience"></scoring>
     </div>
     <div class="col-sm-9">
         <div ng-if="!vm.more.jobs">
-            <span ng-repeat="(i, job) in vm.profile.current.linkedin.jobs | limitTo:vm.more.jobs&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span ng-class="{bold: job.current}">{{job.position}}</span></span>; </span>
-            <span ng-if="!vm.more.jobs"><a ng-click="vm.more.jobs = true">więcej<span ng-if="vm.profile.current.linkedin.jobs.length - 3 > 0"> (+{{vm.profile.current.linkedin.jobs.length - 3}})</span>...</a></span>
+            <span ng-repeat="(i, job) in vm.profile.jobs | limitTo:vm.more.jobs&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span ng-class="{bold: job.current}">{{job.position}}</span></span>; </span>
+            <span ng-if="!vm.more.jobs"><a ng-click="vm.more.jobs = true">więcej<span ng-if="vm.profile.jobs.length - 3 > 0"> (+{{vm.profile.jobs.length - 3}})</span>...</a></span>
         </div>
         <div ng-if="vm.more.jobs" class="jobs">
-            <div class="job" ng-repeat="(i, job) in vm.profile.current.linkedin.jobs track by i">
+            <div class="job" ng-repeat="(i, job) in vm.profile.jobs track by i">
                 <div><strong>{{job.position}}</strong></div>
                 <div>Firma: <i>{{job.company}}</i></div>
                 <div>Miasto: {{job.locality}}</div>

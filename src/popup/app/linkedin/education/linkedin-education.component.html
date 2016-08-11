@@ -1,15 +1,15 @@
 <div class="form-group">
     <div class="col-sm-3">
         <label class="control-label">Uczel.</label>
-        <scoring score="vm.profile.current.linkedin.scoring.education"></scoring>
+        <scoring score="vm.profile.scoring.education"></scoring>
     </div>
     <div class="col-sm-9">
         <div ng-if="!vm.more.education">
-            <span ng-repeat="(i, education) in vm.profile.current.linkedin.education | limitTo:vm.more.education&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span class="bold">{{education.school}}</span></span>; </span>
-            <span ng-if="!vm.more.education"><a ng-click="vm.more.education = true">więcej<span ng-if="vm.profile.current.linkedin.education.length - 3 > 0"> (+{{vm.profile.current.linkedin.education.length - 3}})</span>...</a></span>
+            <span ng-repeat="(i, education) in vm.profile.education | limitTo:vm.more.education&&1000||3 track by i"><span class="nowrap">{{i+1}}. <span class="bold">{{education.school}}</span></span>; </span>
+            <span ng-if="!vm.more.education"><a ng-click="vm.more.education = true">więcej<span ng-if="vm.profile.education.length - 3 > 0"> (+{{vm.profile.education.length - 3}})</span>...</a></span>
         </div>
         <div ng-if="vm.more.education" class="educationlist">
-            <div class="education" ng-repeat="(i, education) in vm.profile.current.linkedin.education track by i">
+            <div class="education" ng-repeat="(i, education) in vm.profile.education track by i">
                 <div><strong>{{education.school}}</strong></div>
                 <div>Stopień: <i>{{education.degree}}</i></div>
                 <div>Specjalność: {{education.major}}</div>

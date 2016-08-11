@@ -1,19 +1,20 @@
 import Profile from '../../../content-scripts/models/profile.model';
+import Linkedin from '../../../content-scripts/models/linkedin.model';
 
 const profileService = function profileService($rootScope, Bridge, MentorsAPI) {
   'ngInject';
 
-  const profile = {
-    current: null,
-    existing: {},
-    initial: {},
+  const data = {
+    linkedin: null,
+    github: null,
+    profile: new Profile(),
   };
 
   Bridge.port.onMessage.addListener(response => {
     if(typeof response === 'object' && response !== 'undefined' && response !== 'null') {
-      profile.current = new Profile(response.current);
-      profile.existing = new Profile(response.existing);
-      profile.initial = new Profile(response.current);
+      if (response.hasOwnProperty('linkedin')) {
+        data.linkedin = new Linkedin(response.linkedin);
+      }
       $rootScope.$apply();
     }
   });
@@ -53,15 +54,15 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI) {
   };
 
   const add = () => {
-    return MentorsAPI.all(`/profiles/${profile.existing.id}/linkedin`).post(profile.current.linkedin);
+    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
   };
 
   const update = () => {
-    return MentorsAPI.all(`/profiles/${profile.existing.id}/linkedin`).post(profile.current.linkedin);
+    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
   };
 
   return {
-    profile,
+    data,
     refresh,
     getProfile,
     getProfileByLinkedin,

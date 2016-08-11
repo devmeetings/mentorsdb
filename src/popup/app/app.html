@@ -1,18 +1,18 @@
 <nav class="navbar navbar-default">
     <button class="btn btn-default" router-active="active" ng-link="['Linkedin']">
-    	Linkedin ({{vm.profileService.profile.existing.linkedin && 1 || 0}})
+    	Linkedin ({{vm.profileService.data.profile.linkedin && 1 || 0}})
     </button>
     <button class="btn btn-default" router-active="active" ng-link="['Github']">
-    	Github ({{vm.profileService.profile.existing.github.length}})
+    	Github ({{vm.profileService.data.profile.github.length}})
     </button>
     <button class="btn btn-default" router-active="active" ng-link="['Trello']">
-    	Trello ({{vm.profileService.profile.existing.trello && 1 || 0}})
+    	Trello ({{vm.profileService.data.profile.trello && 1 || 0}})
     </button>
     <button class="btn btn-default" router-active="active" ng-link="['Email']">
-    	Email ({{vm.profileService.profile.current.email.length}})
+    	Email ({{vm.profileService.data.profile.email.length}})
     </button>
     <div class="pull-right">
-    	<button class="btn btn-default" ng-click="vm.showAll()">Pokaż wszystkich</button>
+    	<button class="btn btn-default" ng-click="vm.openBaseApp()">Panel mentorów</button>
     	<button class="btn btn-default" ng-click="vm.close()">Anuluj</button>
     </div>
 </nav>

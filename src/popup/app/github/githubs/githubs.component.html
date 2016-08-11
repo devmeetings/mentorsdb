@@ -1,6 +1,6 @@
 <h3>Zweryfikowane</h3>
 <div class="githubs">
-    <div class="github" ng-repeat="(i, github) in vm.profile.existing.github track by i">
+    <div class="github" ng-repeat="(i, github) in vm.profile.profile.github track by i">
         <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;margin-right:10px;">
         <button class="btn btn-danger" ng-click="vm.remove(i, github)" style="float:right;">X</button>
         <div><strong>{{github.city}}</strong>, {{github.contributions}} commitów</div>
@@ -14,7 +14,7 @@
 <hr>
 <h3>Pasujące</h3>
 <div class="githubs">
-    <div class="github" ng-repeat="(i, github) in vm.profile.current.github track by i">
+    <div class="github" ng-repeat="(i, github) in vm.profile.github track by i">
         <img ng-src="{{github.avatar}}" class="img-rounded" style="width:50px;height:50px;float:left;margin-right:10px;">
         <button class="btn btn-default" ng-click="vm.add(i, github)" style="float:right;">Dodaj</button>
         <div><strong>{{github.city}}</strong>, {{github.contributions}} commitów</div>

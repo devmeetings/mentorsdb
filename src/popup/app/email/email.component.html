@@ -2,7 +2,7 @@
 <div class="emails">
     <ul>
         <li
-            ng-repeat="(i, email) in vm.profileService.profile.current.email track by i"
+            ng-repeat="(i, email) in vm.profileService.data.profile.email track by i"
             ng-class="{confirmed:email.confirmed}">
             {{email.address}} [{{email.source}}]
             <a ng-if="email.confirmed === null" ng-click="vm.MailVerifier.checkEmail(email.address)"> - zweryfikuj</a>
@@ -19,7 +19,7 @@
 <div class="emails">
     <ul>
         <li
-            ng-repeat="(i, email) in vm.profileService.profile.current.linkedin.email track by i"
+            ng-repeat="(i, email) in vm.profileService.data.profile.linkedin.email track by i"
             ng-class="{confirmed:email.confirmed}">
             {{email.address}} [{{email.source}}]
             <a ng-if="email.confirmed === null" ng-click="vm.MailVerifier.checkEmail(email.address)"> - zweryfikuj</a>
@@ -34,7 +34,7 @@
 <div class="emails">
     <ul>
         <li
-            ng-repeat="(i, github) in vm.profileService.profile.current.github track by i"
+            ng-repeat="(i, github) in vm.profileService.data.profile.github track by i"
             ng-if="github.email">
             {{github.email}} [github]
             <a ng-click="vm.MailVerifier.checkEmail(github.email)"> - zweryfikuj</a>

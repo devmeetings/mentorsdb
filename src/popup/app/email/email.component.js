@@ -17,7 +17,7 @@ const emailComponent = {
 
     vm.addEmail = function(email) {
       if(email) {
-        vm.profileService.profile.current.email.push(new Email({
+        vm.profileService.data.email.push(new Email({
           address: email,
           source: 'manual'
         }));
@@ -25,7 +25,7 @@ const emailComponent = {
     };
 
     vm.removeEmail = function(i) {
-      vm.profileService.profile.current.email.splice(i, 1);
+      vm.profileService.data.email.splice(i, 1);
     };
   },
   controllerAs: 'vm',

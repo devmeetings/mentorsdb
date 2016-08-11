@@ -1,11 +1,11 @@
 <div class="form-group">
     <div class="col-sm-3">
         <label class="control-label">Języki</label>
-        <scoring score="vm.profile.current.linkedin.scoring.languages"></scoring>
+        <scoring score="vm.profile.scoring.languages"></scoring>
     </div>
     <div class="col-sm-9">
         <div class="strips">
-            <div ng-repeat="(i, language) in vm.profile.current.linkedin.languages track by i">
+            <div ng-repeat="(i, language) in vm.profile.languages track by i">
                 <span class="label label-default">
                     {{language.name}}
                     <div class="badge">{{language.proficiency}}</div>

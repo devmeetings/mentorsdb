@@ -11,7 +11,7 @@ const appComponent = {
 
     vm.profileService = profileService;
 
-    vm.showAll = function() {
+    vm.openBaseApp = function() {
       chrome.tabs.create({
         url: chrome.runtime.getURL('base/index.html'),
         active: true
@@ -21,6 +21,8 @@ const appComponent = {
     vm.close = function() {
       window.close();
     };
+
+    vm.profileService.refresh();
   },
   controllerAs: 'vm',
   $routeConfig: [

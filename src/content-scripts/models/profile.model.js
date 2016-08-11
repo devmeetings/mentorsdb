@@ -6,6 +6,7 @@ import Email from './email.model';
 const Profile = (function() {
 
     function ProfileModel(data) {
+        data = data || {};
         this.id = data.id || null;
         this.name = data.name || null;
         this.city = data.city || null;

@@ -13,9 +13,9 @@ const linkedinComponent = {
 
     vm.scoreSum = function() {
       let scoreSum = 0;
-      if(vm.profileService.profile.current.linkedin.scoring) {
-        scoreSum = Object.keys(vm.profileService.profile.current.linkedin.scoring).reduce(function(sum, key) {
-          return sum += vm.profileService.profile.current.linkedin.scoring[key];
+      if(vm.profileService.data.linkedin.scoring) {
+        scoreSum = Object.keys(vm.profileService.data.linkedin.scoring).reduce(function(sum, key) {
+          return sum += vm.profileService.data.linkedin.scoring[key];
         }, 0);
       }
       return scoreSum;
@@ -34,8 +34,6 @@ const linkedinComponent = {
     vm.close = function() {
       window.close();
     };
-
-    vm.profileService.refresh();
   },
   controllerAs: 'vm',
 };
