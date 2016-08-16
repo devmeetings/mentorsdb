@@ -1,48 +1,38 @@
+import backgroundService from './background.service';
+
 const ChromeService = (function() {
 
     function getTab() {
-        return new Promise((resolve, reject) => {
-            chrome.runtime.sendMessage({
-                method: 'getTab'
-            }, function(tab) {
-                resolve(tab);
-            });
-        });
+        return backgroundService.request('getTab');
     }
 
     function setStatus(status, scoring) {
-        chrome.runtime.sendMessage({
-            method: 'setStatus',
+        return backgroundService.request('setStatus', {
             status, // new, existing, processing
             scoring,
         });
     }
 
     function setGithubProfile(tabId, githubProfile) {
-        chrome.runtime.sendMessage({
-            method: 'setGithubProfile',
+        return backgroundService.request('setGithubProfile', {
             openerTabId: tabId,
             github: githubProfile,
         });
     }
 
     function openGithubProfile(url, openerTabId) {
-        chrome.runtime.sendMessage({
-            method: 'openGithubProfile',
+        return backgroundService.request('openGithubProfile', {
             url,
             openerTabId,
         });
     }
 
     function refreshPopup() {
-        chrome.runtime.sendMessage({
-            method: 'refreshPopup',
-        });
+        return backgroundService.request('refreshPopup');
     }
 
     function openGithubSearch(name) {
-        chrome.runtime.sendMessage({
-            method: 'openGithubSearch',
+        return backgroundService.request('openGithubSearch', {
             name: name.replace(/ /g, '+'),
         });
     }

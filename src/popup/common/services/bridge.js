@@ -4,6 +4,7 @@ const Bridge = function Bridge() {
   return {
     port: chrome.runtime.connect({name: "bridge"}),
     popupPushPort: chrome.runtime.connect({name: "popupPush"}),
+    popupPort: chrome.runtime.connect({name: "popup"}),
   };
 };
 
