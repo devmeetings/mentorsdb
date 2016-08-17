@@ -1,9 +1,15 @@
 <nav class="navbar navbar-default">
     <span ng-if="!vm.profileService.data.profile.linkedin">
-        <button class="btn btn-primary" ng-click="vm.add()">Dodaj</button>
+        <button
+            ng-if="vm.profileService.data.linkedin"
+            class="btn btn-primary"
+            ng-click="vm.add()">Dodaj</button>
     </span>
     <span ng-if="vm.profileService.data.profile.linkedin">
-        <button class="btn btn-primary" ng-click="vm.update()">Aktualizuj</button>
+        <button
+            ng-if="vm.profileService.data.linkedin"
+            class="btn btn-primary"
+            ng-click="vm.update()">Aktualizuj</button>
         <span>Zapisany w bazie mentorów</span>
     </span>
 

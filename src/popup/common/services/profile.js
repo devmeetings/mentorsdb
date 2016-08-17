@@ -1,7 +1,4 @@
-import Profile from '../../../content-scripts/models/profile.model';
-import Linkedin from '../../../content-scripts/models/linkedin.model';
-
-const profileService = function profileService($rootScope, Bridge, MentorsAPI) {
+const profileService = function profileService($rootScope, Bridge, MentorsAPI, Linkedin, Profile) {
   'ngInject';
 
   const data = {
@@ -54,12 +51,20 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI) {
   };
 
   const add = () => {
-    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
+    return MentorsAPI.all('/profiles').post(data);
   };
 
   const update = () => {
     return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
   };
+
+  /* const add = () => {
+    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
+  };
+
+  const update = () => {
+    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
+  }; */
 
   return {
     data,

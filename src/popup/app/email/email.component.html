@@ -5,10 +5,10 @@
             ng-repeat="(i, email) in vm.profileService.data.profile.email track by i"
             ng-class="{confirmed:email.confirmed}">
             {{email.address}} [{{email.source}}]
-            <a ng-if="email.confirmed === null" ng-click="vm.MailVerifier.checkEmail(email.address)"> - zweryfikuj</a>
+            <a ng-if="email.confirmed === null" ng-click="vm.mailVerifierService.checkEmail(email.address)"> - zweryfikuj</a>
             <a ng-click="vm.removeEmail(i)">[X]</a>
         </li>
-        <li ng-repeat="(i, email) in vm.MailVerifier.queue track by i">
+        <li ng-repeat="(i, email) in vm.mailVerifierService.queue track by i">
             {{email}} [poszukiwany]
         </li>
     </ul>
@@ -22,11 +22,11 @@
             ng-repeat="(i, email) in vm.profileService.data.profile.linkedin.email track by i"
             ng-class="{confirmed:email.confirmed}">
             {{email.address}} [{{email.source}}]
-            <a ng-if="email.confirmed === null" ng-click="vm.MailVerifier.checkEmail(email.address)"> - zweryfikuj</a>
+            <a ng-if="email.confirmed === null" ng-click="vm.mailVerifierService.checkEmail(email.address)"> - zweryfikuj</a>
             <a ng-click="vm.removeEmail(i)">[X]</a>
         </li>
     </ul>
-    <button class="btn btn-link" ng-click="vm.MailVerifier.searchEmail()" ng-disabled="vm.MailVerifier.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
+    <button class="btn btn-link" ng-click="vm.mailVerifierService.searchEmail()" ng-disabled="vm.mailVerifierService.queue.length > 0">Automatycznie szukaj adresu e-mail</button>
 </div>
 
 <hr>
@@ -37,7 +37,7 @@
             ng-repeat="(i, github) in vm.profileService.data.profile.github track by i"
             ng-if="github.email">
             {{github.email}} [github]
-            <a ng-click="vm.MailVerifier.checkEmail(github.email)"> - zweryfikuj</a>
+            <a ng-click="vm.mailVerifierService.checkEmail(github.email)"> - zweryfikuj</a>
         </li>
     </ul>
 </div>

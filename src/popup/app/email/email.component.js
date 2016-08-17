@@ -1,17 +1,16 @@
 import template from './email.component.html';
-import Email from '../../../content-scripts/models/email.model';
 
 const emailComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function emailController(profileService, MailVerifier) {
+  controller: function emailController(profileService, mailVerifierService, Email) {
     'ngInject';
 
     const vm = this;
 
     vm.profileService = profileService;
-    vm.MailVerifier = MailVerifier;
+    vm.mailVerifierService = mailVerifierService;
 
     vm.newmail = '';
 

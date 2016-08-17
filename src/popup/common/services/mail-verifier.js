@@ -2,9 +2,8 @@ import angular from 'angular';
 import {
   removeDiacritics,
 } from '../../../common/helpers';
-import Email from '../../../content-scripts/models/email.model';
 
-const mailVerifierService = function mailVerifierService($rootScope, profileService) {
+const mailVerifierService = function mailVerifierService($rootScope, profileService, Email) {
   'ngInject';
 
   var _this;
