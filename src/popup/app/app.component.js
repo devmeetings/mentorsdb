@@ -31,6 +31,11 @@ const appComponent = {
   controllerAs: 'vm',
   $routeConfig: [
     {
+      path: '/profile',
+      name: 'Profile',
+      component: 'profileComponent',
+    },
+    {
       path: '/linkedin',
       name: 'Linkedin',
       component: 'linkedinComponent',

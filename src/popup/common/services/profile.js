@@ -60,6 +60,8 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI, L
     });
   };
 
+  const profileDiff = (profile) => JSON.stringify(profile) !== JSON.stringify(data.profile);
+
   const linkedinDiff = () => JSON.stringify(data.linkedin) !== JSON.stringify(data.profile.linkedin);
 
   const addProfile = (profile) => {
@@ -79,6 +81,7 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI, L
     refresh,
     getProfile,
     getProfileByLinkedin,
+    profileDiff,
     linkedinDiff,
     addProfile,
     addLinkedin,

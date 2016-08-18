@@ -1,4 +1,7 @@
 <nav class="navbar navbar-default">
+    <button class="btn btn-default" router-active="active" ng-link="['Profile']">
+        Profil ({{vm.profileService.data.profile.id && 1 || 0}})
+    </button>
     <button class="btn btn-default" router-active="active" ng-link="['Linkedin']">
     	Linkedin ({{vm.profileService.data.profile.linkedin && 1 || 0}})
     </button>
@@ -9,7 +12,7 @@
     	Trello ({{vm.profileService.data.profile.trello && 1 || 0}})
     </button>
     <button class="btn btn-default" router-active="active" ng-link="['Email']">
-    	Email ({{vm.profileService.data.profile.email.length}})
+    	Emaile ({{vm.profileService.data.profile.email.length}})
     </button>
     <div class="pull-right">
     	<button class="btn btn-default" ng-click="vm.openBaseApp()">Panel mentorów</button>
