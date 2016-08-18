@@ -22,6 +22,19 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI, L
         }).finally(() => {
           $rootScope.$apply();
         });
+      } else if (response.hasOwnProperty('trello')) {
+        const id = response.trello.id;
+        getProfileByTrello(id)
+        .then(profile => {
+          if (profile) {
+            data.profile = new Profile(profile);
+            data.linkedin.comment = data.profile.linkedin.comment;
+            data.linkedin.scoring = new Scoring(data.profile.linkedin.scoring);
+            data.linkedin.tags = data.profile.linkedin.tags.slice();
+          }
+        }).finally(() => {
+          $rootScope.$apply();
+        });
       }
     }
   });
@@ -57,6 +70,12 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI, L
   const getProfileByLinkedin = linkedin => {
     return getProfile({
       linkedin,
+    });
+  };
+
+  const getProfileByTrello = id => {
+    return getProfile({
+      trello: id,
     });
   };
 

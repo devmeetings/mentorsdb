@@ -48,6 +48,16 @@
       ],
       "run_at": "document_idle",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "https://trello.com/c/*"
+      ],
+      "js": [
+        "content-trello/index.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ],
   "permissions": [

@@ -13,7 +13,8 @@ const config = {
     'background': './src/background/index',
     'content-github-search': './src/content-scripts/github-search.controller',
     'content-github': './src/content-scripts/github.controller',
-    'content-linkedin': './src/content-scripts/linkedin.controller'
+    'content-linkedin': './src/content-scripts/linkedin.controller',
+    'content-trello': './src/content-scripts/trello.controller'
 	},
 	output: {
 		publicPath: './',
