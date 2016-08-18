@@ -1,4 +1,4 @@
-const profileService = function profileService($rootScope, Bridge, MentorsAPI, Linkedin, Profile) {
+const profileService = function profileService($rootScope, Bridge, MentorsAPI, Linkedin, Profile, Scoring) {
   'ngInject';
 
   const data = {
@@ -11,8 +11,18 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI, L
     if(typeof response === 'object' && response !== 'undefined' && response !== 'null') {
       if (response.hasOwnProperty('linkedin')) {
         data.linkedin = new Linkedin(response.linkedin);
+        getProfileByLinkedin(data.linkedin.id)
+        .then(profile => {
+          if (profile) {
+            data.profile = new Profile(profile);
+            data.linkedin.comment = data.profile.linkedin.comment;
+            data.linkedin.scoring = new Scoring(data.profile.linkedin.scoring);
+            data.linkedin.tags = data.profile.linkedin.tags.slice();
+          }
+        }).finally(() => {
+          $rootScope.$apply();
+        });
       }
-      $rootScope.$apply();
     }
   });
 
@@ -41,7 +51,7 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI, L
   };
 
   const getProfile = criteria => {
-    return MentorsAPI.all('/profiles').getList('', criteria);
+    return MentorsAPI.all('/profile').get('', criteria);
   };
 
   const getProfileByLinkedin = linkedin => {
@@ -50,29 +60,29 @@ const profileService = function profileService($rootScope, Bridge, MentorsAPI, L
     });
   };
 
-  const add = () => {
-    return MentorsAPI.all('/profiles').post(data);
+  const linkedinDiff = () => JSON.stringify(data.linkedin) !== JSON.stringify(data.profile.linkedin);
+
+  const addProfile = (profile) => {
+    return MentorsAPI.all('/profiles').post(profile);
   };
 
-  const update = () => {
-    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
+  const addLinkedin = (linkedin) => {
+    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(linkedin);
   };
 
-  /* const add = () => {
-    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
+  const updateLinkedin = (linkedin) => {
+    return MentorsAPI.one(`/profiles/${data.profile.id}/linkedin`).customPUT(linkedin);
   };
-
-  const update = () => {
-    return MentorsAPI.all(`/profiles/${data.profile.id}/linkedin`).post(data.linkedin);
-  }; */
 
   return {
     data,
     refresh,
     getProfile,
     getProfileByLinkedin,
-    add,
-    update,
+    linkedinDiff,
+    addProfile,
+    addLinkedin,
+    updateLinkedin,
   };
 };
 

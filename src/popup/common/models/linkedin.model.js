@@ -1,2 +1,3 @@
 import Linkedin from '../../../content-scripts/models/linkedin.model';
-export default Linkedin;
+const Model = () => Linkedin;
+export default Model;

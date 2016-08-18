@@ -11,7 +11,7 @@ const mailVerifierService = function mailVerifierService($rootScope, profileServ
 
   function MailVerifier() {
     this.queue = [];
-    this.profile = profileService.profile.current;
+    this.profile = profileService.data.profile;
   }
 
   MailVerifier.prototype.addEmail = function(email) {

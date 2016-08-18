@@ -11,18 +11,22 @@ const appComponent = {
 
     vm.profileService = profileService;
 
-    vm.openBaseApp = function() {
+    vm.openBaseApp = () => {
       chrome.tabs.create({
         url: chrome.runtime.getURL('base/index.html'),
         active: true
       });
     };
 
-    vm.close = function() {
+    vm.close = () => {
       window.close();
     };
 
-    vm.profileService.refresh();
+    vm.refresh = () => {
+      vm.profileService.refresh();
+    };
+
+    vm.refresh();
   },
   controllerAs: 'vm',
   $routeConfig: [

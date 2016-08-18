@@ -10,6 +10,7 @@ import EmailModel from './models/email.model';
 import LinkedinModel from './models/linkedin.model';
 import ProfileModel from './models/profile.model';
 import TrelloModel from './models/trello.model';
+import ScoringModel from './models/scoring.model';
 
 import MentorsAPI from './factories/mentorsapi';
 
@@ -19,7 +20,7 @@ import ScoringComponent from './components/scoring/scoring';
 
 const appCommonModule = angular.module('app.common', [])
 
-  .service('mailVerifier', MailVerifierService)
+  .service('mailVerifierService', MailVerifierService)
   .service('profileService', ProfileService)
   .service('trelloService', TrelloService)
   .service('backgroundService', backgroundService)
@@ -29,6 +30,7 @@ const appCommonModule = angular.module('app.common', [])
   .factory('Linkedin', LinkedinModel)
   .factory('Profile', ProfileModel)
   .factory('Trello', TrelloModel)
+  .factory('Scoring', ScoringModel)
 
   .factory('MentorsAPI', MentorsAPI)
 

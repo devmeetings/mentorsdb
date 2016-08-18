@@ -4,12 +4,17 @@ const linkedinComponent = {
   template,
   restrict: 'E',
   bindings: { $router: '<' },
-  controller: function linkedinController(profileService) {
+  controller: function linkedinController(profileService, Profile) {
     'ngInject';
 
     const vm = this;
 
     vm.profileService = profileService;
+    vm.mode = 'new';
+
+    vm.toggleMode = () => {
+      vm.mode = vm.mode === 'new' ? 'old' : 'new';
+    };
 
     vm.scoreSum = function() {
       let scoreSum = 0;
@@ -22,17 +27,30 @@ const linkedinComponent = {
     };
 
     vm.add = function() {
-      vm.profileService.add();
-      vm.close();
+      if (profileService.data.profile.id !== null) {
+        profileService.addLinkedin(profileService.data.linkedin)
+        .then(() => {
+          profileService.refresh();
+        });
+      } else {
+        profileService.addProfile({
+          name: profileService.data.linkedin.name,
+          city: profileService.data.linkedin.city,
+        }).then(profile => {
+          profileService.data.profile = new Profile(profile);
+          profileService.addLinkedin(profileService.data.linkedin)
+          .then(() => {
+            profileService.refresh();
+          });
+        });
+      }
     };
 
     vm.update = function() {
-      vm.profileService.update();
-      vm.close();
-    };
-
-    vm.close = function() {
-      window.close();
+      profileService.updateLinkedin(profileService.data.linkedin)
+      .then(() => {
+        profileService.refresh();
+      });
     };
   },
   controllerAs: 'vm',

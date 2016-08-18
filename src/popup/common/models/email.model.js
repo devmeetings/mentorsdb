@@ -1,2 +1,3 @@
 import Email from '../../../content-scripts/models/email.model';
-export default Email;
+const Model = () => Email;
+export default Model;

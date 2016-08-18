@@ -5,28 +5,29 @@ import Email from './email.model';
 
 const Profile = (function() {
 
-    function ProfileModel(data) {
-        data = data || {};
-        this.id = data.id || null;
-        this.name = data.name || null;
-        this.city = data.city || null;
-        this.nationality = data.nationality || null;
-        this.trello = data.trello? new Trello(data.trello) : null;
-        this.linkedin = data.linkedin? new Linkedin(data.linkedin) : null;
-        this.github = this.makeModels(Github, data.github);
-        this.email = this.makeModels(Email, data.email);
-    }
+    class ProfileModel {
 
-    ProfileModel.prototype.makeModels = function(model, data) {
-        var me = this;
-        var result = [];
-        if(data) {
-            data.forEach(function(item) {
-                result.push(new model(item));
-            });
+        constructor(data) {
+            data = data || {};
+            this.id = data.id || null;
+            this.name = data.name || null;
+            this.city = data.city || null;
+            this.nationality = data.nationality || null;
+            this.trello = data.trello? new Trello(data.trello) : null;
+            this.linkedin = data.linkedin? new Linkedin(data.linkedin) : null;
+            this.github = this.makeModels(Github, data.github);
+            this.email = this.makeModels(Email, data.email);
         }
-        return result;
-    };
+
+        makeModels(model, data) {
+            var result = [];
+            if(data) {
+                result = data.map(item => new model(item));
+            }
+            return result;
+        }
+
+    }
 
     return ProfileModel;
 

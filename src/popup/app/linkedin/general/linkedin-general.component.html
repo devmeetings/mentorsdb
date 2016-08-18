@@ -6,8 +6,7 @@
     </div>
     <div class="col-sm-9">
         <div class="form-inline">
-            {{vm.profile.name}},
-            <input type="text" id="city" class="form-control" ng-model="vm.profile.city">
+            {{vm.profile.name}}, {{vm.profile.city}}
         </div>
         <div taggle id="tags" tags="vm.profile.tags"></div>
         <textarea id="comment" class="form-control" style="height:80px" ng-model="vm.profile.comment" placeholder="Komentarz"></textarea>

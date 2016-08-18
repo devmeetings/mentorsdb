@@ -6,10 +6,15 @@
             ng-click="vm.add()">Dodaj</button>
     </span>
     <span ng-if="vm.profileService.data.profile.linkedin">
-        <button
-            ng-if="vm.profileService.data.linkedin"
-            class="btn btn-primary"
-            ng-click="vm.update()">Aktualizuj</button>
+        <span ng-if="vm.profileService.data.linkedin && vm.profileService.linkedinDiff()">
+            <button
+                class="btn btn-primary"
+                ng-click="vm.update()">Aktualizuj</button>
+            <button class="btn" ng-click="vm.toggleMode()">
+                <span ng-if="vm.mode === 'new'">Pokaż zapisany</span>
+                <span ng-if="vm.mode === 'old'">Pokaż aktualny</span>
+            </button>
+        </span>
         <span>Zapisany w bazie mentorów</span>
     </span>
 
@@ -28,11 +33,19 @@
         }"></ng-pluralize>
     </div>
 </nav>
-<div ng-if="vm.profileService.data.linkedin">
+<div ng-if="vm.profileService.data.linkedin && vm.mode === 'new'">
     <linkedin-general profile="vm.profileService.data.linkedin"></linkedin-general>
     <linkedin-skills profile="vm.profileService.data.linkedin"></linkedin-skills>
     <linkedin-jobs profile="vm.profileService.data.linkedin"></linkedin-jobs>
     <linkedin-description profile="vm.profileService.data.linkedin"></linkedin-description>
     <linkedin-languages profile="vm.profileService.data.linkedin"></linkedin-languages>
     <linkedin-education profile="vm.profileService.data.linkedin"></linkedin-education>
+</div>
+<div ng-if="vm.profileService.data.profile.linkedin && vm.mode === 'old'">
+    <linkedin-general profile="vm.profileService.data.profile.linkedin"></linkedin-general>
+    <linkedin-skills profile="vm.profileService.data.profile.linkedin"></linkedin-skills>
+    <linkedin-jobs profile="vm.profileService.data.profile.linkedin"></linkedin-jobs>
+    <linkedin-description profile="vm.profileService.data.profile.linkedin"></linkedin-description>
+    <linkedin-languages profile="vm.profileService.data.profile.linkedin"></linkedin-languages>
+    <linkedin-education profile="vm.profileService.data.profile.linkedin"></linkedin-education>
 </div>
