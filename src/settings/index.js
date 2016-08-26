@@ -45,7 +45,7 @@ angular
 
     $scope.removeTrackedBoard = board => {
         if ($window.confirm('Czy na pewno chcesz cofnąć trackowanie?')) {
-            Restangular.all(`/trello/boards/tracked/${board.id}`).remove()
+            Restangular.all(`/trello/boards/tracked/${board.tracked.id}`).remove()
             .then($scope.getBoards);
         }
     };
