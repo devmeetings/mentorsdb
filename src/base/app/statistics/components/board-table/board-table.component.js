@@ -12,6 +12,10 @@ const component = {
         const vm = this;
 
         vm.data = {};
+
+        statisticsService.getBoard(vm.board).then(data => {
+            vm.data = data;
+        });
     },
     controllerAs: 'vm',
 };

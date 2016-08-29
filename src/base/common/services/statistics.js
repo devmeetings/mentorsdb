@@ -3,8 +3,14 @@ const statisticsService = function statisticsService(MentorsAPI) {
 
   class StatisticsService {
 
-    getStatuses(criteria) {
-      return MentorsAPI.all('/statistics/statuses').getList(criteria);
+    getChanges(criteria) {
+      return MentorsAPI.all('/statistics/changes').getList(criteria);
+    }
+
+    getBoard(board) {
+      return MentorsAPI.one('/statistics/board').get({
+        id: board.boardId,
+      });
     }
 
   }

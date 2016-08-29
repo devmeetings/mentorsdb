@@ -66,7 +66,7 @@ const statusesChartComponent = {
 
         vm.redrawChart = () => {
           vm.loaded = false;
-          statisticsService.getStatuses(vm.criteria)
+          statisticsService.getChanges(vm.criteria)
           .then(data => {
             const statuses = {};
             data.forEach(day => {
