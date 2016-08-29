@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <tr>
+      <td></td>
+      <th ng-repeat="status in vm.data.statuses track by status.id">
+        {{ status.name }}
+      </th>
+    </tr>
+    <tr>
+      <th>
+        {{ vm.board.name }}
+      </th>
+      <td ng-repeat="status in vm.data.statuses track by status.id">
+        {{ status.count }}
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="city in vm.data.cities track by city.name">
+      <th>
+        {{ city.name }}
+      </th>
+      <td ng-repeat="measure in city.statuses track by $index">
+        {{ measure }}
+      </td>
+    </tr>
+  </tbody>
+</table>

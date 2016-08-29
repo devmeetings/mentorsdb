@@ -19,7 +19,7 @@ const statusesChartComponent = {
 
         vm.options = {
           chart: {
-            type: 'stackedAreaChart',
+            type: 'multiBarChart',
             height: 450,
             margin : {
               top: 20,
@@ -27,8 +27,8 @@ const statusesChartComponent = {
               bottom: 30,
               left: 40
             },
-            x: function(d){return d[0];},
-            y: function(d){return d[1];},
+            x: d => d[0],
+            y: d => d[1],
             useVoronoi: false,
             clipEdge: true,
             duration: 100,

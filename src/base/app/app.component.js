@@ -7,14 +7,19 @@ const appComponent = {
     controllerAs: 'vm',
     $routeConfig: [
         {
-            path: '/statistics',
-            name: 'Statistics',
-            component: 'statisticsComponent',
+            path: '/statistics/boards',
+            name: 'BoardsStatistics',
+            component: 'boardsStatisticsComponent',
             useAsDefault: true,
         },
         {
+            path: '/statistics/changes',
+            name: 'ChangesStatistics',
+            component: 'changesStatisticsComponent',
+        },
+        {
             path: '/**',
-            redirectTo: ['Statistics'],
+            redirectTo: ['BoardsStatistics'],
         },
     ],
 };
